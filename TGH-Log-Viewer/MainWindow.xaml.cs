@@ -37,6 +37,7 @@ namespace TGH_Log_Viewer
             printLogLines(queryBuilder.getAllData(client, 0, 5));
             Console.WriteLine("Get specific data:");
             printLogLines(queryBuilder.getSpecificData(client, 0, 5));
+            setupDataGrid(queryBuilder.getAllData(client, 0, 5));
         }
 
         private void printLogLines(IReadOnlyCollection<LogLine> loglines)
@@ -47,7 +48,10 @@ namespace TGH_Log_Viewer
             }
         }
 
-        
-
+        private void setupDataGrid(IReadOnlyCollection<LogLine> loglines)
+        {
+            mainDataGrid.ItemsSource = loglines;
+            mainDataGrid.UpdateLayout();
+        }
     }
 }

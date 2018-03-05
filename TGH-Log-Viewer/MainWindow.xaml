@@ -8,7 +8,20 @@
         Title="MainWindow" Height="512.392" Width="718.66">
     <Grid>
         <Button Content="Get Data" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <ScrollViewer x:Name="mainScrollWindows" HorizontalAlignment="Left" Height="424" Margin="10,47,0,0" VerticalAlignment="Top" Width="691"/>
+        <ScrollViewer x:Name="mainScrollWindows" HorizontalAlignment="Left" Height="397" Margin="10,74,0,0" VerticalAlignment="Top" Width="691">
+            <DataGrid x:Name="mainDataGrid" Width="670">
+                <DataGrid.DataContext>
+                    <local:LogLine/>
+                </DataGrid.DataContext>
+            </DataGrid>
+        </ScrollViewer>
+        <DatePicker x:Name="fromDatePicker" HorizontalAlignment="Left" Margin="445,45,0,0" VerticalAlignment="Top" FirstDayOfWeek="Monday" SelectedDateFormat="Long"/>
+        <DatePicker x:Name="toDatePicker" HorizontalAlignment="Left" Margin="447,13,0,0" VerticalAlignment="Top"/>
+        <Label Content="From:" HorizontalAlignment="Left" Margin="402,43,0,0" VerticalAlignment="Top"/>
+        <Label Content="To:" HorizontalAlignment="Left" Margin="417,12,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.18,0.5"/>
+        <Button x:Name="leftButton" Content="&lt;" HorizontalAlignment="Left" Margin="577,13,0,0" VerticalAlignment="Top" Width="25" RenderTransformOrigin="0.28,0.2" VerticalContentAlignment="Center" Padding="1"  Height="25"/>
+        <Button x:Name="leftButton_Copy" Content="&gt;" HorizontalAlignment="Left" Margin="666,13,0,0" VerticalAlignment="Top" Width="25" RenderTransformOrigin="0.28,0.2" VerticalContentAlignment="Center" Padding="1"  Height="25"/>
+        <Label Content="1/100" HorizontalAlignment="Left" Margin="607,13,0,0" VerticalAlignment="Top" Height="27" RenderTransformOrigin="0.211,0.593" Width="54" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
     </Grid>
 </Window>

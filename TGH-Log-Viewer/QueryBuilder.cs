@@ -31,6 +31,8 @@ namespace TGH_Log_Viewer
                     )
                 )
             );
+            
+            
 
             return searchResponse.Documents;
         }
