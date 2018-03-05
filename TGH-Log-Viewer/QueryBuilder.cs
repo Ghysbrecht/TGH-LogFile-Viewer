@@ -9,6 +9,8 @@ namespace TGH_Log_Viewer
 {
     class QueryBuilder
     {
+        Object lastResponse;
+
         //Get all the data in the main index where field = X and logtype = Y
         public IReadOnlyCollection<LogLine> getSpecificData(ElasticClient client, int offset, int records)
         {
@@ -16,6 +18,11 @@ namespace TGH_Log_Viewer
                 .AllTypes()
                 .From(offset)
                 .Size(records)
+                .Sort(ss => ss
+                    .Ascending(p =>
+                        p.timestamp
+                    )
+                )
                 .Query(q => q
                     .Bool(b => b
                         .Must(m => m
@@ -31,9 +38,9 @@ namespace TGH_Log_Viewer
                     )
                 )
             );
-            
-            
 
+
+            lastResponse = searchResponse;
             return searchResponse.Documents;
         }
 
@@ -44,12 +51,33 @@ namespace TGH_Log_Viewer
                 .AllTypes()
                 .From(offset)
                 .Size(records)
+                .Sort(ss => ss
+                    .Ascending(p => 
+                        p.timestamp
+                    )
+                )
                 .Query(q => q
                     .MatchAll()
                 )
             );
 
+            lastResponse = searchResponse;
             return searchResponse.Documents;
+        }
+
+        //Workaround!!!!
+        public long getLastResponseHits()
+        {
+            var test = (ISearchResponse<LogLine>)lastResponse;
+            if(test != null)
+            {
+                return test.HitsMetadata.Total;
+            }
+            else
+            {
+                return -1;
+            }
+            
         }
     }
 }
