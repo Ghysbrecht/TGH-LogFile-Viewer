@@ -29,6 +29,8 @@ namespace TGH_Log_Viewer
 
         String rightClickContent;
         String rightClickColumnName;
+        String doubleClickContent;
+        String doubleClickColumnName;
 
 
         public MainWindow()
@@ -189,6 +191,26 @@ namespace TGH_Log_Viewer
         private void copyCell_Click(object sender, RoutedEventArgs e)
         {   
             if(rightClickContent != null)Clipboard.SetText(rightClickContent);
+        }
+
+        private void mainDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var hit = VisualTreeHelper.HitTest((Visual)sender, e.GetPosition((IInputElement)sender));
+            DependencyObject cell = VisualTreeHelper.GetParent(hit.VisualHit);
+            while (cell != null && !(cell is System.Windows.Controls.DataGridCell)) cell = VisualTreeHelper.GetParent(cell);
+            System.Windows.Controls.DataGridCell targetCell = cell as System.Windows.Controls.DataGridCell;
+            if (targetCell != null)
+            {
+                doubleClickContent = ((TextBlock)targetCell.Content).Text;
+                doubleClickColumnName = targetCell.Column.Header.ToString();
+                
+                Dispatcher.BeginInvoke(new Action(() => {
+                    var window = new CellValueWindow(doubleClickContent);
+                    window.Show();
+                    window.Focus();
+                }));
+                
+            }
         }
     }
 }
