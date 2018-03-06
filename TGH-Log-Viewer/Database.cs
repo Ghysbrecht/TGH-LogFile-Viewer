@@ -14,8 +14,11 @@ namespace TGH_Log_Viewer
         {
             var settings = new ConnectionSettings(new Uri("http://localhost:9200"))
                     .DefaultIndex("maintest")
+                    .DisableDirectStreaming()
                     .DefaultMappingFor<LogLine>(m => m
-                        .PropertyName(f => f.timestamp, "@timestamp"));
+                        .PropertyName(f => f.timestamp, "@timestamp")
+                        .PropertyName(f => f.TID, "TID")
+                        .PropertyName(f => f.PID, "PID"));
             client = new ElasticClient(settings);
         }
 

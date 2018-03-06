@@ -19,26 +19,36 @@ namespace TGH_Log_Viewer
     
     public partial class MainWindow : Window
     {
-        QueryBuilder queryBuilder = new QueryBuilder();
+        QueryBuilder queryBuilder;
         Database database;
+        ElasticClient client;
 
-        //Database/Table navigation variables
-        int defaultRequestSize = 100;   //Ammount of returned lines per page
-        int currentPage = 0;            //Current page
-        
+        //Database&Table navigation variables
+        int defaultRequestSize = 100;   
+        int currentPage = 0;            
+
+        String rightClickContent;
+        String rightClickColumnName;
+
+
         public MainWindow()
         {
             InitializeComponent();
 
-            
+            //Disable buttons
+            leftButton.IsEnabled = false;
+            rightButton.IsEnabled = false;
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             database = new Database("localost:9200","mainindex");
-            ElasticClient client = database.getClient();
-           
-            setupDataGrid(queryBuilder.getAllData(client, currentPage, defaultRequestSize));
+            client = database.getClient();
+            queryBuilder = new QueryBuilder(client);
+
+            //setupDataGrid(queryBuilder.getAllData(currentPage, defaultRequestSize));
+            setupDataGrid(queryBuilder.getAllData(currentPage, defaultRequestSize));
         }
 
         //Prints out logines via console
@@ -53,12 +63,17 @@ namespace TGH_Log_Viewer
         //Updates the dataGrid with data
         private void setupDataGrid(IReadOnlyCollection<LogLine> loglines)
         {
-            mainDataGrid.ItemsSource = loglines;
-            mainScrollWindow.Visibility = Visibility.Visible;
-            rowLabel.Content = loglines.Count;
-            updatePageCount();
+            if (loglines != null)
+            {
+                leftButton.IsEnabled = true;
+                rightButton.IsEnabled = true;
+                mainDataGrid.ItemsSource = loglines;
+                mainScrollWindow.Visibility = Visibility.Visible;
+                rowLabel.Content = loglines.Count;
+                updatePageCount();
+            }
         }
-
+        //Update the page counter in the top right
         private void updatePageCount()
         {
             pageLabel.Content = (currentPage + 1) + "/" + (int)(queryBuilder.getLastResponseHits() / defaultRequestSize);
@@ -91,22 +106,89 @@ namespace TGH_Log_Viewer
             }
         }
 
+        //Left button page selection clicked
         private void leftButton_Click(object sender, RoutedEventArgs e)
         {
             if(currentPage != 0)
             {
                 currentPage -= 1;
                 updatePageCount();
+                updatePageDataGrid();
             }
         }
-
+        //Right button page selection clicked
         private void rightButton_Click(object sender, RoutedEventArgs e)
         {
-            if (currentPage != ((int)(queryBuilder.getLastResponseHits() / defaultRequestSize) - 1))
+            if (currentPage < ((int)(queryBuilder.getLastResponseHits() / defaultRequestSize)))
             {
                 currentPage += 1;
                 updatePageCount();
+                updatePageDataGrid();
             }
+        }
+
+        //Datagrid cell right clicked
+        private void mainDataGrid_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var hit = VisualTreeHelper.HitTest((Visual)sender, e.GetPosition((IInputElement)sender));
+            DependencyObject cell = VisualTreeHelper.GetParent(hit.VisualHit);
+            while (cell != null && !(cell is System.Windows.Controls.DataGridCell)) cell = VisualTreeHelper.GetParent(cell);
+            System.Windows.Controls.DataGridCell targetCell = cell as System.Windows.Controls.DataGridCell;
+            if(targetCell != null)
+            {
+                rightClickContent = ((TextBlock)targetCell.Content).Text;
+                rightClickColumnName = targetCell.Column.Header.ToString();
+            }
+        }
+        //Rightclick context menu filter on clicked
+        private void filterOnMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Filtering on: " + rightClickColumnName + " : " + rightClickContent);
+            currentPage = 0;
+            
+            switch (rightClickColumnName)
+            {
+                case "Filename":
+                    setupDataGrid(queryBuilder.filterOnFilename(currentPage, defaultRequestSize, rightClickContent));
+                    break;
+                case "Function":
+                    setupDataGrid(queryBuilder.filterOnFunction(currentPage, defaultRequestSize, rightClickContent));
+                    break;
+                case "Process":
+                    setupDataGrid(queryBuilder.filterOnProcess(currentPage, defaultRequestSize, rightClickContent));
+                    break;
+                case "PID":
+                    setupDataGrid(queryBuilder.filterOnPID(currentPage, defaultRequestSize, rightClickContent));
+                    break;
+                case "TID":
+                    setupDataGrid(queryBuilder.filterOnTID(currentPage, defaultRequestSize, rightClickContent));
+                    break;
+                case "Loglevel":
+                    setupDataGrid(queryBuilder.filterOnLoglevel(currentPage, defaultRequestSize, rightClickContent));
+                    break;
+                case "Logtype":
+                    setupDataGrid(queryBuilder.filterOnLogtype(currentPage, defaultRequestSize, rightClickContent));
+                    break;
+                case "Message":
+                    setupDataGrid(queryBuilder.filterOnMessage(currentPage, defaultRequestSize, rightClickContent));
+                    break;
+                default:
+                    MessageBox.Show("Not yet supported for this column!");
+                    break;
+            }
+            
+        }
+
+        //Update the datagrid by requering the last query with the new offset
+        private void updatePageDataGrid()
+        {
+            setupDataGrid(queryBuilder.lastQueryNewPage(currentPage * defaultRequestSize, defaultRequestSize));
+        }
+
+        //Copy a cell when copycell is clicked in the contextmenu
+        private void copyCell_Click(object sender, RoutedEventArgs e)
+        {   
+            if(rightClickContent != null)Clipboard.SetText(rightClickContent);
         }
     }
 }

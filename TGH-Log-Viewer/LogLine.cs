@@ -8,8 +8,8 @@ namespace TGH_Log_Viewer
 {
     class LogLine
     {
-        public int PID { get; set; }
-        public int TID { get; set; }
+        public string PID { get; set; }
+        public string TID { get; set; }
         public string filename { get; set; }
         public string function { get; set; }
         public string loglevel { get; set; }
