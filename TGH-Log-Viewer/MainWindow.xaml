@@ -18,9 +18,9 @@
                 <Label Content="To:" HorizontalAlignment="Left" Margin="375,30,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.18,0.5" Background="{x:Null}" Foreground="White"/>
                 <Button x:Name="leftButton" Content="&lt;" HorizontalAlignment="Left" Margin="560,10,0,0" VerticalAlignment="Top" Width="25" RenderTransformOrigin="0.28,0.2" VerticalContentAlignment="Center" Padding="1"  Height="25" BorderBrush="White" Foreground="White" Background="#FF0D2C49" Click="leftButton_Click"/>
                 <Button x:Name="rightButton" Content="&gt;" HorizontalAlignment="Left" Margin="650,10,0,0" VerticalAlignment="Top" Width="25" RenderTransformOrigin="0.28,0.2" VerticalContentAlignment="Center" Padding="1"  Height="25" Background="#FF0D2C49" Foreground="White" BorderBrush="White" Click="rightButton_Click"/>
-                <Label x:Name="pageLabel" Content="1/NA" HorizontalAlignment="Left" Margin="590,10,0,0" VerticalAlignment="Top" Height="27" RenderTransformOrigin="0.211,0.593" Width="54" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White"/>
-                <Label x:Name="rowTitleLabel" Content="Rows: " HorizontalAlignment="Left" Margin="590,35,0,0" VerticalAlignment="Top" Width="44" Foreground="White"/>
-                <Label x:Name="rowLabel" Content="0" HorizontalAlignment="Left" Margin="630,35,0,0" VerticalAlignment="Top" Width="41" Background="{x:Null}" Foreground="White"/>
+                <Label x:Name="pageLabel" Content="1/NA" HorizontalAlignment="Left" Margin="590,2,0,0" VerticalAlignment="Top" Height="40" RenderTransformOrigin="0.211,0.593" Width="54" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" MouseRightButtonUp="pageLabel_MouseRightButtonUp"/>
+                <Label x:Name="rowTitleLabel" Content="Rows: " HorizontalAlignment="Left" Margin="585,35,0,0" VerticalAlignment="Top" Width="44" Foreground="White"/>
+                <Label x:Name="rowLabel" Content="0" HorizontalAlignment="Left" Margin="625,35,0,0" VerticalAlignment="Top" Width="41" Background="{x:Null}" Foreground="White"/>
                 <Border BorderBrush="White" BorderThickness="1" HorizontalAlignment="Left" Height="59" Margin="-1,0,-16,0" VerticalAlignment="Top" Width="692" />
             </Grid>
         </DockPanel>
@@ -48,6 +48,7 @@
                             <Style>
                                 <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
                                 <Setter Property="TextBlock.MaxHeight" Value="50"/>
+                                <Setter Property="TextBlock.TextTrimming" Value="CharacterEllipsis"/>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>

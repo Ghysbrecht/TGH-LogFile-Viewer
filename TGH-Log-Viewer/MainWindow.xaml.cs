@@ -49,8 +49,8 @@ namespace TGH_Log_Viewer
             client = database.getClient();
             queryBuilder = new QueryBuilder(client);
 
-            //setupDataGrid(queryBuilder.getAllData(currentPage, defaultRequestSize));
             setupDataGrid(queryBuilder.getAllData(currentPage, defaultRequestSize));
+            //setupDataGrid(queryBuilder.getSpecificData(currentPage, defaultRequestSize));
         }
 
         //Prints out logines via console
@@ -78,7 +78,10 @@ namespace TGH_Log_Viewer
         //Update the page counter in the top right
         private void updatePageCount()
         {
-            pageLabel.Content = (currentPage + 1) + "/" + (int)(queryBuilder.getLastResponseHits() / defaultRequestSize);
+            String strSeperator = "/";
+            int totalPages = (int)(queryBuilder.getLastResponseHits() / defaultRequestSize);
+            if ((currentPage > 98) && totalPages > 999) strSeperator = " /\n";
+            pageLabel.Content = (currentPage + 1) + strSeperator + totalPages;
         }
 
         //Makes the scrollview scrollable with mousewheel
@@ -193,6 +196,7 @@ namespace TGH_Log_Viewer
             if(rightClickContent != null)Clipboard.SetText(rightClickContent);
         }
 
+        //Double click a cell to open up the value in a seperate window
         private void mainDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var hit = VisualTreeHelper.HitTest((Visual)sender, e.GetPosition((IInputElement)sender));
@@ -211,6 +215,24 @@ namespace TGH_Log_Viewer
                 }));
                 
             }
+        }
+
+        private void pageLabel_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            PageNumberWindow pageWindow = new PageNumberWindow();
+            pageWindow.ShowDialog();
+            int enteredPage = pageWindow.getPageNumber();
+            if(queryBuilder != null)
+            {
+                if (enteredPage < ((int)(queryBuilder.getLastResponseHits() / defaultRequestSize)))
+                {
+                    currentPage = enteredPage - 1;
+                    updatePageCount();
+                    updatePageDataGrid();
+                }
+                else MessageBox.Show("Page number not valid!");
+            }
+            
         }
     }
 }
