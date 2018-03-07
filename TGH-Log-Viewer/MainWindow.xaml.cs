@@ -262,5 +262,15 @@ namespace TGH_Log_Viewer
             toTimeDate.Text = "";
             updatePageDataGrid();
         }
+
+        private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if(toTimeDate.Value != null) fromTimeDate.Value = toTimeDate.Value;
+        }
+
+        private void Label_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
+        {
+            if(fromTimeDate.Value != null) toTimeDate.Value = fromTimeDate.Value;
+        }
     }
 }
