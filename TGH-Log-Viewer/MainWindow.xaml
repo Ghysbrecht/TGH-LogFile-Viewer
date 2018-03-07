@@ -9,7 +9,7 @@
     <Grid Background="#FF2C3E50">
         <!-- Topbox -->
         <DockPanel HorizontalAlignment="Left" Height="59" LastChildFill="False" Margin="10,10,0,0" VerticalAlignment="Top" Width="830" Background="#FF34495E">
-            <Image Source="C:\Users\ThomasGH\Downloads\TGH-LogViewer-Logo.png" Margin="27,0"/>
+            <Image Source="C:\Users\ThomasGH\Downloads\TGH-LogViewer-Logo.png" Margin="26,0"/>
             <Grid Background="#FF34495E">
                 <Button Content="GET DATA" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Width="94" Click="Button_Click" Height="49" Background="#FF0D2C49" Foreground="White" BorderBrush="White"/>
                 <DatePicker x:Name="fromDatePicker" HorizontalAlignment="Left" Margin="400,5,0,0" VerticalAlignment="Top" FirstDayOfWeek="Monday" SelectedDateFormat="Long" BorderBrush="White" Background="White"/>
@@ -21,7 +21,7 @@
                 <Label x:Name="pageLabel" Content="1/NA" HorizontalAlignment="Left" Margin="590,10,0,0" VerticalAlignment="Top" Height="27" RenderTransformOrigin="0.211,0.593" Width="54" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White"/>
                 <Label x:Name="rowTitleLabel" Content="Rows: " HorizontalAlignment="Left" Margin="590,35,0,0" VerticalAlignment="Top" Width="44" Foreground="White"/>
                 <Label x:Name="rowLabel" Content="0" HorizontalAlignment="Left" Margin="630,35,0,0" VerticalAlignment="Top" Width="41" Background="{x:Null}" Foreground="White"/>
-                <Border BorderBrush="White" BorderThickness="1" HorizontalAlignment="Left" Height="59" Margin="-1,0,-16,0" VerticalAlignment="Top" Width="692" PreviewStylusUp="Border_PreviewStylusUp"/>
+                <Border BorderBrush="White" BorderThickness="1" HorizontalAlignment="Left" Height="59" Margin="-1,0,-16,0" VerticalAlignment="Top" Width="692" />
             </Grid>
         </DockPanel>
 
@@ -30,7 +30,7 @@
             <ScrollViewer.Background>
                 <SolidColorBrush Color="Black" Opacity="0"/>
             </ScrollViewer.Background>
-            <DataGrid x:Name="mainDataGrid" MinWidth="532" MinHeight="400" HeadersVisibility="Column" AutoGenerateColumns="False" AlternationCount="2" BorderBrush="Black" CanUserDeleteRows="False" ClipToBounds="True" IsReadOnly="True" IsTextSearchEnabled="True" AlternatingRowBackground="#FFB2CDDA" Foreground="Black" TextOptions.TextFormattingMode="Display" Background="White" MouseRightButtonUp="mainDataGrid_MouseRightButtonUp" MouseDoubleClick="mainDataGrid_MouseDoubleClick">
+            <DataGrid x:Name="mainDataGrid" MinWidth="532" MinHeight="400" HeadersVisibility="Column" AutoGenerateColumns="False" AlternationCount="2" BorderBrush="White" CanUserDeleteRows="False" ClipToBounds="True" IsReadOnly="True" IsTextSearchEnabled="True" AlternatingRowBackground="#FFB2CDDA" Foreground="Black" TextOptions.TextFormattingMode="Display" Background="White" MouseRightButtonUp="mainDataGrid_MouseRightButtonUp" MouseDoubleClick="mainDataGrid_MouseDoubleClick">
                 <DataGrid.DataContext>
                     <local:LogLine/>
                 </DataGrid.DataContext>
@@ -84,7 +84,7 @@
         <!-- Side Box -->
         <DockPanel HorizontalAlignment="Left" Height="auto" MinHeight="200" LastChildFill="False" Margin="10,74,0,0" VerticalAlignment="Top" Width="136" Background="#FF2C3E50">
             <StackPanel>
-                <Label Content="Hide columns:" Height="26" Padding="5,5,5,0" BorderBrush="Black" Foreground="White" FontFamily="Calibri"/>
+                <Label Content="       HIDE COLUMNS" Height="26" Padding="5,5,5,0" BorderBrush="White" Foreground="#FF2C3E50" FontFamily="Calibri" Background="#FFFFFF" FontWeight="ExtraBold"/>
                 <ListBox x:Name="columnListBox" Width="135" SelectionMode="Multiple" SelectionChanged="columnListBox_SelectionChanged" Background="#FF34495E" BorderBrush="White" Foreground="White" FontFamily="Calibri">
                     <ListBoxItem Name="Timestamp">Timestamp</ListBoxItem>
                     <ListBoxItem Name="Filename">Filename</ListBoxItem>
