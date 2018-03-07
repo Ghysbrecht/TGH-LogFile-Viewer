@@ -25,7 +25,10 @@ namespace TGH_Log_Viewer
 
         //Database&Table navigation variables
         int defaultRequestSize = 100;   
-        int currentPage = 0;            
+        int currentPage = 0;
+
+        //Automatically fill in the from and to time with the first and last date of the current dataset.
+        bool autoTimeFill = false;
 
         String rightClickContent;
         String rightClickColumnName;
@@ -72,6 +75,11 @@ namespace TGH_Log_Viewer
                 mainDataGrid.ItemsSource = loglines;
                 mainScrollWindow.Visibility = Visibility.Visible;
                 rowLabel.Content = loglines.Count;
+                if (autoTimeFill)
+                {
+                    fromTimeDate.Value = loglines.First().timestamp;
+                    toTimeDate.Value = loglines.Last().timestamp;
+                }
                 updatePageCount();
             }
             else Console.WriteLine("Seting up datagrid failed -> Data is null");
@@ -178,6 +186,10 @@ namespace TGH_Log_Viewer
                 case "Message":
                     setupDataGrid(queryBuilder.filterOnMessage(currentPage, defaultRequestSize, rightClickContent));
                     break;
+                case "Timestamp":
+                    if (fromTimeDate.Value == null && toTimeDate.Value == null) fromTimeDate.Text = rightClickContent;
+                    else toTimeDate.Text = rightClickContent;
+                    break;
                 default:
                     MessageBox.Show("Not yet supported for this column!");
                     break;
@@ -262,12 +274,12 @@ namespace TGH_Log_Viewer
             toTimeDate.Text = "";
             updatePageDataGrid();
         }
-
+        //Copy over the date when doubleclicking the to label
         private void Label_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if(toTimeDate.Value != null) fromTimeDate.Value = toTimeDate.Value;
         }
-
+        //Copy over the date when doubleclicking the from label
         private void Label_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
         {
             if(fromTimeDate.Value != null) toTimeDate.Value = fromTimeDate.Value;
