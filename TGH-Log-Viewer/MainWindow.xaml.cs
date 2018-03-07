@@ -259,9 +259,13 @@ namespace TGH_Log_Viewer
             {
                 DateTime leftTimeBound = (DateTime)fromTimeDate.Value;
                 DateTime rightTimeBound = (DateTime)toTimeDate.Value;
+                if( rightTimeBound.Subtract(leftTimeBound).TotalSeconds > 0 )
+                {
+                    if (queryBuilder != null) queryBuilder.setTimeBounds(leftTimeBound, rightTimeBound);
+                    updatePageDataGrid();
+                }
+                else MessageBox.Show("End date is earlier then start date!");
 
-                if(queryBuilder != null) queryBuilder.setTimeBounds(leftTimeBound, rightTimeBound);
-                updatePageDataGrid();
             }
             else MessageBox.Show("Dates not valid!");  
         }
