@@ -15,9 +15,12 @@ namespace TGH_Log_Viewer
 
         String savedFilename, savedFunctionName, savedProcessName, savedPID, savedTID, savedLoglevel, savedLogtype, savedMessage;
 
+        DateTime leftBound, rightBound;
+
         public QueryBuilder(ElasticClient client)
         {
             this.client = client;
+            setTimeBoundsDefault();
         }
 
         //Get all the data in the main index where field = X and logtype = Y
@@ -63,12 +66,23 @@ namespace TGH_Log_Viewer
                 .From(offset)
                 .Size(records)
                 .Sort(ss => ss
-                    .Ascending(p => 
+                    .Ascending(p =>
                         p.timestamp
                     )
                 )
                 .Query(q => q
-                    .MatchAll()
+                    .Bool(b => b
+                        .Must(m => m
+                            .MatchAll()
+                        )
+                        .Filter(fi => fi
+                            .DateRange(r => r
+                                .Field(f => f.timestamp)
+                                .GreaterThanOrEquals(leftBound)
+                                .LessThan(rightBound)
+                            )
+                        )
+                    )
                 )
             );
             lastResponse = searchResponse;
@@ -77,7 +91,7 @@ namespace TGH_Log_Viewer
 
         public IReadOnlyCollection<LogLine> filterOnFilename(int offset, int records, String filename)
         {
-            lastExecuted = "filterOnFileName";
+            lastExecuted = "filterOnFilename";
             savedFilename = filename;
 
             var searchResponse = client.Search<LogLine>(s => s
@@ -95,6 +109,13 @@ namespace TGH_Log_Viewer
                             .MatchPhrase(c => c
                                 .Field(p => p.filename)
                                 .Query(filename)
+                            )
+                        )
+                        .Filter(fi => fi
+                            .DateRange(r => r
+                                .Field(f => f.timestamp)
+                                .GreaterThanOrEquals(leftBound)
+                                .LessThan(rightBound)
                             )
                         )
                     )
@@ -127,6 +148,13 @@ namespace TGH_Log_Viewer
                                 .Query(functionName)
                             )
                         )
+                        .Filter(fi => fi
+                            .DateRange(r => r
+                                .Field(f => f.timestamp)
+                                .GreaterThanOrEquals(leftBound)
+                                .LessThan(rightBound)
+                            )
+                        )
                     )
                 )
             );
@@ -155,6 +183,13 @@ namespace TGH_Log_Viewer
                             .MatchPhrase(c => c
                                 .Field(p => p.process)
                                 .Query(processName)
+                            )
+                        )
+                        .Filter(fi => fi
+                            .DateRange(r => r
+                                .Field(f => f.timestamp)
+                                .GreaterThanOrEquals(leftBound)
+                                .LessThan(rightBound)
                             )
                         )
                     )
@@ -188,6 +223,13 @@ namespace TGH_Log_Viewer
                                 .Query(PIDstr)
                             )
                         )
+                        .Filter(fi => fi
+                            .DateRange(r => r
+                                .Field(f => f.timestamp)
+                                .GreaterThanOrEquals(leftBound)
+                                .LessThan(rightBound)
+                            )
+                        )
                     )
                 )
             );
@@ -216,6 +258,13 @@ namespace TGH_Log_Viewer
                             .MatchPhrase(c => c
                                 .Field(p => p.TID)
                                 .Query(TIDstr)
+                            )
+                        )
+                        .Filter(fi => fi
+                            .DateRange(r => r
+                                .Field(f => f.timestamp)
+                                .GreaterThanOrEquals(leftBound)
+                                .LessThan(rightBound)
                             )
                         )
                     )
@@ -248,6 +297,13 @@ namespace TGH_Log_Viewer
                                 .Query(loglevel)
                             )
                         )
+                        .Filter(fi => fi
+                            .DateRange(r => r
+                                .Field(f => f.timestamp)
+                                .GreaterThanOrEquals(leftBound)
+                                .LessThan(rightBound)
+                            )
+                        )
                     )
                 )
             );
@@ -276,6 +332,13 @@ namespace TGH_Log_Viewer
                             .MatchPhrase(c => c
                                 .Field(p => p.logtype)
                                 .Query(logtype)
+                            )
+                        )
+                        .Filter(fi => fi
+                            .DateRange(r => r
+                                .Field(f => f.timestamp)
+                                .GreaterThanOrEquals(leftBound)
+                                .LessThan(rightBound)
                             )
                         )
                     )
@@ -308,6 +371,13 @@ namespace TGH_Log_Viewer
                                 .Query(message)
                             )
                         )
+                        .Filter(fi => fi
+                            .DateRange(r => r
+                                .Field(f => f.timestamp)
+                                .GreaterThanOrEquals(leftBound)
+                                .LessThan(rightBound)
+                            )
+                        )
                     )
                 )
             );
@@ -320,7 +390,7 @@ namespace TGH_Log_Viewer
         public long getLastResponseHits()
         {
             var test = (ISearchResponse<LogLine>)lastResponse;
-            if(test != null)
+            if(test.IsValid)
             {
                 return test.HitsMetadata.Total;
             }
@@ -357,5 +427,17 @@ namespace TGH_Log_Viewer
                     return null;
             }
         }
+
+        public void setTimeBounds(DateTime leftBound, DateTime rightBound)
+        {
+            this.leftBound = leftBound;
+            this.rightBound = rightBound;
+        }
+
+        public void setTimeBoundsDefault()
+        {
+            setTimeBounds(DateTime.Now.AddYears(-5), DateTime.Now);
+        }
+
     }
 }

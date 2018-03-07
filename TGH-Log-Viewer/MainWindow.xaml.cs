@@ -45,7 +45,7 @@ namespace TGH_Log_Viewer
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            database = new Database("localost:9200","mainindex");
+            database = new Database("dummy","dummy");
             client = database.getClient();
             queryBuilder = new QueryBuilder(client);
 
@@ -74,12 +74,13 @@ namespace TGH_Log_Viewer
                 rowLabel.Content = loglines.Count;
                 updatePageCount();
             }
+            else Console.WriteLine("Seting up datagrid failed -> Data is null");
         }
         //Update the page counter in the top right
         private void updatePageCount()
         {
             String strSeperator = "/";
-            int totalPages = (int)(queryBuilder.getLastResponseHits() / defaultRequestSize);
+            int totalPages = (int)(queryBuilder.getLastResponseHits() / defaultRequestSize) + 1;
             if ((currentPage > 98) && totalPages > 999) strSeperator = " /\n";
             pageLabel.Content = (currentPage + 1) + strSeperator + totalPages;
         }
@@ -187,7 +188,11 @@ namespace TGH_Log_Viewer
         //Update the datagrid by requering the last query with the new offset
         private void updatePageDataGrid()
         {
-            setupDataGrid(queryBuilder.lastQueryNewPage(currentPage * defaultRequestSize, defaultRequestSize));
+            if (queryBuilder != null)
+            {
+                Console.WriteLine("Updating grid!");
+                setupDataGrid(queryBuilder.lastQueryNewPage(currentPage * defaultRequestSize, defaultRequestSize));
+            }
         }
 
         //Copy a cell when copycell is clicked in the contextmenu
@@ -216,7 +221,7 @@ namespace TGH_Log_Viewer
                 
             }
         }
-
+        //Right clicked the page counter in top right
         private void pageLabel_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             PageNumberWindow pageWindow = new PageNumberWindow();
@@ -233,6 +238,29 @@ namespace TGH_Log_Viewer
                 else MessageBox.Show("Page number not valid!");
             }
             
+        }
+        //Clicked the filter button
+        private void filterButton_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Left clicked on filter!");
+            if((fromTimeDate.Value != null) && (toTimeDate.Value != null))
+            {
+                DateTime leftTimeBound = (DateTime)fromTimeDate.Value;
+                DateTime rightTimeBound = (DateTime)toTimeDate.Value;
+
+                if(queryBuilder != null) queryBuilder.setTimeBounds(leftTimeBound, rightTimeBound);
+                updatePageDataGrid();
+            }
+            else MessageBox.Show("Dates not valid!");  
+        }
+        //Right clicked the filter button (set time to default)
+        private void filterButton_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Console.WriteLine("Right clicked on filter!");
+            if (queryBuilder != null) queryBuilder.setTimeBoundsDefault();
+            fromTimeDate.Text = "";
+            toTimeDate.Text = "";
+            updatePageDataGrid();
         }
     }
 }

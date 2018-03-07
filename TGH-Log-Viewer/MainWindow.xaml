@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:TGH_Log_Viewer"
         mc:Ignorable="d"
         Title="TGH Log Viewer" Height="512.392" Width="718.66" MinWidth="870" MinHeight="512">
@@ -12,10 +13,27 @@
             <Image Source="C:\Users\ThomasGH\Downloads\TGH-LogViewer-Logo.png" Margin="26,0"/>
             <Grid Background="#FF34495E">
                 <Button Content="GET DATA" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Width="94" Click="Button_Click" Height="49" Background="#FF0D2C49" Foreground="White" BorderBrush="White"/>
-                <DatePicker x:Name="fromDatePicker" HorizontalAlignment="Left" Margin="400,5,0,0" VerticalAlignment="Top" FirstDayOfWeek="Monday" SelectedDateFormat="Long" BorderBrush="White" Background="White"/>
-                <DatePicker x:Name="toDatePicker" HorizontalAlignment="Left" Margin="400,30,0,0" VerticalAlignment="Top" BorderBrush="White" Background="White"/>
-                <Label Content="From:" HorizontalAlignment="Left" Margin="360,5,0,0" VerticalAlignment="Top" Foreground="White"/>
-                <Label Content="To:" HorizontalAlignment="Left" Margin="375,30,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.18,0.5" Background="{x:Null}" Foreground="White"/>
+                <Button Name="settingsButton" Content="SETTINGS" HorizontalAlignment="Left" Margin="104,5,0,0" VerticalAlignment="Top" Width="94" Height="22" Foreground="White" BorderBrush="White" Background="#FF0D2C49"/>
+                <Button Name="infoButton" Content="INFO" HorizontalAlignment="Left" Margin="104,32,0,0" VerticalAlignment="Top" Width="94" Height="22" Foreground="White" BorderBrush="White" Background="#FF0D2C49"/>
+                <Separator Background="White" Height="55" Width="52" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Margin="188,2,0,2" Foreground="White" >
+                    <Separator.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="90"/>
+                        </TransformGroup>
+                    </Separator.RenderTransform>
+                </Separator>
+                <Label Content="From:" HorizontalAlignment="Left" Margin="225,3,0,0" VerticalAlignment="Top" Foreground="White"/>
+                <Label Content="To:" HorizontalAlignment="Left" Margin="240,30,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.18,0.5" Background="{x:Null}" Foreground="White"/>
+                <xctk:DateTimePicker Name="fromTimeDate" Width="150" Height="22" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="270,5,0,0" Format="UniversalSortableDateTime" BorderBrush="White" TimeFormat="LongTime" ShowButtonSpinner="False" AutoCloseCalendar="True"/>
+                <xctk:DateTimePicker Name="toTimeDate" Width="150" Height="22" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="270,32,0,0" Format="UniversalSortableDateTime" BorderBrush="White" TimeFormat="LongTime" ShowButtonSpinner="False" AutoCloseCalendar="True" />
+                <Button Name="filterButton" Content="FILTER" HorizontalAlignment="Left" Margin="435,5,0,0" VerticalAlignment="Top" Width="94" Height="49" Background="#FF0D2C49" Foreground="White" BorderBrush="White" Click="filterButton_Click" MouseRightButtonUp="filterButton_MouseRightButtonUp"/>
+                <Separator Background="White" Height="55" Width="52" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Margin="519,2,0,2" Foreground="White" >
+                    <Separator.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="90"/>
+                        </TransformGroup>
+                    </Separator.RenderTransform>
+                </Separator>
                 <Button x:Name="leftButton" Content="&lt;" HorizontalAlignment="Left" Margin="560,10,0,0" VerticalAlignment="Top" Width="25" RenderTransformOrigin="0.28,0.2" VerticalContentAlignment="Center" Padding="1"  Height="25" BorderBrush="White" Foreground="White" Background="#FF0D2C49" Click="leftButton_Click"/>
                 <Button x:Name="rightButton" Content="&gt;" HorizontalAlignment="Left" Margin="650,10,0,0" VerticalAlignment="Top" Width="25" RenderTransformOrigin="0.28,0.2" VerticalContentAlignment="Center" Padding="1"  Height="25" Background="#FF0D2C49" Foreground="White" BorderBrush="White" Click="rightButton_Click"/>
                 <Label x:Name="pageLabel" Content="1/NA" HorizontalAlignment="Left" Margin="590,2,0,0" VerticalAlignment="Top" Height="40" RenderTransformOrigin="0.211,0.593" Width="54" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" MouseRightButtonUp="pageLabel_MouseRightButtonUp"/>
@@ -35,7 +53,7 @@
                     <local:LogLine/>
                 </DataGrid.DataContext>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Timestamp"  Binding="{Binding timestamp}"/>
+                    <DataGridTextColumn Header="Timestamp"  Binding="{Binding timestamp, StringFormat=\{0:yyyy-MM-dd HH:mm:ss\} }"/>
                     <DataGridTextColumn Header="Filename"  Binding="{Binding filename}"/>
                     <DataGridTextColumn Header="Logtype"  Binding="{Binding logtype}"/>
                     <DataGridTextColumn Header="Loglevel"  Binding="{Binding loglevel}"/>
@@ -85,7 +103,7 @@
         <!-- Side Box -->
         <DockPanel HorizontalAlignment="Left" Height="auto" MinHeight="200" LastChildFill="False" Margin="10,74,0,0" VerticalAlignment="Top" Width="136" Background="#FF2C3E50">
             <StackPanel>
-                <Label Content="       HIDE COLUMNS" Height="26" Padding="5,5,5,0" BorderBrush="White" Foreground="#FF2C3E50" FontFamily="Calibri" Background="#FFFFFF" FontWeight="ExtraBold"/>
+                <Label Content="       HIDE COLUMNS" Height="26" Padding="5,6,5,0" BorderBrush="White" Foreground="#FF2C3E50" FontFamily="Calibri" Background="#FFFFFF" FontWeight="ExtraBold"/>
                 <ListBox x:Name="columnListBox" Width="135" SelectionMode="Multiple" SelectionChanged="columnListBox_SelectionChanged" Background="#FF34495E" BorderBrush="White" Foreground="White" FontFamily="Calibri">
                     <ListBoxItem Name="Timestamp">Timestamp</ListBoxItem>
                     <ListBoxItem Name="Filename">Filename</ListBoxItem>
