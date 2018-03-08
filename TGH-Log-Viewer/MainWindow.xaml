@@ -13,7 +13,7 @@
             <Image Source="C:\Users\ThomasGH\Downloads\TGH-LogViewer-Logo.png" Margin="26,0"/>
             <Grid Background="#FF34495E">
                 <Button Content="GET DATA" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Width="94" Click="Button_Click" Height="49" Background="#FF0D2C49" Foreground="White" BorderBrush="White"/>
-                <Button Name="settingsButton" Content="SETTINGS" HorizontalAlignment="Left" Margin="104,5,0,0" VerticalAlignment="Top" Width="94" Height="22" Foreground="White" BorderBrush="White" Background="#FF0D2C49"/>
+                <Button Name="settingsButton" Content="SETTINGS" HorizontalAlignment="Left" Margin="104,5,0,0" VerticalAlignment="Top" Width="94" Height="22" Foreground="White" BorderBrush="White" Background="#FF0D2C49" Click="settingsButton_Click"/>
                 <Button Name="infoButton" Content="INFO" HorizontalAlignment="Left" Margin="104,32,0,0" VerticalAlignment="Top" Width="94" Height="22" Foreground="White" BorderBrush="White" Background="#FF0D2C49"/>
                 <Separator Background="White" Height="55" Width="52" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Margin="188,2,0,2" Foreground="White" >
                     <Separator.RenderTransform>

@@ -12,8 +12,8 @@ namespace TGH_Log_Viewer
         ElasticClient client;
         public Database(string address, string index)
         {
-            var settings = new ConnectionSettings(new Uri("http://localhost:9200"))
-                    .DefaultIndex("maintest")
+            var settings = new ConnectionSettings(new Uri("http://" + address))
+                    .DefaultIndex(index)
                     .DisableDirectStreaming()
                     .DefaultMappingFor<LogLine>(m => m
                         .PropertyName(f => f.timestamp, "@timestamp")

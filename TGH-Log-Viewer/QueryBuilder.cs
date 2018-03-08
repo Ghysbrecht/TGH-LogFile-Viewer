@@ -19,8 +19,13 @@ namespace TGH_Log_Viewer
 
         public QueryBuilder(ElasticClient client)
         {
-            this.client = client;
+            setClient(client);
             setTimeBoundsDefault();
+        }
+
+        public void setClient(ElasticClient client)
+        {
+            this.client = client;
         }
 
         //Get all the data in the main index where field = X and logtype = Y
@@ -390,7 +395,7 @@ namespace TGH_Log_Viewer
         public long getLastResponseHits()
         {
             var test = (ISearchResponse<LogLine>)lastResponse;
-            if(test.IsValid)
+            if((test != null) && (test.IsValid))
             {
                 return test.HitsMetadata.Total;
             }

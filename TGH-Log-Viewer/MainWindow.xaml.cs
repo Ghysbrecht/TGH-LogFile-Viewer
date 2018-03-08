@@ -22,14 +22,12 @@ namespace TGH_Log_Viewer
         QueryBuilder queryBuilder;
         Database database;
         ElasticClient client;
+        AppSettings appSettings;
 
         //Database&Table navigation variables
-        int defaultRequestSize = 100;   
+        int defaultRequestSize = 100;
         int currentPage = 0;
-
-        //Automatically fill in the from and to time with the first and last date of the current dataset.
-        bool autoTimeFill = false;
-
+        
         String rightClickContent;
         String rightClickColumnName;
         String doubleClickContent;
@@ -44,15 +42,13 @@ namespace TGH_Log_Viewer
             leftButton.IsEnabled = false;
             rightButton.IsEnabled = false;
 
+            setSettings(new AppSettings());
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            database = new Database("dummy","dummy");
-            client = database.getClient();
-            queryBuilder = new QueryBuilder(client);
-
-            setupDataGrid(queryBuilder.getAllData(currentPage, defaultRequestSize));
+        { 
+            if(database.isValid()) setupDataGrid(queryBuilder.getAllData(currentPage, appSettings.defaultRecords));
             //setupDataGrid(queryBuilder.getSpecificData(currentPage, defaultRequestSize));
         }
 
@@ -75,7 +71,7 @@ namespace TGH_Log_Viewer
                 mainDataGrid.ItemsSource = loglines;
                 mainScrollWindow.Visibility = Visibility.Visible;
                 rowLabel.Content = loglines.Count;
-                if (autoTimeFill)
+                if (appSettings.autoTime && loglines.Count > 0)
                 {
                     fromTimeDate.Value = loglines.First().timestamp;
                     toTimeDate.Value = loglines.Last().timestamp;
@@ -88,7 +84,7 @@ namespace TGH_Log_Viewer
         private void updatePageCount()
         {
             String strSeperator = "/";
-            int totalPages = (int)(queryBuilder.getLastResponseHits() / defaultRequestSize) + 1;
+            int totalPages = (int)(queryBuilder.getLastResponseHits() / appSettings.defaultRecords) + 1;
             if ((currentPage > 98) && totalPages > 999) strSeperator = " /\n";
             pageLabel.Content = (currentPage + 1) + strSeperator + totalPages;
         }
@@ -133,7 +129,7 @@ namespace TGH_Log_Viewer
         //Right button page selection clicked
         private void rightButton_Click(object sender, RoutedEventArgs e)
         {
-            if (currentPage < ((int)(queryBuilder.getLastResponseHits() / defaultRequestSize)))
+            if (currentPage < ((int)(queryBuilder.getLastResponseHits() /  appSettings.defaultRecords)))
             {
                 currentPage += 1;
                 updatePageCount();
@@ -163,28 +159,28 @@ namespace TGH_Log_Viewer
             switch (rightClickColumnName)
             {
                 case "Filename":
-                    setupDataGrid(queryBuilder.filterOnFilename(currentPage, defaultRequestSize, rightClickContent));
+                    setupDataGrid(queryBuilder.filterOnFilename(currentPage,  appSettings.defaultRecords, rightClickContent));
                     break;
                 case "Function":
-                    setupDataGrid(queryBuilder.filterOnFunction(currentPage, defaultRequestSize, rightClickContent));
+                    setupDataGrid(queryBuilder.filterOnFunction(currentPage,  appSettings.defaultRecords, rightClickContent));
                     break;
                 case "Process":
-                    setupDataGrid(queryBuilder.filterOnProcess(currentPage, defaultRequestSize, rightClickContent));
+                    setupDataGrid(queryBuilder.filterOnProcess(currentPage,  appSettings.defaultRecords, rightClickContent));
                     break;
                 case "PID":
-                    setupDataGrid(queryBuilder.filterOnPID(currentPage, defaultRequestSize, rightClickContent));
+                    setupDataGrid(queryBuilder.filterOnPID(currentPage,  appSettings.defaultRecords, rightClickContent));
                     break;
                 case "TID":
-                    setupDataGrid(queryBuilder.filterOnTID(currentPage, defaultRequestSize, rightClickContent));
+                    setupDataGrid(queryBuilder.filterOnTID(currentPage,  appSettings.defaultRecords, rightClickContent));
                     break;
                 case "Loglevel":
-                    setupDataGrid(queryBuilder.filterOnLoglevel(currentPage, defaultRequestSize, rightClickContent));
+                    setupDataGrid(queryBuilder.filterOnLoglevel(currentPage,  appSettings.defaultRecords, rightClickContent));
                     break;
                 case "Logtype":
-                    setupDataGrid(queryBuilder.filterOnLogtype(currentPage, defaultRequestSize, rightClickContent));
+                    setupDataGrid(queryBuilder.filterOnLogtype(currentPage,  appSettings.defaultRecords, rightClickContent));
                     break;
                 case "Message":
-                    setupDataGrid(queryBuilder.filterOnMessage(currentPage, defaultRequestSize, rightClickContent));
+                    setupDataGrid(queryBuilder.filterOnMessage(currentPage,  appSettings.defaultRecords, rightClickContent));
                     break;
                 case "Timestamp":
                     if (fromTimeDate.Value == null && toTimeDate.Value == null) fromTimeDate.Text = rightClickContent;
@@ -203,7 +199,7 @@ namespace TGH_Log_Viewer
             if (queryBuilder != null)
             {
                 Console.WriteLine("Updating grid!");
-                setupDataGrid(queryBuilder.lastQueryNewPage(currentPage * defaultRequestSize, defaultRequestSize));
+                setupDataGrid(queryBuilder.lastQueryNewPage(currentPage *  appSettings.defaultRecords,  appSettings.defaultRecords));
             }
         }
 
@@ -241,7 +237,7 @@ namespace TGH_Log_Viewer
             int enteredPage = pageWindow.getPageNumber();
             if(queryBuilder != null)
             {
-                if (enteredPage < ((int)(queryBuilder.getLastResponseHits() / defaultRequestSize)))
+                if (enteredPage < ((int)(queryBuilder.getLastResponseHits() /  appSettings.defaultRecords)))
                 {
                     currentPage = enteredPage - 1;
                     updatePageCount();
@@ -249,7 +245,6 @@ namespace TGH_Log_Viewer
                 }
                 else MessageBox.Show("Page number not valid!");
             }
-            
         }
         //Clicked the filter button
         private void filterButton_Click(object sender, RoutedEventArgs e)
@@ -262,7 +257,8 @@ namespace TGH_Log_Viewer
                 if( rightTimeBound.Subtract(leftTimeBound).TotalSeconds > 0 )
                 {
                     if (queryBuilder != null) queryBuilder.setTimeBounds(leftTimeBound, rightTimeBound);
-                    updatePageDataGrid();
+                    currentPage = 0;
+                    updatePageDataGrid(); 
                 }
                 else MessageBox.Show("End date is earlier then start date!");
 
@@ -287,6 +283,27 @@ namespace TGH_Log_Viewer
         private void Label_MouseDoubleClick_1(object sender, MouseButtonEventArgs e)
         {
             if(fromTimeDate.Value != null) toTimeDate.Value = fromTimeDate.Value;
+        }
+        //Open Settings window
+        private void settingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsWindow settingsWindow = new SettingsWindow(appSettings);
+            settingsWindow.ShowDialog();
+            setSettings(settingsWindow.getAppSettings());
+
+        }
+
+        private void setSettings(AppSettings settings)
+        {
+            appSettings = settings;
+            database = new Database(appSettings.elasticip, appSettings.defaultIndex);
+            if (database.isValid())
+            {
+                client = database.getClient();
+                if (queryBuilder == null) queryBuilder = new QueryBuilder(client);
+                else queryBuilder.setClient(client);
+            }
+            else MessageBox.Show("Connection failed! Check your settings...");
         }
     }
 }
