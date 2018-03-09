@@ -14,7 +14,38 @@
             <Grid Background="#FF34495E">
                 <Button Content="GET DATA" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Width="94" Click="Button_Click" Height="49" Background="#FF0D2C49" Foreground="White" BorderBrush="White"/>
                 <Button Name="settingsButton" Content="SETTINGS" HorizontalAlignment="Left" Margin="104,5,0,0" VerticalAlignment="Top" Width="94" Height="22" Foreground="White" BorderBrush="White" Background="#FF0D2C49" Click="settingsButton_Click"/>
-                <Button Name="infoButton" Content="INFO" HorizontalAlignment="Left" Margin="104,32,0,0" VerticalAlignment="Top" Width="94" Height="22" Foreground="White" BorderBrush="White" Background="#FF0D2C49"/>
+                <Button Name="moreButton" Content="MORE" HorizontalAlignment="Left" Margin="104,32,0,0" VerticalAlignment="Top" Width="94" Height="22" Foreground="White" BorderBrush="White" Background="#FF0D2C49" ContextMenuService.IsEnabled="false" Click="Button_Click_1">
+                    <Button.ContextMenu>
+                        <ContextMenu Name="moreButtonContextMenu" >
+                            <MenuItem x:Name="analyzeMenu" Header="Analyze" >
+                                <MenuItem.Icon>
+                                    <Image Source="C:\Users\ThomasGH\Documents\Project\Resources\services-64.ico" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem x:Name="globalSearchMenu" Header="Global Search" >
+                                <MenuItem.Icon>
+                                    <Image Source="C:\Users\ThomasGH\Documents\Project\Resources\search-12-64.ico" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem x:Name="graphMenu" Header="Graph" >
+                                <MenuItem.Icon>
+                                    <Image Source="C:\Users\ThomasGH\Documents\Project\Resources\line-chart-64.ico" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem x:Name="advancedQueryMenu" Header="Advanced Query" >
+                                <MenuItem.Icon>
+                                    <Image Source="C:\Users\ThomasGH\Documents\Project\Resources\database-64.ico" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem x:Name="infoMenu" Header="Info" >
+                                <MenuItem.Icon>
+                                    <Image Source="C:\Users\ThomasGH\Documents\Project\Resources\info-2-64.ico" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                </Button>
                 <Separator Background="White" Height="55" Width="52" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Margin="188,2,0,2" Foreground="White" >
                     <Separator.RenderTransform>
                         <TransformGroup>
@@ -103,7 +134,7 @@
         <!-- Side Box -->
         <DockPanel HorizontalAlignment="Left" Height="auto" MinHeight="200" LastChildFill="False" Margin="10,74,0,0" VerticalAlignment="Top" Width="136" Background="#FF2C3E50">
             <StackPanel>
-                <Label Content="       HIDE COLUMNS" Height="26" Padding="5,6,5,0" BorderBrush="White" Foreground="#FF2C3E50" FontFamily="Calibri" Background="#FFFFFF" FontWeight="ExtraBold"/>
+                <Label Name="hideColumnsLabel" Content="       HIDE COLUMNS" Height="26" Width="135" Padding="5,6,5,0" BorderBrush="White" Foreground="#FF2C3E50" FontFamily="Calibri" Background="#FFFFFF" FontWeight="ExtraBold" MouseLeftButtonDown="Label_MouseLeftButtonDown"/>
                 <ListBox x:Name="columnListBox" Width="135" SelectionMode="Multiple" SelectionChanged="columnListBox_SelectionChanged" Background="#FF34495E" BorderBrush="White" Foreground="White" FontFamily="Calibri">
                     <ListBoxItem Name="Timestamp">Timestamp</ListBoxItem>
                     <ListBoxItem Name="Filename">Filename</ListBoxItem>
@@ -115,6 +146,23 @@
                     <ListBoxItem Name="TID">TID</ListBoxItem>
                     <ListBoxItem Name="Message">Message</ListBoxItem>
                 </ListBox>
+                <Label Margin="0,6,0,0" Content="                FILTER" Height="26" Padding="5,6,5,0" BorderBrush="White" Foreground="#FF2C3E50" FontFamily="Calibri" Background="#FFFFFF" FontWeight="ExtraBold"/>
+                <Button Name="columnButton" Height="26" Content="COLUMN        &#9661;  " Background="#FF0D2C49" Foreground="White" BorderBrush="White" HorizontalContentAlignment="Right" Click="Button_Click_1" ContextMenuService.IsEnabled="false">
+                    <Button.ContextMenu>
+                        <ContextMenu Name="columnFilterContextMenu" Background="White" >
+                            <MenuItem Header="Filename" IsCheckable="True"/>
+                            <MenuItem Header="Logtype" IsCheckable="True"/>
+                            <MenuItem Header="Loglevel" IsCheckable="True"/>
+                            <MenuItem Header="Process" IsCheckable="True"/>
+                            <MenuItem Header="Function" IsCheckable="True"/>
+                            <MenuItem Header="PID" IsCheckable="True"/>
+                            <MenuItem Header="TID" IsCheckable="True"/>
+                            <MenuItem Header="Message" IsCheckable="True"/>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                </Button>
+                <TextBox Name="filterTextBox" Text="..." Height="24" BorderBrush="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MouseDoubleClick="TextBox_MouseDoubleClick" />
+                <Button Name="applyFilterButton" Height="26" Content="APPLY" Background="#FF0D2C49" Foreground="White" BorderBrush="White" Click="applyFilterButton_Click"/>
             </StackPanel>
         </DockPanel>
 

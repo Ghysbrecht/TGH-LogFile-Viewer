@@ -25,13 +25,14 @@ namespace TGH_Log_Viewer
         AppSettings appSettings;
 
         //Database&Table navigation variables
-        int defaultRequestSize = 100;
         int currentPage = 0;
         
-        String rightClickContent;
+        String filterContent;
         String rightClickColumnName;
+        String rightClickContent;
         String doubleClickContent;
         String doubleClickColumnName;
+        String dropDownFilterName;
 
 
         public MainWindow()
@@ -43,6 +44,7 @@ namespace TGH_Log_Viewer
             rightButton.IsEnabled = false;
 
             setSettings(new AppSettings());
+            assignCheckListeners();
 
         }
 
@@ -155,42 +157,45 @@ namespace TGH_Log_Viewer
         {
             Console.WriteLine("Filtering on: " + rightClickColumnName + " : " + rightClickContent);
             currentPage = 0;
-            
-            switch (rightClickColumnName)
+            filterOnColumnName(rightClickColumnName, rightClickContent);
+            setFilter(rightClickColumnName, rightClickContent);
+        }
+        private void filterOnColumnName(String columnName, String filterContent)
+        {
+            switch (columnName)
             {
                 case "Filename":
-                    setupDataGrid(queryBuilder.filterOnFilename(currentPage,  appSettings.defaultRecords, rightClickContent));
+                    setupDataGrid(queryBuilder.filterOnFilename(currentPage, appSettings.defaultRecords, filterContent));
                     break;
                 case "Function":
-                    setupDataGrid(queryBuilder.filterOnFunction(currentPage,  appSettings.defaultRecords, rightClickContent));
+                    setupDataGrid(queryBuilder.filterOnFunction(currentPage, appSettings.defaultRecords, filterContent));
                     break;
                 case "Process":
-                    setupDataGrid(queryBuilder.filterOnProcess(currentPage,  appSettings.defaultRecords, rightClickContent));
+                    setupDataGrid(queryBuilder.filterOnProcess(currentPage, appSettings.defaultRecords, filterContent));
                     break;
                 case "PID":
-                    setupDataGrid(queryBuilder.filterOnPID(currentPage,  appSettings.defaultRecords, rightClickContent));
+                    setupDataGrid(queryBuilder.filterOnPID(currentPage, appSettings.defaultRecords, filterContent));
                     break;
                 case "TID":
-                    setupDataGrid(queryBuilder.filterOnTID(currentPage,  appSettings.defaultRecords, rightClickContent));
+                    setupDataGrid(queryBuilder.filterOnTID(currentPage, appSettings.defaultRecords, filterContent));
                     break;
                 case "Loglevel":
-                    setupDataGrid(queryBuilder.filterOnLoglevel(currentPage,  appSettings.defaultRecords, rightClickContent));
+                    setupDataGrid(queryBuilder.filterOnLoglevel(currentPage, appSettings.defaultRecords, filterContent));
                     break;
                 case "Logtype":
-                    setupDataGrid(queryBuilder.filterOnLogtype(currentPage,  appSettings.defaultRecords, rightClickContent));
+                    setupDataGrid(queryBuilder.filterOnLogtype(currentPage, appSettings.defaultRecords, filterContent));
                     break;
                 case "Message":
-                    setupDataGrid(queryBuilder.filterOnMessage(currentPage,  appSettings.defaultRecords, rightClickContent));
+                    setupDataGrid(queryBuilder.filterOnMessage(currentPage, appSettings.defaultRecords, filterContent));
                     break;
                 case "Timestamp":
-                    if (fromTimeDate.Value == null && toTimeDate.Value == null) fromTimeDate.Text = rightClickContent;
-                    else toTimeDate.Text = rightClickContent;
+                    if (fromTimeDate.Value == null && toTimeDate.Value == null) fromTimeDate.Text = filterContent;
+                    else toTimeDate.Text = filterContent;
                     break;
                 default:
                     MessageBox.Show("Not yet supported for this column!");
                     break;
             }
-            
         }
 
         //Update the datagrid by requering the last query with the new offset
@@ -292,7 +297,7 @@ namespace TGH_Log_Viewer
             setSettings(settingsWindow.getAppSettings());
 
         }
-
+        //Set the settings for this project
         private void setSettings(AppSettings settings)
         {
             appSettings = settings;
@@ -304,6 +309,89 @@ namespace TGH_Log_Viewer
                 else queryBuilder.setClient(client);
             }
             else MessageBox.Show("Connection failed! Check your settings...");
+        }
+        //When clicking on the columns button, open the context menu
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+           (sender as Button).ContextMenu.IsEnabled = true;
+           (sender as Button).ContextMenu.PlacementTarget = (sender as Button);
+           (sender as Button).ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+           (sender as Button).ContextMenu.IsOpen = true;
+        }
+        //Add the onContextCheck handler to all menuItems in the filter contextmenu
+        private void assignCheckListeners()
+        {
+            MenuItem test = columnFilterContextMenu.Items[0] as MenuItem;
+            foreach(Object menuItem in columnFilterContextMenu.Items)
+            {
+                ((MenuItem)menuItem).Checked += new RoutedEventHandler(onContextCheck);
+            }
+        }
+        //Eventhandler when a menuItem is checked in the filter contextMenu
+        private void onContextCheck( object sender, RoutedEventArgs e)
+        {
+            dropDownFilterName = (String)((MenuItem)sender).Header;
+            setFilterButtonText(dropDownFilterName);
+            onlyCheckColumn(dropDownFilterName);
+        }
+        //Set the text in the filterbutton to the given name
+        private void setFilterButtonText(String name)
+        {
+            columnButton.Content = name.ToUpper() + "        \u25BD  ";
+        }
+        private void setFilter(String columnName, String searchTerm)
+        {
+            if (columnName != "Timestamp")
+            {
+                setFilterButtonText(columnName);
+                filterTextBox.Text = rightClickContent;
+                onlyCheckColumn(columnName);
+            }
+        }
+        private void onlyCheckColumn(String columName)
+        {
+            foreach (MenuItem menuItem in columnFilterContextMenu.Items)
+            {
+                if (menuItem.IsChecked && ((String)menuItem.Header != columName))
+                {
+                    menuItem.IsChecked = false;
+                    menuItem.IsCheckable = true;
+                }
+                else if ((String)menuItem.Header == columName)
+                {
+                    menuItem.IsChecked = true;
+                    menuItem.IsCheckable = false;
+                }
+            }
+        }
+        //Enable filtering
+        private void applyFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            filterOnColumnName(dropDownFilterName, filterTextBox.Text);
+        }
+        //Remove all in the filter textbox when you doubleclick it
+        private void TextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            filterTextBox.Text = "";
+        }
+        //Hide the 'hide columns' selector when clicking the header label
+        private void Label_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if(columnListBox.Visibility == Visibility.Collapsed)
+            {
+                columnListBox.Visibility = Visibility.Visible;
+                hideColumnsLabel.Content = "       HIDE COLUMNS";
+            }
+            else
+            {
+                columnListBox.Visibility = Visibility.Collapsed;
+                hideColumnsLabel.Content = "       HIDE COLUMNS     \u25BD";
+            }
+        }
+
+        private void moreButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
