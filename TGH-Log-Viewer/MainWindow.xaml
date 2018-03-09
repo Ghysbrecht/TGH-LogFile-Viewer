@@ -161,7 +161,7 @@
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>
-                <TextBox Name="filterTextBox" Text="..." Height="24" BorderBrush="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MouseDoubleClick="TextBox_MouseDoubleClick" />
+                <TextBox Name="filterTextBox" Text="..." Height="24" BorderBrush="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MouseDoubleClick="TextBox_MouseDoubleClick" KeyDown="filterTextBox_KeyDown" />
                 <Button Name="applyFilterButton" Height="26" Content="APPLY" Background="#FF0D2C49" Foreground="White" BorderBrush="White" Click="applyFilterButton_Click"/>
             </StackPanel>
         </DockPanel>

@@ -339,6 +339,7 @@ namespace TGH_Log_Viewer
         {
             columnButton.Content = name.ToUpper() + "        \u25BD  ";
         }
+        //Set the filter options
         private void setFilter(String columnName, String searchTerm)
         {
             if (columnName != "Timestamp")
@@ -348,6 +349,7 @@ namespace TGH_Log_Viewer
                 onlyCheckColumn(columnName);
             }
         }
+        //Only chekmark this specific column in the contextmenu
         private void onlyCheckColumn(String columName)
         {
             foreach (MenuItem menuItem in columnFilterContextMenu.Items)
@@ -389,9 +391,9 @@ namespace TGH_Log_Viewer
             }
         }
 
-        private void moreButton_Click(object sender, RoutedEventArgs e)
+        private void filterTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-
+            if(e.Key == Key.Enter) filterOnColumnName(dropDownFilterName, filterTextBox.Text);
         }
     }
 }
