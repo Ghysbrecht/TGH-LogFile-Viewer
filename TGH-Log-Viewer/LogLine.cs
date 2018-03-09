@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TGH_Log_Viewer
 {
-    class LogLine
+    public class LogLine
     {
         public string PID { get; set; }
         public string TID { get; set; }

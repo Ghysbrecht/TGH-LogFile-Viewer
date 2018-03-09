@@ -27,7 +27,7 @@
                                     <Image Source="C:\Users\ThomasGH\Documents\Project\Resources\search-12-64.ico" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem x:Name="graphMenu" Header="Graph" >
+                            <MenuItem x:Name="graphMenu" Header="Graph" Click="graphMenu_Click" >
                                 <MenuItem.Icon>
                                     <Image Source="C:\Users\ThomasGH\Documents\Project\Resources\line-chart-64.ico" />
                                 </MenuItem.Icon>

@@ -23,11 +23,11 @@ namespace TGH_Log_Viewer
         Database database;
         ElasticClient client;
         AppSettings appSettings;
+        GraphWindow graphWindow;
 
         //Database&Table navigation variables
         int currentPage = 0;
         
-        String filterContent;
         String rightClickColumnName;
         String rightClickContent;
         String doubleClickContent;
@@ -79,6 +79,7 @@ namespace TGH_Log_Viewer
                     toTimeDate.Value = loglines.Last().timestamp;
                 }
                 updatePageCount();
+                if (graphWindow != null) graphWindow.createFromData(loglines);
             }
             else Console.WriteLine("Seting up datagrid failed -> Data is null");
         }
@@ -394,6 +395,13 @@ namespace TGH_Log_Viewer
         private void filterTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Enter) filterOnColumnName(dropDownFilterName, filterTextBox.Text);
+        }
+
+        private void graphMenu_Click(object sender, RoutedEventArgs e)
+        {
+            graphWindow = new GraphWindow();
+            graphWindow.Show();
+            graphWindow.refresh();
         }
     }
 }
