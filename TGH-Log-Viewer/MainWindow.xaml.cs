@@ -403,5 +403,6 @@ namespace TGH_Log_Viewer
             graphWindow.Show();
             graphWindow.refresh();
         }
+
     }
 }
