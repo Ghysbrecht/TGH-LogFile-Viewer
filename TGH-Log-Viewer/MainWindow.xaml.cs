@@ -34,7 +34,6 @@ namespace TGH_Log_Viewer
         String doubleClickColumnName;
         String dropDownFilterName;
 
-
         public MainWindow()
         {
             InitializeComponent();
@@ -47,13 +46,11 @@ namespace TGH_Log_Viewer
             assignCheckListeners();
 
         }
-
+        //Main button click
         private void Button_Click(object sender, RoutedEventArgs e)
         { 
             if(database.isValid()) setupDataGrid(queryBuilder.getAllData(currentPage, appSettings.defaultRecords));
-            //setupDataGrid(queryBuilder.getSpecificData(currentPage, defaultRequestSize));
         }
-
         //Prints out logines via console
         private void printLogLines(IReadOnlyCollection<LogLine> loglines)
         {
@@ -62,7 +59,6 @@ namespace TGH_Log_Viewer
                 Console.WriteLine(logline.timestamp.ToShortDateString() + " Process: " + logline.process + " Logtype: " + logline.logtype + " Messagedata: " + logline.messagedata);
             }
         }
-
         //Updates the dataGrid with data
         private void setupDataGrid(IReadOnlyCollection<LogLine> loglines)
         {
@@ -91,7 +87,6 @@ namespace TGH_Log_Viewer
             if ((currentPage > 98) && totalPages > 999) strSeperator = " /\n";
             pageLabel.Content = (currentPage + 1) + strSeperator + totalPages;
         }
-
         //Makes the scrollview scrollable with mousewheel
         private void mainScrollWindows_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
@@ -99,7 +94,6 @@ namespace TGH_Log_Viewer
             scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
             e.Handled = true;
         }
-
         //Show/Hide columns depending on selection in sidebar
         private void columnListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -118,7 +112,6 @@ namespace TGH_Log_Viewer
                 }
             }
         }
-
         //Left button page selection clicked
         private void leftButton_Click(object sender, RoutedEventArgs e)
         {
@@ -139,7 +132,6 @@ namespace TGH_Log_Viewer
                 updatePageDataGrid();
             }
         }
-
         //Datagrid cell right clicked
         private void mainDataGrid_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -198,7 +190,6 @@ namespace TGH_Log_Viewer
                     break;
             }
         }
-
         //Update the datagrid by requering the last query with the new offset
         private void updatePageDataGrid()
         {
@@ -208,13 +199,11 @@ namespace TGH_Log_Viewer
                 setupDataGrid(queryBuilder.lastQueryNewPage(currentPage *  appSettings.defaultRecords,  appSettings.defaultRecords));
             }
         }
-
         //Copy a cell when copycell is clicked in the contextmenu
         private void copyCell_Click(object sender, RoutedEventArgs e)
         {   
             if(rightClickContent != null)Clipboard.SetText(rightClickContent);
         }
-
         //Double click a cell to open up the value in a seperate window
         private void mainDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -391,18 +380,23 @@ namespace TGH_Log_Viewer
                 hideColumnsLabel.Content = "       HIDE COLUMNS     \u25BD";
             }
         }
-
+        //When entering while the filter textbox is in focus
         private void filterTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Enter) filterOnColumnName(dropDownFilterName, filterTextBox.Text);
         }
-
+        //Clicking the graph button in the extra contextmenu
         private void graphMenu_Click(object sender, RoutedEventArgs e)
         {
             graphWindow = new GraphWindow();
             graphWindow.Show();
             graphWindow.refresh();
         }
-
+        //Clicking the info button in the extra contextmenu
+        private void infoMenu_Click(object sender, RoutedEventArgs e)
+        {
+            InfoWindow infoWindow = new InfoWindow();
+            infoWindow.ShowDialog();
+        }
     }
 }

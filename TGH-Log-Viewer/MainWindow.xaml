@@ -37,7 +37,7 @@
                                     <Image Source="C:\Users\ThomasGH\Documents\Project\Resources\database-64.ico" />
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem x:Name="infoMenu" Header="Info" >
+                            <MenuItem x:Name="infoMenu" Header="Info" Click="infoMenu_Click" >
                                 <MenuItem.Icon>
                                     <Image Source="C:\Users\ThomasGH\Documents\Project\Resources\info-2-64.ico" />
                                 </MenuItem.Icon>
