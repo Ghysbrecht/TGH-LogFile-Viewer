@@ -17,7 +17,7 @@
                 <Button Name="moreButton" Content="MORE" HorizontalAlignment="Left" Margin="104,32,0,0" VerticalAlignment="Top" Width="94" Height="22" Foreground="White" BorderBrush="White" Background="#FF0D2C49" ContextMenuService.IsEnabled="false" Click="Button_Click_1">
                     <Button.ContextMenu>
                         <ContextMenu Name="moreButtonContextMenu" >
-                            <MenuItem x:Name="analyzeMenu" Header="Analyze" >
+                            <MenuItem x:Name="analyzeMenu" Header="Analyze" Click="analyzeMenu_Click" >
                                 <MenuItem.Icon>
                                     <Image Source="C:\Users\ThomasGH\Documents\Project\Resources\services-64.ico" />
                                 </MenuItem.Icon>

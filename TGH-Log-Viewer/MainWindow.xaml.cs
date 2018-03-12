@@ -25,7 +25,6 @@ namespace TGH_Log_Viewer
         AppSettings appSettings;
         GraphWindow graphWindow;
 
-        //Database&Table navigation variables
         int currentPage = 0;
         
         String rightClickColumnName;
@@ -270,6 +269,12 @@ namespace TGH_Log_Viewer
             graphWindow.Show();
             graphWindow.refresh();
         }
+        //Topbar - Extra - Clicking the ANALYZE button in the extra contextmenu
+        private void analyzeMenu_Click(object sender, RoutedEventArgs e)
+        {
+            AnalyzeWindow analyzeWindow = new AnalyzeWindow();
+            analyzeWindow.Show();
+        }
 
         //Datagrid - Contextmenu 'filter on'
         private void filterOnMenuItem_Click(object sender, RoutedEventArgs e)
@@ -411,5 +416,7 @@ namespace TGH_Log_Viewer
         {
             filterTextBox.Text = "";
         }
+
+        
     }
 }
