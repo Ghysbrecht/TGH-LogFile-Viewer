@@ -275,6 +275,13 @@ namespace TGH_Log_Viewer
             AnalyzeWindow analyzeWindow = new AnalyzeWindow();
             analyzeWindow.Show();
         }
+        //Topbar - Extra - Clicking the GLOBAL SEARCH button in the extra contextmenu
+        private void globalSearchMenu_Click(object sender, RoutedEventArgs e)
+        {
+            GlobalSearchWindow globalSearchWindow = new GlobalSearchWindow();
+            globalSearchWindow.ShowDialog();
+            MessageBox.Show("Entered searchterm: " + globalSearchWindow.getSearch(), "INFO");
+        }
 
         //Datagrid - Contextmenu 'filter on'
         private void filterOnMenuItem_Click(object sender, RoutedEventArgs e)

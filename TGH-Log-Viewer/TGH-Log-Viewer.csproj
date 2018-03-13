@@ -103,6 +103,9 @@
     <Compile Include="CellValueWindow.xaml.cs">
       <DependentUpon>CellValueWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSearchWindow.xaml.cs">
+      <DependentUpon>GlobalSearchWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GraphWindow.xaml.cs">
       <DependentUpon>GraphWindow.xaml</DependentUpon>
     </Compile>
@@ -116,6 +119,10 @@
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="AnalyzeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GlobalSearchWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
