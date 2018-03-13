@@ -13,15 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Nest;
+using Elasticsearch.Net;
 
 namespace TGH_Log_Viewer
 {
     
     public partial class MainWindow : Window
     {
-        QueryBuilder queryBuilder;
-        Database database;
-        ElasticClient client;
+        LLDatabase database;
+        ElasticLowLevelClient client;
+        LLQueryBuilder queryBuilder; 
+
         AppSettings appSettings;
         GraphWindow graphWindow;
 
@@ -50,11 +52,15 @@ namespace TGH_Log_Viewer
         private void setSettings(AppSettings settings)
         {
             appSettings = settings;
-            database = new Database(appSettings.elasticip, appSettings.defaultIndex);
+            database = new LLDatabase(appSettings.elasticip, appSettings.defaultIndex);
             if (database.isValid())
             {
                 client = database.getClient();
-                if (queryBuilder == null) queryBuilder = new QueryBuilder(client);
+                if (queryBuilder == null)
+                {
+                    queryBuilder = new LLQueryBuilder(client);
+                    queryBuilder.setMainIndex(settings.defaultIndex);
+                }
                 else queryBuilder.setClient(client);
             }
             else MessageBox.Show("Connection failed! Check your settings...");

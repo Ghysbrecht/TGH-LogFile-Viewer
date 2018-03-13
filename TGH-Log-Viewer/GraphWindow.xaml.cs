@@ -197,7 +197,6 @@ namespace TGH_Log_Viewer
             if(timeSpan.TotalDays > 365) stringBuilder.Append(Math.Round(timeSpan.TotalDays / 365,0) + "y ");
             if (timeSpan.TotalDays > 0) stringBuilder.Append(Math.Round(timeSpan.TotalDays % 365,0) + "d ");
             stringBuilder.Append(Math.Round(timeSpan.TotalHours % 24,0) + "h " + Math.Round(timeSpan.TotalMinutes % 60,0) + "m " + Math.Round(timeSpan.TotalSeconds % 60,3) + "s ");
-            Console.WriteLine(stringBuilder.ToString());
             return stringBuilder.ToString();
         }
     }
