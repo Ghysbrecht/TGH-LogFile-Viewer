@@ -165,11 +165,5 @@
                 <Button Name="applyFilterButton" Height="26" Content="APPLY" Background="#FF0D2C49" Foreground="White" BorderBrush="White" Click="applyFilterButton_Click"/>
             </StackPanel>
         </DockPanel>
-
-
-
-
-
-
     </Grid>
 </Window>

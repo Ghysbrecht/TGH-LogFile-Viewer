@@ -25,7 +25,7 @@
 
         <Label Name="totalTitleLabel" Content="TOTAL :" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,70,18" HorizontalContentAlignment="Right" Width="70" VerticalContentAlignment="Center" FontSize="10" Height="25"/>
         <Label Name="singleBarTitleLabel" Content="ONE BAR :" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,70,0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Width="70" FontSize="10" Height="25"/>
-        <Label Name="totalLabel" Content="TIME" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="100,0,0,18" Width="100" VerticalContentAlignment="Center" Height="25"/>
-        <Label Name="singleBarLabel" Content="TIME" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="100,0,0,0" VerticalContentAlignment="Center" Width="100" Height="25"/>
+        <Label Name="totalLabel" Content="TIME" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="120,0,0,18" Width="120" VerticalContentAlignment="Center" Height="25"/>
+        <Label Name="singleBarLabel" Content="TIME" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="120,0,0,0" VerticalContentAlignment="Center" Width="120" Height="25"/>
     </Grid>
 </Window>

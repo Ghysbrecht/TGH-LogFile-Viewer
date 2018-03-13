@@ -67,6 +67,7 @@ namespace TGH_Log_Viewer
                     if(graphType == "bar")barGrid.Children.Add(createBar((double)barsArray[i] / (double)maxValue, i, numberOfBars));
                     if(graphType == "line")barGrid.Children.Add(lineArray[i]);
                 }
+                if (graphType == "line") barGrid.Children.Add(lineArray[numberOfBars]);
                 updateBottomBar();
                 
             }
@@ -85,7 +86,7 @@ namespace TGH_Log_Viewer
         //Create the array with lines
         private Line[] createLineArray(int[] barValues, int numberOfBars)
         {
-            Line[] lineArray = new Line[numberOfBars];
+            Line[] lineArray = new Line[numberOfBars + 1];
 
             int[] xCoArray = new int[numberOfBars];
             int[] yCoArray = new int[numberOfBars];
@@ -106,6 +107,8 @@ namespace TGH_Log_Viewer
                 if (i == 0) lineArray[i] = createLine(xRef, xCoArray[i], yRef, yCoArray[i]);
                 else lineArray[i] = createLine(xCoArray[i-1], xCoArray[i], yCoArray[i-1], yCoArray[i]);
             }
+
+            lineArray[numberOfBars] = createLine(xCoArray[numberOfBars - 1], (int)gridWidth, yCoArray[numberOfBars - 1], yRef);
 
             return lineArray;
         }
@@ -173,8 +176,7 @@ namespace TGH_Log_Viewer
             TimeSpan totalTime = endDate.Subtract(startDate);
             totalLabel.Content = buildTimeSpanString(totalTime);
 
-            double barSeconds = endDate.Subtract(startDate).TotalSeconds / (double)numberOfBars;
-            TimeSpan barDateTime = new TimeSpan(0, 0, (int)barSeconds);
+            TimeSpan barDateTime = new TimeSpan(endDate.Subtract(startDate).Ticks / numberOfBars );
             singleBarLabel.Content = buildTimeSpanString(barDateTime);
         }
 
@@ -194,7 +196,7 @@ namespace TGH_Log_Viewer
             StringBuilder stringBuilder = new StringBuilder();
             if(timeSpan.TotalDays > 365) stringBuilder.Append(Math.Round(timeSpan.TotalDays / 365,0) + "y ");
             if (timeSpan.TotalDays > 0) stringBuilder.Append(Math.Round(timeSpan.TotalDays % 365,0) + "d ");
-            stringBuilder.Append(Math.Round(timeSpan.TotalHours % 24,0) + "h " + Math.Round(timeSpan.TotalMinutes % 60,0) + "m " + Math.Round(timeSpan.TotalSeconds % 60,0) + "s ");
+            stringBuilder.Append(Math.Round(timeSpan.TotalHours % 24,0) + "h " + Math.Round(timeSpan.TotalMinutes % 60,0) + "m " + Math.Round(timeSpan.TotalSeconds % 60,3) + "s ");
             Console.WriteLine(stringBuilder.ToString());
             return stringBuilder.ToString();
         }
