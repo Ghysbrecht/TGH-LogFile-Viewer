@@ -71,32 +71,35 @@ namespace TGH_Log_Viewer
             switch (columnName)
             {
                 case "Filename":
-                    setupDataGrid(queryBuilder.filterOnFilename(currentPage, appSettings.defaultRecords, filterContent));
+                    setupDataGrid(queryBuilder.filterOnFilename(currentPage*appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
                     break;
                 case "Function":
-                    setupDataGrid(queryBuilder.filterOnFunction(currentPage, appSettings.defaultRecords, filterContent));
+                    setupDataGrid(queryBuilder.filterOnFunction(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
                     break;
                 case "Process":
-                    setupDataGrid(queryBuilder.filterOnProcess(currentPage, appSettings.defaultRecords, filterContent));
+                    setupDataGrid(queryBuilder.filterOnProcess(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
                     break;
                 case "PID":
-                    setupDataGrid(queryBuilder.filterOnPID(currentPage, appSettings.defaultRecords, filterContent));
+                    setupDataGrid(queryBuilder.filterOnPID(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
                     break;
                 case "TID":
-                    setupDataGrid(queryBuilder.filterOnTID(currentPage, appSettings.defaultRecords, filterContent));
+                    setupDataGrid(queryBuilder.filterOnTID(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
                     break;
                 case "Loglevel":
-                    setupDataGrid(queryBuilder.filterOnLoglevel(currentPage, appSettings.defaultRecords, filterContent));
+                    setupDataGrid(queryBuilder.filterOnLoglevel(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
                     break;
                 case "Logtype":
-                    setupDataGrid(queryBuilder.filterOnLogtype(currentPage, appSettings.defaultRecords, filterContent));
+                    setupDataGrid(queryBuilder.filterOnLogtype(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
                     break;
                 case "Message":
-                    setupDataGrid(queryBuilder.filterOnMessage(currentPage, appSettings.defaultRecords, filterContent));
+                    setupDataGrid(queryBuilder.filterOnMessage(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
                     break;
                 case "Timestamp":
                     if (fromTimeDate.Value == null && toTimeDate.Value == null) fromTimeDate.Text = filterContent;
                     else toTimeDate.Text = filterContent;
+                    break;
+                case "global":
+                    setupDataGrid(queryBuilder.globalSearch(filterContent, currentPage * appSettings.defaultRecords, appSettings.defaultRecords));
                     break;
                 default:
                     MessageBox.Show("Not yet supported for this column!");
@@ -286,7 +289,7 @@ namespace TGH_Log_Viewer
         {
             GlobalSearchWindow globalSearchWindow = new GlobalSearchWindow();
             globalSearchWindow.ShowDialog();
-            MessageBox.Show("Entered searchterm: " + globalSearchWindow.getSearch(), "INFO");
+            if (globalSearchWindow.getSearch() != "") filterOnColumnName("global", globalSearchWindow.getSearch());
         }
 
         //Datagrid - Contextmenu 'filter on'

@@ -88,7 +88,8 @@ namespace TGH_Log_Viewer
             stringBuilder.Append("\"sort\":[{\"@timestamp\":{\"order\":\"asc\"}}],");   //Order by timestamp ascending
             stringBuilder.Append("\"query\":{\"bool\":{\"must\":[");
 
-            if(column == "all") stringBuilder.Append("{\"match_all\":{}}");
+            if (column == "all") stringBuilder.Append("{\"match_all\":{}}");
+            else if (column == "global") stringBuilder.Append("{\"multi_match\": {\"query\": \" "+ message + "\"}}");
             else stringBuilder.Append("{\"match_phrase\":{\"" + column + "\":\"" + message + "\"}}"); //Match Phrase
                  //stringBuilder.Append(",");
             stringBuilder.Append("],\"filter\":[{\"range\":{\"@timestamp\":{");
@@ -97,6 +98,11 @@ namespace TGH_Log_Viewer
 
             var searchResponse = client.Search<StringResponse>(mainIndex, stringBuilder.ToString());
             return searchResponse.Body;
+        }
+
+        public List<LogLine> globalSearch(String term, int offset, int records)
+        {
+            return toLogLines(filterOn("global", term, offset, records));
         }
 
         private List<LogLine> toLogLines(String json)
@@ -115,6 +121,7 @@ namespace TGH_Log_Viewer
         public List<LogLine> lastQueryNewPage(int offset, int records)
         {
             if (lastExecuted == "all") return getAllData(offset, records);
+            else if (lastExecuted == "global") return globalSearch(savedTerm, offset, records);
             else return toLogLines(filterOn(lastExecuted, savedTerm, offset, records));
         }
 
