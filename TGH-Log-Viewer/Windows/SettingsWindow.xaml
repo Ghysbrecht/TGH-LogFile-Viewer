@@ -1,0 +1,31 @@
+﻿<Window x:Class="TGH_Log_Viewer.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TGH_Log_Viewer"
+        mc:Ignorable="d"
+        Title="SettingsWindow" Height="267" Width="305" ResizeMode="NoResize">
+    <Grid Background="#FF2C3E50">
+        <Border BorderBrush="White" BorderThickness="1" HorizontalAlignment="Left" Height="92" Margin="5,5,0,0" VerticalAlignment="Top" Width="280" Background="#FF34495E"/>
+        <Border BorderBrush="White" BorderThickness="1" HorizontalAlignment="Left" Height="92" Margin="5,101,0,0" VerticalAlignment="Top" Width="280" Background="#FF34495E"/>
+        
+        <Label Name="serverSettingsLabel" Width="280" Height="27" Content="SERVER" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" Foreground="#FF2C3E50" HorizontalContentAlignment="Center" FontWeight="ExtraBold" FontFamily="Calibri"/>
+        <TextBox Name="serverTextBox" Width="166" Height="20" Text="localhost:9200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="110,40,0,0" BorderBrush="White" Padding="3,0,0,0" KeyUp="Button_KeyUp"/>
+        <TextBox Name="defaultIndexTextBox" Width="166" Height="20" Text="maintest" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="110,68,0,0" BorderBrush="White" Padding="3,0,0,0" KeyUp="Button_KeyUp"/>
+        <Label Name="serverLabel" Width="100" Height="20" Content="Elasticsearch IP:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,40,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontSize="11" Padding="1" />
+        <Label Name="defaultIndex" Width="100" Height="20" Content="Default Index:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,68,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontSize="11" Padding="1" />
+
+        <Label Name="generalSettingsLabel" Width="280" Height="27" Content="GENERAL" Margin="5,102,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" Foreground="#FF2C3E50" HorizontalContentAlignment="Center" FontWeight="ExtraBold" FontFamily="Calibri"/>
+        <TextBox Name="defaultRecordsTextBox" Width="166" Height="20" Text="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="110,137,0,0" BorderBrush="White" KeyUp="Button_KeyUp"/>
+        <Label Name="recordsLabel" Width="100" Height="20" Content="Records / Page:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,137,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontSize="11" Padding="1" />
+
+        <Label Name="enableAutoTime" Width="100" Height="20" Content="Auto Time:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,165,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontSize="11" Padding="1" />
+        <RadioButton Name="onAutoTimeButton" Content="ON" Margin="110,165,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="40" Height="20" Padding="0" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" KeyUp="Button_KeyUp"/>
+        <RadioButton Name="offAutoTimeButton" IsChecked="True" Content="OFF" Margin="160,165,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="40" Height="20" Padding="0" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" KeyUp="Button_KeyUp"/>
+        
+        <Button Width="70" Height="25" Margin="105,198,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="SAVE" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="Button_Confirm" KeyUp="Button_KeyUp"/>
+
+
+    </Grid>
+</Window>
