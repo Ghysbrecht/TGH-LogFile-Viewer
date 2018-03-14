@@ -19,25 +19,25 @@ using System.Threading.Tasks;
 
 namespace TGH_Log_Viewer
 {
-    
+
     public partial class MainWindow : Window
     {
         LLDatabase database;
         ElasticLowLevelClient client;
-        LLQueryBuilder queryBuilder; 
+        LLQueryBuilder queryBuilder;
 
         AppSettings appSettings;
         GraphWindow graphWindow;
 
         int currentPage = 0;
-        
+
         String rightClickColumnName;
         String rightClickContent;
         String doubleClickContent;
         String doubleClickColumnName;
         String dropDownFilterName;
 
-        Timer timer;
+        Timer timer1;
 
         public MainWindow()
         {
@@ -76,7 +76,7 @@ namespace TGH_Log_Viewer
             switch (columnName)
             {
                 case "Filename":
-                    setupDataGrid(queryBuilder.filterOnFilename(currentPage*appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
+                    setupDataGrid(queryBuilder.filterOnFilename(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
                     break;
                 case "Function":
                     setupDataGrid(queryBuilder.filterOnFunction(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
@@ -126,6 +126,7 @@ namespace TGH_Log_Viewer
         {
             String strSeperator = "/";
             int totalPages = (int)(queryBuilder.getLastResponseHits() / appSettings.defaultRecords) + 1;
+            if (currentPage > totalPages) currentPage = totalPages;
             if ((currentPage > 98) && totalPages > 999) strSeperator = " /\n";
             pageLabel.Content = (currentPage + 1) + strSeperator + totalPages;
         }
@@ -150,12 +151,12 @@ namespace TGH_Log_Viewer
             }
             else Console.WriteLine("Seting up datagrid failed -> Data is null");
         }
-        
+
         //Sidebar - Add the onContextCheck handler to all menuItems in the filter contextmenu
         private void assignCheckListeners()
         {
             MenuItem test = columnFilterContextMenu.Items[0] as MenuItem;
-            foreach(Object menuItem in columnFilterContextMenu.Items)
+            foreach (Object menuItem in columnFilterContextMenu.Items)
             {
                 ((MenuItem)menuItem).Checked += new RoutedEventHandler(onContextCheck);
             }
@@ -196,24 +197,30 @@ namespace TGH_Log_Viewer
         private void filContextMenu(List<String> suggestions)
         {
             filterTextBoxContextMenu.Items.Clear();
-            foreach(String suggestion in suggestions)
+            foreach (String suggestion in suggestions)
             {
                 MenuItem menuItem = new MenuItem();
                 menuItem.Header = suggestion;
                 menuItem.Click += suggestionSet;
                 menuItem.KeyDown += suggestionKey;
                 filterTextBoxContextMenu.Items.Add(menuItem);
-            }      
+            }
         }
         //Sidebar - Open the context menu
         private void openContextMenu()
         {
             List<String> suggestions = queryBuilder.getSuggestionsFor(dropDownFilterName.ToLower(), filterTextBox.Text);
             filContextMenu(suggestions);
-            filterTextBox.ContextMenu.IsEnabled = true;
-            filterTextBox.ContextMenu.PlacementTarget = filterTextBox;
-            filterTextBox.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
-            filterTextBox.ContextMenu.IsOpen = true;
+
+            if (filterTextBoxContextMenu.Items.Count != 0)
+            {
+                filterTextBox.ContextMenu.IsEnabled = true;
+                filterTextBox.ContextMenu.PlacementTarget = filterTextBox;
+                filterTextBox.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+                filterTextBox.ContextMenu.IsOpen = true;
+                (filterTextBoxContextMenu.Items[0] as MenuItem).Focus();
+            }
+            else filterTextBox.Focus();
         }
 
 
@@ -231,6 +238,17 @@ namespace TGH_Log_Viewer
         {
             if (e.Key == Key.Enter) filterOnColumnName(dropDownFilterName, filterTextBox.Text);
             else if (e.Key == Key.Down) openContextMenu();
+            else
+            {
+                if(timer1 == null)
+                {
+                    timer1 = new Timer(1000);
+                    timer1.Elapsed += new ElapsedEventHandler(HandleTimerElapsed);
+                    timer1.Enabled = true;
+                }
+                timer1.Stop();
+                timer1.Start();
+            }
         }
         //Sidebar - Eventhandler when a menuItem is checked in the filter contextMenu
         private void onContextCheck(object sender, RoutedEventArgs e)
@@ -244,10 +262,24 @@ namespace TGH_Log_Viewer
         {
             filterTextBox.Text = (String)(sender as MenuItem).Header;
         }
-        //Sidebar - Suggestion entered
+        //Sidebar - Key pressed while contextmenu is in focus
         private void suggestionKey(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Enter) filterTextBox.Text = (String)(sender as MenuItem).Header;
+            if (e.Key == Key.Enter) filterTextBox.Text = (String)(sender as MenuItem).Header;
+            else
+            {
+                filterTextBox.Focus();
+                timer1.Start();
+            }
+        }
+        //Sidebar - Open the contextmenu after user stops typing
+        private void HandleTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            timer1.Stop();
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                openContextMenu();
+            }));
         }
 
 
