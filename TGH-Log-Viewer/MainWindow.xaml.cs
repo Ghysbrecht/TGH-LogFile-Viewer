@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Nest;
 using Elasticsearch.Net;
+using System.Timers;
+using System.Threading.Tasks;
 
 namespace TGH_Log_Viewer
 {
@@ -35,6 +37,8 @@ namespace TGH_Log_Viewer
         String doubleClickColumnName;
         String dropDownFilterName;
 
+        Timer timer;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -45,6 +49,7 @@ namespace TGH_Log_Viewer
 
             setSettings(new AppSettings());
             assignCheckListeners();
+            dropDownFilterName = "";
 
         }
 
@@ -187,7 +192,29 @@ namespace TGH_Log_Viewer
                 }
             }
         }
-
+        //Sidebar - Fill the context menu for the textbox
+        private void filContextMenu(List<String> suggestions)
+        {
+            filterTextBoxContextMenu.Items.Clear();
+            foreach(String suggestion in suggestions)
+            {
+                MenuItem menuItem = new MenuItem();
+                menuItem.Header = suggestion;
+                menuItem.Click += suggestionSet;
+                menuItem.KeyDown += suggestionKey;
+                filterTextBoxContextMenu.Items.Add(menuItem);
+            }      
+        }
+        //Sidebar - Open the context menu
+        private void openContextMenu()
+        {
+            List<String> suggestions = queryBuilder.getSuggestionsFor(dropDownFilterName.ToLower(), filterTextBox.Text);
+            filContextMenu(suggestions);
+            filterTextBox.ContextMenu.IsEnabled = true;
+            filterTextBox.ContextMenu.PlacementTarget = filterTextBox;
+            filterTextBox.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+            filterTextBox.ContextMenu.IsOpen = true;
+        }
 
 
 
@@ -199,10 +226,11 @@ namespace TGH_Log_Viewer
             scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
             e.Handled = true;
         }
-        //Sidebar - When entering while the filter textbox is in focus
+        //Sidebar - When entering while the filter textbox is in focus OR Arrowdown for sugestions
         private void filterTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter) filterOnColumnName(dropDownFilterName, filterTextBox.Text);
+            else if (e.Key == Key.Down) openContextMenu();
         }
         //Sidebar - Eventhandler when a menuItem is checked in the filter contextMenu
         private void onContextCheck(object sender, RoutedEventArgs e)
@@ -210,6 +238,16 @@ namespace TGH_Log_Viewer
             dropDownFilterName = (String)((MenuItem)sender).Header;
             setFilterButtonText(dropDownFilterName);
             onlyCheckColumn(dropDownFilterName);
+        }
+        //Sidebar - Suggestion clicked
+        private void suggestionSet(object sender, RoutedEventArgs e)
+        {
+            filterTextBox.Text = (String)(sender as MenuItem).Header;
+        }
+        //Sidebar - Suggestion entered
+        private void suggestionKey(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter) filterTextBox.Text = (String)(sender as MenuItem).Header;
         }
 
 

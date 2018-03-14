@@ -11,6 +11,7 @@ namespace TGH_Log_Viewer
     {
         ElasticLowLevelClient client;
         LogLineFactory logLineFactory = new LogLineFactory();
+        SuggestionFactory suggestionFactory = new SuggestionFactory();
 
         String savedTerm, lastExecuted, mainIndex;
         DateTime leftBound, rightBound;
@@ -98,6 +99,20 @@ namespace TGH_Log_Viewer
 
             var searchResponse = client.Search<StringResponse>(mainIndex, stringBuilder.ToString());
             return searchResponse.Body;
+        }
+
+        public List<String> getSuggestionsFor(String column, String text)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("{\"size\":0,\"aggs\":{\"logtypes\":{\"terms\":{\"field\":\"" + column + ".keyword\",\"size\":5,\"include\":\"" + text + ".*\"}}}}");
+
+            var searchResponse = client.Search<StringResponse>(mainIndex, stringBuilder.ToString());
+            return toSuggestions(searchResponse.Body);
+        }
+
+        private List<String> toSuggestions(String json)
+        {
+            return suggestionFactory.getSuggestionsFromJson(json);
         }
 
         public List<LogLine> globalSearch(String term, int offset, int records)
