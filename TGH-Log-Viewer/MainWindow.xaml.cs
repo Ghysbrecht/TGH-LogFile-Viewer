@@ -361,6 +361,12 @@ namespace TGH_Log_Viewer
             globalSearchWindow.ShowDialog();
             if (globalSearchWindow.getSearch() != "") filterOnColumnName("global", globalSearchWindow.getSearch());
         }
+        //Topbar - Extra - Clicking the GLOBAL SEARCH button in the extra contextmenu
+        private void logStashMenu_Click(object sender, RoutedEventArgs e)
+        {
+            LogManagerWindow logManagerWindow = new LogManagerWindow();
+            logManagerWindow.ShowDialog();
+        }
 
         //Datagrid - Contextmenu 'filter on'
         private void filterOnMenuItem_Click(object sender, RoutedEventArgs e)
