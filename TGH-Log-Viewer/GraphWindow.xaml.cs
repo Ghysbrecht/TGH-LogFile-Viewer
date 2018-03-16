@@ -34,7 +34,7 @@ namespace TGH_Log_Viewer
         }
         private void createBarsArray()
         {
-            if(loglines != null)
+            if(loglines != null && loglines.Count() > 0)
             {
                 barsArray = new int[numberOfBars];
                 startDate = loglines.First().timestamp;
@@ -49,7 +49,8 @@ namespace TGH_Log_Viewer
         //Increment the intigers in the main array to count the bar length
         private void incrementAtPercentage(double percentage)
         {
-            barsArray[(int)((numberOfBars - 1) * percentage)] += 1;
+            int index = (int)((numberOfBars - 1) * percentage);
+            if (index >= 0 || index < numberOfBars) barsArray[index] += 1;
         }
         //Refresh the bargraph with the current window size and data
         public void refresh()
