@@ -31,7 +31,7 @@ namespace TGH_Log_Viewer
 
         public void setMainIndex(String index)
         {
-            this.mainIndex = index;
+            mainIndex = index;
         }
 
         public List<LogLine> getAllData(int offset, int records)

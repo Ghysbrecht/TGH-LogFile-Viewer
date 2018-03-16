@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using Nest;
 using Elasticsearch.Net;
 using System.Timers;
-using System.Threading.Tasks;
+
 
 namespace TGH_Log_Viewer
 {
@@ -61,12 +61,9 @@ namespace TGH_Log_Viewer
             if (database.isValid())
             {
                 client = database.getClient();
-                if (queryBuilder == null)
-                {
-                    queryBuilder = new LLQueryBuilder(client);
-                    queryBuilder.setMainIndex(settings.defaultIndex);
-                }
+                if (queryBuilder == null) queryBuilder = new LLQueryBuilder(client);
                 else queryBuilder.setClient(client);
+                queryBuilder.setMainIndex(appSettings.defaultIndex);
             }
             else MessageBox.Show("Connection failed! Check your settings...");
         }
