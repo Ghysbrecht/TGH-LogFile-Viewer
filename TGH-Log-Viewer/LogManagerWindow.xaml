@@ -13,8 +13,8 @@
                     <Label Content="1. Select the logfile folder:" Foreground="White" Margin="20,10,0,0" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="1" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Select the folder where the logfiles are stored that you want to parse."/>
                     <Button Name="selectFolderButton" Height="30" Width="160" Content="SELECT FOLDER" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Margin="215,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Click="selectFolderButton_Click"   />
                     <Label Content="OR" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,50,0,0" Height="30" VerticalContentAlignment="Center"/>
-                    <TextBox Text="C:\folder\logfiles" Name="pathTextBox" Width="250" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="60,50,0,0" VerticalContentAlignment="Center" Padding="5,0,0,0"/>
-                    <Button Content="CHECK" Height="30" Width="55" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="320,50,0,0" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="Button_Click"/>
+                    <TextBox Text="C:\folder\logfiles" Name="pathTextBox" Width="250" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="60,50,0,0" VerticalContentAlignment="Center" Padding="5,0,0,0" MouseDoubleClick="mouseDoubleClick"/>
+                    <Button Name="checkButton" Content="CHECK" Height="30" Width="55" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="320,50,0,0" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="Button_Click"/>
                     <Label Visibility="Visible" Name="filesFoundLabel" Content="Text files found:" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="230,85,0,0" Height="25" Padding="0" VerticalContentAlignment="Center"/>
                     <Label Visibility="Visible" Name="numberFilesFoundLabel"  Content="NA" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="320,85,0,0" Height="25" Padding="0" VerticalContentAlignment="Center"/>
                     <Image Visibility="Hidden" Name="folderCheckMark" Source="C:\Users\ThomasGH\Documents\Project\Resources\ok-64.ico" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="385,15,0,0" />
@@ -39,7 +39,28 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Remote LogStash">
+                <Grid>
+                    <Label Content="1. Select the logfile folder:" Foreground="White" Margin="20,10,0,0" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="1" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Select the folder where the logfiles are stored that you want to parsed on the server."/>
+                    <Button Name="selectRFolderButton" Height="30" Width="160" Content="SELECT FOLDER" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Margin="215,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Click="selectFolderButton_Click"   />
+                    <Label Content="OR" Foreground="White" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,50,0,0" Height="30" VerticalContentAlignment="Center"/>
+                    <TextBox Text="C:\folder\logfiles" Name="pathRTextBox" Width="250" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="60,50,0,0" VerticalContentAlignment="Center" Padding="5,0,0,0" MouseDoubleClick="mouseDoubleClick"/>
+                    <Button Name="checkRButton" Content="CHECK" Height="30" Width="55" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="320,50,0,0" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="Button_Click"/>
+                    <Label Visibility="Visible" Name="filesRFoundLabel" Content="Text files found:" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="230,85,0,0" Height="25" Padding="0" VerticalContentAlignment="Center"/>
+                    <Label Visibility="Visible" Name="numberRFilesFoundLabel"  Content="NA" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="320,85,0,0" Height="25" Padding="0" VerticalContentAlignment="Center"/>
+                    <Image Visibility="Hidden" Name="folderRCheckMark" Source="C:\Users\ThomasGH\Documents\Project\Resources\ok-64.ico" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="385,15,0,0" />
 
+                    <Label Content="2. Select the script folder:" Foreground="White" Margin="20,120,0,0" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="1" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ToolTip="Select the folder where the LogStasher remote script is in." />
+                    <Button Name="selectRScriptButton" Height="30" Width="160" Content="SELECT FOLDER" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Margin="215,120,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Click="selectScriptButton_Click"   />
+                    <Image Visibility="Hidden" Name="scriptRCheckMark" Source="C:\Users\ThomasGH\Documents\Project\Resources\ok-64.ico" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="385,125,0,0" />
+
+                    <Label Content="3. Enter Index Name:" Foreground="White" Margin="20,170,0,0" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="1" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  ToolTip="Enter the index name for the elasticsearch database. Keep in mind to use lowercase characters. &#10; HINT: Doubleclick this label to use the logfiles folder name as index." MouseDoubleClick="Label_MouseDoubleClick"/>
+                    <TextBox Text="defaultindex" Height="30" Width="160" Name="indexRTextBox" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="215,170,0,0" FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="White" MouseDoubleClick="mouseDoubleClick" />
+                    <Image Visibility="Hidden" Name="indexRCheckMark" Source="C:\Users\ThomasGH\Documents\Project\Resources\ok-64.ico" Height="20" Width="20" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="385,175,0,0" />
+
+                    <Button Name="runRScriptButton" Height="40" Width="120" Content="RUN SCRIPT" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Margin="150,280,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Click="runRScriptButton_Click" />
+                    <Label Name="infoRLabel" Height="30" Width="120" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="290,285,0,0"/>
+
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>
