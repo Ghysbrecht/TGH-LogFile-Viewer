@@ -24,15 +24,17 @@ namespace TGH_Log_Viewer
         
         int numberOfFiles;
 
-        String logfilesPath = "C:\\Users\\ThomasGH\\Documents\\Project\\Logfiles\\CompleteList";
-        String logStasherPath = "C:\\Users\\ThomasGH\\Documents\\Project\\Playground\\MyTool Single Conf";
-        String remoteToolPath = "C:\\Users\\ThomasGH\\Documents\\Project\\Playground\\RemoteTool";
+        String logfilesPath = "";
+        String logStasherPath = "";
+        String remoteToolPath = "";
+
         String elasticIp, mainIndex;
         string[] txtFiles;
 
         public LogManagerWindow()
         {
             InitializeComponent();
+            setPaths(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location));
         }
 
 
@@ -61,6 +63,13 @@ namespace TGH_Log_Viewer
                 file.Delete();
             foreach (System.IO.DirectoryInfo subDirectory in directory.GetDirectories())
                 directory.Delete(true);
+        }
+        //Set the default path depending on the executing directory
+        private void setPaths(String executingPath)
+        {
+            executingPath = executingPath.Remove(executingPath.LastIndexOf('\\'));
+            logStasherPath = executingPath + "\\LocalLogStash";
+            remoteToolPath = executingPath + "\\RemoteLogStash";
         }
 
 
