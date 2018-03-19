@@ -22,11 +22,13 @@ namespace TGH_Log_Viewer
             setClient(client);
             setTimeBoundsDefault();
             mainIndex = "maintest";
+            setElasticSettings();
         }
 
         public void setClient(ElasticLowLevelClient client)
         {
             this.client = client;
+            setElasticSettings();
         }
 
         public void setMainIndex(String index)
@@ -149,6 +151,12 @@ namespace TGH_Log_Viewer
         public void setTimeBoundsDefault()
         {
             setTimeBounds(DateTime.Now.AddYears(-5), DateTime.Now);
+        }
+
+        private void setElasticSettings()
+        {
+            var request = client.IndicesPutSettingsForAll<StringResponse>("{\"max_result_window\":1000000}");
+            Console.WriteLine("Set elastic settings: " + request.DebugInformation);
         }
     }
 }
