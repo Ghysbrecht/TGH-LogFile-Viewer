@@ -107,6 +107,7 @@
     <Compile Include="CellValueWindow.xaml.cs">
       <DependentUpon>CellValueWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Logger.cs" />
     <Compile Include="GlobalSearchWindow.xaml.cs">
       <DependentUpon>GlobalSearchWindow.xaml</DependentUpon>
     </Compile>

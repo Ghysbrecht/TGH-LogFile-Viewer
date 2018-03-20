@@ -9,12 +9,13 @@ namespace TGH_Log_Viewer
 {
     class LLDatabase
     {
+        Logger logger = new Logger();
         ElasticLowLevelClient client;
         bool valid;
         //String defaultIndex;
         public LLDatabase(string address, string index)
         {
-            Console.WriteLine("Creating client!");
+            logger.debug("Creating client!");
             var settings = new ConnectionConfiguration(new Uri("http://" + address))
                     .DisableDirectStreaming()
                     .ThrowExceptions()
@@ -34,7 +35,7 @@ namespace TGH_Log_Viewer
             }
             catch (Exception e)
             {
-                Console.WriteLine("Exception while trying to create a client! -> " + e.Message);
+                logger.debug("Exception while trying to create a client! -> " + e.Message);
                 valid = false;
             }
             

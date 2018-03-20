@@ -12,6 +12,7 @@ namespace TGH_Log_Viewer
         ElasticLowLevelClient client;
         LogLineFactory logLineFactory = new LogLineFactory();
         SuggestionFactory suggestionFactory = new SuggestionFactory();
+        Logger logger = new Logger();
 
         String savedTerm, lastExecuted, mainIndex;
         DateTime leftBound, rightBound;
@@ -158,7 +159,6 @@ namespace TGH_Log_Viewer
         private void setElasticSettings()
         {
             var request = client.IndicesPutSettingsForAll<StringResponse>("{\"max_result_window\":1000000}");
-            Console.WriteLine("Set elastic settings: " + request.DebugInformation);
         }
 
         private String executeQuery(String index, String query)
@@ -171,7 +171,7 @@ namespace TGH_Log_Viewer
             }
             catch(Exception e)
             {
-                Console.WriteLine("Exception when trying to execute a query! -> " + e.Message);
+                logger.error("Exception when trying to execute a query! -> " + e.Message);
                 lastError = e.Message;
                 return "";
             }

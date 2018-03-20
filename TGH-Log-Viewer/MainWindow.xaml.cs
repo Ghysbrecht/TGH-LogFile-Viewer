@@ -39,6 +39,8 @@ namespace TGH_Log_Viewer
 
         Timer timer1;
 
+        Logger logger = new Logger();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -46,8 +48,11 @@ namespace TGH_Log_Viewer
             //Disable buttons
             leftButton.IsEnabled = false;
             rightButton.IsEnabled = false;
+
             assignCheckListeners();
             dropDownFilterName = "";
+
+            logger.debug("=== Starting TGH Log Viewer ===");
 
         }
 
@@ -116,7 +121,7 @@ namespace TGH_Log_Viewer
         {
             if (queryBuilder != null)
             {
-                Console.WriteLine("Updating grid!");
+                logger.debug("Updating grid!");
                 setupDataGrid(queryBuilder.lastQueryNewPage(currentPage * appSettings.defaultRecords, appSettings.defaultRecords));
             }
         }
@@ -149,7 +154,7 @@ namespace TGH_Log_Viewer
                 updatePageCount();
                 if (graphWindow != null) graphWindow.createFromData(loglines);
             }
-            else Console.WriteLine("Seting up datagrid failed -> Data is null");
+            else logger.debug("Seting up datagrid failed -> Data is null");
         }
 
         //Sidebar - Add the onContextCheck handler to all menuItems in the filter contextmenu
