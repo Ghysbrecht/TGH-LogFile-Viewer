@@ -107,6 +107,7 @@ namespace TGH_Log_Viewer
                         MessageBox.Show("Not yet supported for this column!");
                         break;
                 }
+                if (queryBuilder.getLastError() != "") MessageBox.Show("WARNING: " + queryBuilder.getLastError());
             }
             else MessageBox.Show("Fitlering disabled! No database connection.");
         }

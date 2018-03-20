@@ -16,6 +16,7 @@ namespace TGH_Log_Viewer
         String savedTerm, lastExecuted, mainIndex;
         DateTime leftBound, rightBound;
         long lastHits = 0;
+        String lastError = "";
 
         public LLQueryBuilder(ElasticLowLevelClient client)
         {
@@ -78,6 +79,8 @@ namespace TGH_Log_Viewer
 
         public List<LogLine> filterOnMessage(int offset, int records, String term)
         {
+            term = term.Replace('\r', ' ');
+            term = term.Replace(@"\", @"\\");
             return toLogLines(filterOn("messagedata", term, offset, records));
         }
 
@@ -99,8 +102,8 @@ namespace TGH_Log_Viewer
             stringBuilder.Append("\"gte\":\"" + leftBound.Subtract(new DateTime(1970,1,1,0,0,0,DateTimeKind.Utc)).TotalMilliseconds + "\",");
             stringBuilder.Append("\"lt\":\"" + rightBound.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds + "\"}}}]}}}");
 
-            var searchResponse = client.Search<StringResponse>(mainIndex, stringBuilder.ToString());
-            return searchResponse.Body;
+
+            return executeQuery(mainIndex, stringBuilder.ToString());
         }
 
         public List<String> getSuggestionsFor(String column, String text)
@@ -108,8 +111,7 @@ namespace TGH_Log_Viewer
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("{\"size\":0,\"aggs\":{\"logtypes\":{\"terms\":{\"field\":\"" + column + ".keyword\",\"size\":5,\"include\":\"" + text + ".*\"}}}}");
 
-            var searchResponse = client.Search<StringResponse>(mainIndex, stringBuilder.ToString());
-            return toSuggestions(searchResponse.Body);
+            return toSuggestions(executeQuery(mainIndex, stringBuilder.ToString()));
         }
 
         private List<String> toSuggestions(String json)
@@ -157,6 +159,27 @@ namespace TGH_Log_Viewer
         {
             var request = client.IndicesPutSettingsForAll<StringResponse>("{\"max_result_window\":1000000}");
             Console.WriteLine("Set elastic settings: " + request.DebugInformation);
+        }
+
+        private String executeQuery(String index, String query)
+        {
+            try
+            {
+                var searchResponse = client.Search<StringResponse>(index, query);
+                lastError = "";
+                return searchResponse.Body;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Exception when trying to execute a query! -> " + e.Message);
+                lastError = e.Message;
+                return "";
+            }
+        }
+
+        public String getLastError()
+        {
+            return lastError;
         }
     }
 }

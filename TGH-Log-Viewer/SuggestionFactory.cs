@@ -13,17 +13,21 @@ namespace TGH_Log_Viewer
         {
             List<String> suggestionCollection = new List<String>();
 
-            var jsonObj = JObject.Parse(json);
-
-            if (jsonObj["error"] == null)
+            if (json != "")
             {
-                foreach (var bucket in jsonObj["aggregations"]["logtypes"]["buckets"])
+                var jsonObj = JObject.Parse(json);
+
+                if (jsonObj["error"] == null)
                 {
-                    String key = (String)bucket["key"];
-                    suggestionCollection.Add(key);
+                    foreach (var bucket in jsonObj["aggregations"]["logtypes"]["buckets"])
+                    {
+                        String key = (String)bucket["key"];
+                        suggestionCollection.Add(key);
+                    }
                 }
+                else Console.WriteLine("ERROR - Returned json contains an error message!");
             }
-            else Console.WriteLine("ERROR - Returned json contains an error message!");
+            else Console.WriteLine("Empty JSON received in SuggestionFactory");
       
             return suggestionCollection;
         }
