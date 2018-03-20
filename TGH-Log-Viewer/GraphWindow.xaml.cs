@@ -50,7 +50,7 @@ namespace TGH_Log_Viewer
         private void incrementAtPercentage(double percentage)
         {
             int index = (int)((numberOfBars - 1) * percentage);
-            if (index >= 0 || index < numberOfBars) barsArray[index] += 1;
+            if (index >= 0 && index < numberOfBars) barsArray[index] += 1;
         }
         //Refresh the bargraph with the current window size and data
         public void refresh()

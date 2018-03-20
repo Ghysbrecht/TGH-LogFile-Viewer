@@ -31,11 +31,11 @@ namespace TGH_Log_Viewer
 
         int currentPage = 0;
 
-        String rightClickColumnName;
-        String rightClickContent;
-        String doubleClickContent;
-        String doubleClickColumnName;
-        String dropDownFilterName;
+        String rightClickColumnName = "";
+        String rightClickContent = "";
+        String doubleClickContent = "";
+        String doubleClickColumnName = "";
+        String dropDownFilterName = "";
 
         Timer timer1;
 
@@ -46,8 +46,6 @@ namespace TGH_Log_Viewer
             //Disable buttons
             leftButton.IsEnabled = false;
             rightButton.IsEnabled = false;
-
-            setSettings(new AppSettings());
             assignCheckListeners();
             dropDownFilterName = "";
 
@@ -70,43 +68,47 @@ namespace TGH_Log_Viewer
         //General - Filter on a given column name
         private void filterOnColumnName(String columnName, String filterContent)
         {
-            switch (columnName)
+            if (database != null && database.isValid())
             {
-                case "Filename":
-                    setupDataGrid(queryBuilder.filterOnFilename(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
-                    break;
-                case "Function":
-                    setupDataGrid(queryBuilder.filterOnFunction(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
-                    break;
-                case "Process":
-                    setupDataGrid(queryBuilder.filterOnProcess(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
-                    break;
-                case "PID":
-                    setupDataGrid(queryBuilder.filterOnPID(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
-                    break;
-                case "TID":
-                    setupDataGrid(queryBuilder.filterOnTID(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
-                    break;
-                case "Loglevel":
-                    setupDataGrid(queryBuilder.filterOnLoglevel(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
-                    break;
-                case "Logtype":
-                    setupDataGrid(queryBuilder.filterOnLogtype(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
-                    break;
-                case "Message":
-                    setupDataGrid(queryBuilder.filterOnMessage(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
-                    break;
-                case "Timestamp":
-                    if (fromTimeDate.Value == null && toTimeDate.Value == null) fromTimeDate.Text = filterContent;
-                    else toTimeDate.Text = filterContent;
-                    break;
-                case "global":
-                    setupDataGrid(queryBuilder.globalSearch(filterContent, currentPage * appSettings.defaultRecords, appSettings.defaultRecords));
-                    break;
-                default:
-                    MessageBox.Show("Not yet supported for this column!");
-                    break;
+                switch (columnName)
+                {
+                    case "Filename":
+                        setupDataGrid(queryBuilder.filterOnFilename(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
+                        break;
+                    case "Function":
+                        setupDataGrid(queryBuilder.filterOnFunction(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
+                        break;
+                    case "Process":
+                        setupDataGrid(queryBuilder.filterOnProcess(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
+                        break;
+                    case "PID":
+                        setupDataGrid(queryBuilder.filterOnPID(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
+                        break;
+                    case "TID":
+                        setupDataGrid(queryBuilder.filterOnTID(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
+                        break;
+                    case "Loglevel":
+                        setupDataGrid(queryBuilder.filterOnLoglevel(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
+                        break;
+                    case "Logtype":
+                        setupDataGrid(queryBuilder.filterOnLogtype(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
+                        break;
+                    case "Message":
+                        setupDataGrid(queryBuilder.filterOnMessage(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
+                        break;
+                    case "Timestamp":
+                        if (fromTimeDate.Value == null && toTimeDate.Value == null) fromTimeDate.Text = filterContent;
+                        else toTimeDate.Text = filterContent;
+                        break;
+                    case "global":
+                        setupDataGrid(queryBuilder.globalSearch(filterContent, currentPage * appSettings.defaultRecords, appSettings.defaultRecords));
+                        break;
+                    default:
+                        MessageBox.Show("Not yet supported for this column!");
+                        break;
+                }
             }
+            else MessageBox.Show("Fitlering disabled! No database connection.");
         }
         //General - Requery the last query with the new offset
         private void updatePageDataGrid()
@@ -206,18 +208,21 @@ namespace TGH_Log_Viewer
         //Sidebar - Open the context menu
         private void openContextMenu()
         {
-            List<String> suggestions = queryBuilder.getSuggestionsFor(dropDownFilterName.ToLower(), filterTextBox.Text);
-            filContextMenu(suggestions);
-
-            if (filterTextBoxContextMenu.Items.Count != 0)
+            if(queryBuilder != null)
             {
-                filterTextBox.ContextMenu.IsEnabled = true;
-                filterTextBox.ContextMenu.PlacementTarget = filterTextBox;
-                filterTextBox.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
-                filterTextBox.ContextMenu.IsOpen = true;
-                (filterTextBoxContextMenu.Items[0] as MenuItem).Focus();
-            }
-            else filterTextBox.Focus();
+                List<String> suggestions = queryBuilder.getSuggestionsFor(dropDownFilterName.ToLower(), filterTextBox.Text);
+                filContextMenu(suggestions);
+
+                if (filterTextBoxContextMenu.Items.Count != 0)
+                {
+                    filterTextBox.ContextMenu.IsEnabled = true;
+                    filterTextBox.ContextMenu.PlacementTarget = filterTextBox;
+                    filterTextBox.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+                    filterTextBox.ContextMenu.IsOpen = true;
+                    (filterTextBoxContextMenu.Items[0] as MenuItem).Focus();
+                }
+                else filterTextBox.Focus();
+            }  
         }
 
 
@@ -284,7 +289,9 @@ namespace TGH_Log_Viewer
         //Topbar - Main - Get data button
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (appSettings == null) setSettings(new AppSettings());
             if (database.isValid()) setupDataGrid(queryBuilder.getAllData(currentPage, appSettings.defaultRecords));
+            else MessageBox.Show("No connection to a database!");
         }
         //Topbar - Pages - Left button page selection
         private void leftButton_Click(object sender, RoutedEventArgs e)
@@ -370,8 +377,14 @@ namespace TGH_Log_Viewer
         {
             Console.WriteLine("Filtering on: " + rightClickColumnName + " : " + rightClickContent);
             currentPage = 0;
-            filterOnColumnName(rightClickColumnName, rightClickContent);
-            setFilter(rightClickColumnName, rightClickContent);
+            if(rightClickColumnName == "" || rightClickContent == "")
+            {
+                Console.WriteLine("Filtering on empty string! Ignoring...");
+            } else
+            {
+                filterOnColumnName(rightClickColumnName, rightClickContent);
+                setFilter(rightClickColumnName, rightClickContent);
+            } 
         }
         //Datagrid - Contextmenu 'copy cell'
         private void copyCell_Click(object sender, RoutedEventArgs e)

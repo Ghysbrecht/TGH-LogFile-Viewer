@@ -23,6 +23,7 @@ namespace TGH_Log_Viewer
 
         public SettingsWindow(AppSettings appSettings)
         {
+            if (appSettings == null) appSettings = new AppSettings();
             InitializeComponent();
             this.settings = appSettings;
             serverTextBox.Text = settings.elasticip;
