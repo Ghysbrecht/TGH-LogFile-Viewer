@@ -139,13 +139,23 @@ namespace TGH_Log_Viewer
             infoRLabel.Content = "Done!";
             runRScriptButton.IsEnabled = true;
         }
+        //Execute the remote script
         private void executeRScript(String path, String logFilePath, String index)
         {
             ProcessStartInfo start = new ProcessStartInfo();
             String argument = "Set-ExecutionPolicy Unrestricted;cd \'" + path + "\';.\\MainScript.ps1 -bypassui";
             argument += " -elasticIndex \'" + index + "\'";
             argument += " -sourceLogfilePath \'" + logFilePath + "\\*\'";
-            argument += ";Read-Host";
+            if (targetLogfilePathCheck.IsChecked == true) argument += " -targetLogfilePath \'" + targetLogfilePath.Text + "\'";
+            if (targetScriptPathCheck.IsChecked == true) argument += " -targetScriptPath \'" + targetScriptPath.Text + "\'";
+            if (targetServerCheck.IsChecked == true) argument += " -targetServer\'" + targetServer.Text + "\'";
+            if (targetServerIpCheck.IsChecked == true) argument += " -targetServerIp \'" + targetServerIp.Text + "\'";
+            if (targetServerUserCheck.IsChecked == true) argument += " -targetServerUser \'" + targetServerUser.Text + "\'";
+            if (remoteElasticCheck.IsChecked == true) {
+                argument += " -elasticServer \'" + remoteElasticIp.Text + "\'";
+                argument += " -elasticPort \'" + remoteElasticPort.Text + "\'";
+            }
+            //argument += ";Read-Host";
             Console.WriteLine("Starting with: " + argument);
             start.Arguments = argument;
             start.FileName = "powershell";
@@ -161,8 +171,6 @@ namespace TGH_Log_Viewer
             {
                 MessageBox.Show("ERROR! " + e.Message);
             }
-            
-
         }
 
         // ------- DATACHECKS -------
@@ -210,11 +218,14 @@ namespace TGH_Log_Viewer
         //Check if the script is present
         private bool checkIfScriptPresent(String path, String filename)
         {
-            string[] psFiles = System.IO.Directory.GetFiles(path, "*.ps1");
-            foreach (String psFile in psFiles)
+            if (Directory.Exists(path))
             {
-                if (psFile.Substring(psFile.LastIndexOf('\\') + 1) == filename) return true;
-            }
+                string[] psFiles = System.IO.Directory.GetFiles(path, "*.ps1");
+                foreach (String psFile in psFiles)
+                {
+                    if (psFile.Substring(psFile.LastIndexOf('\\') + 1) == filename) return true;
+                }
+            } 
             return false;
         }
 

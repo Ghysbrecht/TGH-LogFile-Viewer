@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TGH_Log_Viewer"
         mc:Ignorable="d"
-        Title="Log Manager" Height="400" Width="435">
+        Title="Log Manager" Height="410" Width="435" ResizeMode="NoResize">
     <Grid Background="#FF2C3E50">
         <TabControl Background="#FF34495E" BorderBrush="White">
             <TabItem Header="Local LogStash" >
@@ -59,6 +59,39 @@
 
                     <Button Name="runRScriptButton" Height="40" Width="120" Content="RUN SCRIPT" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Margin="150,280,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Click="runRScriptButton_Click" />
                     <Label Name="infoRLabel" Height="30" Width="120" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="290,285,0,0"/>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Advanced Settings">
+                <Grid>
+                    <Border Width="400" Height="70" BorderBrush="White" BorderThickness="1" Margin="0,0,0,250"/>
+                    <Label Content="These are advanced settings that can be used to alter the &#10;remote script's behaviour. These should not be changed for &#10;normal operation. Click the checkbox to enable the setting." Foreground="White" Margin="20,16,0,0" Height="58" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="1" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    
+                    <Label Content="Target logfile folder path:" Foreground="White" Margin="20,100,0,0" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="1" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  ToolTip="Enter the index name for the elasticsearch database. Keep in mind to use lowercase characters. &#10; HINT: Doubleclick this label to use the logfiles folder name as index."/>
+                    <TextBox Text="C:\folder\script\LogFiles" Height="30" Width="190" Name="targetLogfilePath" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="190,100,0,0" FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="White" MouseDoubleClick="mouseDoubleClick" />
+                    <CheckBox Name="targetLogfilePathCheck" Width="30" Height="30" Margin="390,100,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+                    <Label Content="Target script folder path:" Foreground="White" Margin="20,140,0,0" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="1" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  ToolTip="Enter the index name for the elasticsearch database. Keep in mind to use lowercase characters. &#10; HINT: Doubleclick this label to use the logfiles folder name as index."/>
+                    <TextBox Text="C:\folder\script" Height="30" Width="190" Name="targetScriptPath" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="190,140,0,0" FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="White" MouseDoubleClick="mouseDoubleClick" />
+                    <CheckBox Name="targetScriptPathCheck" Width="30" Height="30" Margin="390,140,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+                    <Label Content="Target server name:" Foreground="White" Margin="20,180,0,0" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="1" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  ToolTip="Enter the index name for the elasticsearch database. Keep in mind to use lowercase characters. &#10; HINT: Doubleclick this label to use the logfiles folder name as index."/>
+                    <TextBox Text="dev-dma-06_5.skyline.local" Height="30" Width="190" Name="targetServer" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="190,180,0,0" FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="White" MouseDoubleClick="mouseDoubleClick" />
+                    <CheckBox Name="targetServerCheck" Width="30" Height="30" Margin="390,180,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+                    <Label Content="Target server IP:" Foreground="White" Margin="20,220,0,0" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="1" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  ToolTip="Enter the index name for the elasticsearch database. Keep in mind to use lowercase characters. &#10; HINT: Doubleclick this label to use the logfiles folder name as index."/>
+                    <TextBox Text="10.0.1.50" Height="30" Width="190" Name="targetServerIp" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="190,220,0,0" FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="White" MouseDoubleClick="mouseDoubleClick" />
+                    <CheckBox Name="targetServerIpCheck" Width="30" Height="30" Margin="390,220,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+                    <Label Content="Target server user:" Foreground="White" Margin="20,260,0,0" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="1" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  ToolTip="Enter the index name for the elasticsearch database. Keep in mind to use lowercase characters. &#10; HINT: Doubleclick this label to use the logfiles folder name as index."/>
+                    <TextBox Text="Administrator" Height="30" Width="190" Name="targetServerUser" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="190,260,0,0" FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="White" MouseDoubleClick="mouseDoubleClick" />
+                    <CheckBox Name="targetServerUserCheck" Width="30" Height="30" Margin="390,260,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+                    <Label Content="Elasticsearch IP:" Foreground="White" Margin="20,300,0,0" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="1" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  ToolTip="Enter the IP and port of the elasticsearch database server where you want to store the loglines."/>
+                    <TextBox Text="localhost" Height="30" Width="125" Name="remoteElasticIp" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="190,300,0,0" FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="White" MouseDoubleClick="mouseDoubleClick" />
+                    <Label Content=":" Foreground="White" Margin="320,300,0,0" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="1" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    <TextBox Text="9200" Height="30" Width="50" Name="remoteElasticPort" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="330,300,0,0" FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" BorderBrush="White" MouseDoubleClick="mouseDoubleClick" />
+                    <CheckBox Name="remoteElasticCheck" Width="30" Height="30" Margin="390,300,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
                 </Grid>
             </TabItem>
