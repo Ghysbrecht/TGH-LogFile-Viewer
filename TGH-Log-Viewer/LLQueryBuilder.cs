@@ -25,6 +25,7 @@ namespace TGH_Log_Viewer
             setTimeBoundsDefault();
             mainIndex = "maintest";
             setElasticSettings();
+            logger.debug("QueryBuilder created!");
         }
 
         public void setClient(ElasticLowLevelClient client)
@@ -87,6 +88,7 @@ namespace TGH_Log_Viewer
 
         private String filterOn(String column, String message, int offset, int records)
         {
+            logger.debug("Filtering on: OF:" + offset + " RE:" + records + " COL:" + column + " -> " + (message.Length <= 50 ? message : message.Substring(0,50)));
             lastExecuted = column;
             savedTerm = message;
 
@@ -100,8 +102,8 @@ namespace TGH_Log_Viewer
             else stringBuilder.Append("{\"match_phrase\":{\"" + column + "\":\"" + message + "\"}}"); //Match Phrase
                  //stringBuilder.Append(",");
             stringBuilder.Append("],\"filter\":[{\"range\":{\"@timestamp\":{");
-            stringBuilder.Append("\"gte\":\"" + leftBound.Subtract(new DateTime(1970,1,1,0,0,0,DateTimeKind.Utc)).TotalMilliseconds + "\",");
-            stringBuilder.Append("\"lt\":\"" + rightBound.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds + "\"}}}]}}}");
+            stringBuilder.Append("\"gte\":\"" + Math.Round(leftBound.Subtract(new DateTime(1970,1,1,0,0,0,DateTimeKind.Utc)).TotalMilliseconds,0)  + "\",");
+            stringBuilder.Append("\"lt\":\"" + Math.Round(rightBound.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds,0)  + "\"}}}]}}}");
 
 
             return executeQuery(mainIndex, stringBuilder.ToString());
@@ -109,6 +111,7 @@ namespace TGH_Log_Viewer
 
         public List<String> getSuggestionsFor(String column, String text)
         {
+            logger.debug("Getting suggestions for: " + column + " -> " + text);
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("{\"size\":0,\"aggs\":{\"logtypes\":{\"terms\":{\"field\":\"" + column + ".keyword\",\"size\":5,\"include\":\"" + text + ".*\"}}}}");
 
@@ -158,6 +161,7 @@ namespace TGH_Log_Viewer
 
         private void setElasticSettings()
         {
+            logger.debug("Setting elastic settings");
             var request = client.IndicesPutSettingsForAll<StringResponse>("{\"max_result_window\":1000000}");
         }
 
