@@ -16,7 +16,6 @@ using Nest;
 using Elasticsearch.Net;
 using System.Timers;
 
-
 namespace TGH_Log_Viewer
 {
 
@@ -530,7 +529,8 @@ namespace TGH_Log_Viewer
         //Sidebar - Remove all in the filter textbox when you doubleclick it
         private void TextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            filterTextBox.Text = "";
+            if (sender as TextBox != null) (sender as TextBox).Text = "";
+            else (sender as Xceed.Wpf.Toolkit.DateTimePicker).Text = "";
         }
 
         
