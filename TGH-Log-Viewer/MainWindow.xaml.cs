@@ -68,7 +68,11 @@ namespace TGH_Log_Viewer
                 else queryBuilder.setClient(client);
                 queryBuilder.setMainIndex(appSettings.defaultIndex);
             }
-            else MessageBox.Show("Connection failed! Check your settings...");
+            else
+            {
+                MessageBox.Show("Connection failed! Check your settings...");
+                logger.debug("setSettings failed! -> elastic ip: " + appSettings.elasticip + " elastic index" + appSettings.defaultIndex);
+            }
         }
         //General - Filter on a given column name
         private void filterOnColumnName(String columnName, String filterContent)
@@ -110,6 +114,7 @@ namespace TGH_Log_Viewer
                         break;
                     default:
                         MessageBox.Show("Not yet supported for this column!");
+                        logger.debug("Filtered on column that is not supported! -> " + columnName);
                         break;
                 }
                 if (queryBuilder.getLastError() != "") MessageBox.Show("WARNING: " + queryBuilder.getLastError());
@@ -121,7 +126,6 @@ namespace TGH_Log_Viewer
         {
             if (queryBuilder != null)
             {
-                logger.debug("Updating grid!");
                 setupDataGrid(queryBuilder.lastQueryNewPage(currentPage * appSettings.defaultRecords, appSettings.defaultRecords));
             }
         }
@@ -296,7 +300,11 @@ namespace TGH_Log_Viewer
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (appSettings == null) setSettings(new AppSettings());
-            if (database.isValid()) setupDataGrid(queryBuilder.getAllData(currentPage, appSettings.defaultRecords));
+            if (database.isValid())
+            {
+                setupDataGrid(queryBuilder.getAllData(currentPage, appSettings.defaultRecords));
+                if (queryBuilder.getLastError() != "") MessageBox.Show("WARNING: " + queryBuilder.getLastError());
+            }
             else MessageBox.Show("No connection to a database!");
         }
         //Topbar - Pages - Left button page selection

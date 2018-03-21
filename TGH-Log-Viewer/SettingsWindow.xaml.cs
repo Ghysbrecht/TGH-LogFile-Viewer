@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace TGH_Log_Viewer
 {
-    /// <summary>
-    /// Interaction logic for SettingsWindow.xaml
-    /// </summary>
     public partial class SettingsWindow : Window
     {
         AppSettings settings;
