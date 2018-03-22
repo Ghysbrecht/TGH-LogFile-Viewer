@@ -1,0 +1,251 @@
+[33mcommit f9bad35e76b706261ce5a2bf4d0c7a5bb3f04d5f[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;33mtag: v0.1.2[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Wed Mar 21 17:22:39 2018 +0100
+
+    From-To date time boxes can now be cleared by doubleclicking
+
+[33mcommit 91020c65dc65fcba89b15332525202e7053434ea[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Wed Mar 21 17:13:47 2018 +0100
+
+    Fixed small bug with time convertion when creating the query
+
+[33mcommit b22dc22b9ee8bdbde9cf439c3bb741b9353bdeb5[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Wed Mar 21 13:53:24 2018 +0100
+
+    Added a few log debug lines
+
+[33mcommit e0243b61476d162d55c1f4c21b60d424cd18c965[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Tue Mar 20 17:30:36 2018 +0100
+
+    Added a logger
+
+[33mcommit cf1a2e80d04677c953f1db12bcefb0e781b7f8eb[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Tue Mar 20 16:09:12 2018 +0100
+
+    Added more errorhandling when executing a query
+
+[33mcommit 1121f7bbdd28b25ad6e14923170c915e63d656f9[m[33m ([m[1;33mtag: v0.1.1[m[33m)[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Tue Mar 20 14:00:01 2018 +0100
+
+    Added extra failsaves when there is no connection to a database.
+
+[33mcommit baa3c994ab30e38a48bf5ef7ed51ba7e6fa6a4e0[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Tue Mar 20 10:51:29 2018 +0100
+
+    Small edit on the label tooltips in the advanced remote settings
+
+[33mcommit dc385ea4f85ade89bc9f10130c1d42a444b16504[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Tue Mar 20 10:08:34 2018 +0100
+
+    Added remote logstash advanced settings
+
+[33mcommit 611619e04265bcd47bb77a049a0fbe01064d71a7[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Mon Mar 19 15:51:07 2018 +0100
+
+    Default paths now relative
+
+[33mcommit c6119c55742b2e126c1fdd768bec0dbd7db6cd78[m[33m ([m[1;33mtag: v0.1.0[m[33m)[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Mon Mar 19 10:02:28 2018 +0100
+
+    Fixed crash when empty json is received
+
+[33mcommit b27a978b6332af852d77692946ea25dde9486b3b[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Fri Mar 16 16:11:58 2018 +0100
+
+    Added remote logmanager, and small tweaks
+
+[33mcommit 0a9a9a7c2af9911fcd3f57b11b5d80856aec1ad1[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Fri Mar 16 12:10:11 2018 +0100
+
+    Added logmanager to run the local script
+
+[33mcommit 4eec345abbc608d2d150beae0c06e8304764b5a8[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Fri Mar 16 10:21:21 2018 +0100
+
+    Minor tweaks to the graphwindow
+
+[33mcommit 4b1823a13fdb61d37e515c34cd0751ead2e14986[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Wed Mar 14 17:08:34 2018 +0100
+
+    Added an logstasher window to trigger the script
+
+[33mcommit b6a2f2d5c0a802625c4bd422eb746d7d84203023[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Wed Mar 14 13:48:10 2018 +0100
+
+    Added automatic suggestions when you stop typing
+
+[33mcommit e54e4af85f9bf67eadb02072ac5f84222a20a5d4[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Wed Mar 14 11:57:37 2018 +0100
+
+    Removed unnecessary files
+
+[33mcommit 73acacdc67585055ea8c4b36c46b48213b7c0119[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Wed Mar 14 11:49:28 2018 +0100
+
+    Main running version
+
+[33mcommit 7390230ccaa6f9d2d5f9d82d9813349497be056a[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Wed Mar 14 10:03:16 2018 +0100
+
+    Added suggestions to the sidebar filter
+
+[33mcommit e99916fbc85edac58ce868b22a7fb6451b216466[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Tue Mar 13 15:09:13 2018 +0100
+
+    Implemented global search
+
+[33mcommit b7979318d24e85221d74c8b78450958a96044b1c[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Tue Mar 13 13:11:38 2018 +0100
+
+    Changed the used database library to elasticsearch.net
+
+[33mcommit ed11668840b776db56362c03aa47ae3b763059b2[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Tue Mar 13 09:14:22 2018 +0100
+
+    Added a global search window
+
+[33mcommit 675b78ba44d3ea04218ee28133d34c0a9d78d490[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Tue Mar 13 08:46:10 2018 +0100
+
+    Small line graph tweak
+
+[33mcommit 9369ce56e306c25fb2baa88eacc0d4b91769d805[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Mon Mar 12 16:37:36 2018 +0100
+
+    Added a placeholder analyze window
+
+[33mcommit fc229ae72ca21faa65bb0783294dc876b0df354a[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Mon Mar 12 15:16:53 2018 +0100
+
+    Completely reorganized the code with comments
+
+[33mcommit a142fdfadac2ec357abc3eadb8061afd52813ac3[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Mon Mar 12 14:18:17 2018 +0100
+
+    Added an info window
+
+[33mcommit 45fad2fe4fa8b608bed959dbcc272aba84ce0f34[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Mon Mar 12 13:47:27 2018 +0100
+
+    Added the finished graph window with a bar and line graph.
+
+[33mcommit a88f043491d44fee1e2e658a26788a9b6813edfa[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Fri Mar 9 16:11:13 2018 +0100
+
+    Created a simple bar graph
+
+[33mcommit 1ee876c1560f05fad820a9cfcd8a71301eadd6b7[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Fri Mar 9 13:06:56 2018 +0100
+
+    Entering in the textbox also enables the filter
+
+[33mcommit 0aebb8498251676154e2e0579970502126c9fcb4[m
+Author: Thomas Ghysbrecht <thomas.ghysbrecht@skyline.be>
+Date:   Fri Mar 9 11:58:02 2018 +0100
+
+    Added sidebar filter and 'more' menu
+
+[33mcommit 31ca18d27dc6222d3cbca17c1fe31e3c312a1582[m
+Author: Thomas Ghysbrecht <ghysbrecht@hotmail.com>
+Date:   Thu Mar 8 13:20:54 2018 +0100
+
+    Added settingswindow
+
+[33mcommit e7e97c059c21a88c0b128a53bb6ad4d076361f6b[m
+Author: Thomas Ghysbrecht <ghysbrecht@hotmail.com>
+Date:   Wed Mar 7 16:58:39 2018 +0100
+
+    Startdate has to be earlier then enddate now.
+
+[33mcommit a22da2cf7eeaa360759287cadbb61e1a7236fc90[m
+Author: Thomas Ghysbrecht <ghysbrecht@hotmail.com>
+Date:   Wed Mar 7 16:34:52 2018 +0100
+
+    Added the option to enable automatic timestamps
+
+[33mcommit bf680ab51195b8991c77ed191f758036a789983a[m
+Author: Thomas Ghysbrecht <ghysbrecht@hotmail.com>
+Date:   Wed Mar 7 15:32:10 2018 +0100
+
+    Added double click on from/to labels to copy date
+
+[33mcommit 8dd85e9cd87a34b2fce65eecbcce8f4475f59422[m
+Author: Thomas Ghysbrecht <ghysbrecht@hotmail.com>
+Date:   Wed Mar 7 15:21:47 2018 +0100
+
+    Added time filtering. Right click the filter button to remove the time.
+
+[33mcommit e5d2fd2178bb05e795edd864362eff26953995a5[m
+Author: Thomas Ghysbrecht <ghysbrecht@hotmail.com>
+Date:   Wed Mar 7 10:35:44 2018 +0100
+
+    Page can be entered in a textbox when rightclicking the current page number
+
+[33mcommit b4e52f16ecbc41e30b558d09fe322ef9201b44ee[m
+Author: Thomas Ghysbrecht <ghysbrecht@hotmail.com>
+Date:   Wed Mar 7 09:04:35 2018 +0100
+
+    Small styling changes
+
+[33mcommit 438468391b9e18032111343f27712f251ac1faf4[m
+Author: Thomas Ghysbrecht <ghysbrecht@hotmail.com>
+Date:   Tue Mar 6 17:03:28 2018 +0100
+
+    Doubleclicking on a cell opens a new windows with that cell's text.
+
+[33mcommit ff178b22df327f0ad2755c7c2eeba5ebf1594cbc[m
+Author: Thomas Ghysbrecht <ghysbrecht@hotmail.com>
+Date:   Tue Mar 6 16:00:48 2018 +0100
+
+    Added right click copy cell and copy all
+
+[33mcommit d48c3a1f474c773d7873f36bdbee16f88eede812[m
+Author: Thomas Ghysbrecht <ghysbrecht@hotmail.com>
+Date:   Mon Mar 5 16:53:30 2018 +0100
+
+    Updated layout and styling. Added small features.
+
+[33mcommit 002803ca0b289e7ab75d813050267f06d72758ff[m
+Author: Thomas Ghysbrecht <ghysbrecht@hotmail.com>
+Date:   Mon Mar 5 10:05:12 2018 +0100
+
+    Displaying of loglines works
+
+[33mcommit 50748dea19cb6df9ccf7196025177e695cb2a431[m
+Author: Thomas Ghysbrecht <ghysbrecht@hotmail.com>
+Date:   Fri Mar 2 15:35:29 2018 +0100
+
+    Add project files.
+
+[33mcommit 02a530209b7cddc16eb8f4dc97568438631f9a5f[m
+Author: Thomas Ghysbrecht <ghysbrecht@hotmail.com>
+Date:   Fri Mar 2 15:35:27 2018 +0100
+
+    Add .gitignore and .gitattributes.

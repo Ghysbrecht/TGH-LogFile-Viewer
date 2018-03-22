@@ -105,7 +105,6 @@ namespace TGH_Log_Viewer
             stringBuilder.Append("\"gte\":\"" + Math.Round(leftBound.Subtract(new DateTime(1970,1,1,0,0,0,DateTimeKind.Utc)).TotalMilliseconds,0)  + "\",");
             stringBuilder.Append("\"lt\":\"" + Math.Round(rightBound.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds,0)  + "\"}}}]}}}");
 
-
             return executeQuery(mainIndex, stringBuilder.ToString());
         }
 

@@ -12,7 +12,8 @@
         <DockPanel HorizontalAlignment="Left" Height="59" LastChildFill="False" Margin="10,10,0,0" VerticalAlignment="Top" Width="830" Background="#FF34495E">
             <Image Source="C:\Users\ThomasGH\Downloads\TGH-LogViewer-Logo.png" Margin="26,0"/>
             <Grid Background="#FF34495E">
-                <Button Content="GET DATA" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Width="94" Click="Button_Click" Height="49" Background="#FF0D2C49" Foreground="White" BorderBrush="White"/>
+                <Button Content="GET DATA" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Width="94" Click="Button_Click" Height="22" Background="#FF0D2C49" Foreground="White" BorderBrush="White"/>
+                <Button Content="PARSE DATA" HorizontalAlignment="Left" Margin="5,32,0,0" VerticalAlignment="Top" Width="94" Click="logStashMenu_Click" Height="22" Background="#FF0D2C49" Foreground="White" BorderBrush="White"/>
                 <Button Name="settingsButton" Content="SETTINGS" HorizontalAlignment="Left" Margin="104,5,0,0" VerticalAlignment="Top" Width="94" Height="22" Foreground="White" BorderBrush="White" Background="#FF0D2C49" Click="settingsButton_Click"/>
                 <Button Name="moreButton" Content="MORE" HorizontalAlignment="Left" Margin="104,32,0,0" VerticalAlignment="Top" Width="94" Height="22" Foreground="White" BorderBrush="White" Background="#FF0D2C49" ContextMenuService.IsEnabled="false" Click="Button_Click_1">
                     <Button.ContextMenu>
