@@ -10,7 +10,7 @@
     <Grid Background="#FF2C3E50">
         <!-- Topbox -->
         <DockPanel HorizontalAlignment="Left" Height="59" LastChildFill="False" Margin="10,10,0,0" VerticalAlignment="Top" Width="830" Background="#FF34495E">
-            <Image Source="C:\Users\ThomasGH\Downloads\TGH-LogViewer-Logo.png" Margin="26,0"/>
+            <Image Source="Resources/TGH-LogViewer-Logo.png" Margin="26,0"/>
             <Grid Background="#FF34495E">
                 <Button Content="GET DATA" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Width="94" Click="Button_Click" Height="22" Background="#FF0D2C49" Foreground="White" BorderBrush="White"/>
                 <Button Content="PARSE DATA" HorizontalAlignment="Left" Margin="5,32,0,0" VerticalAlignment="Top" Width="94" Click="logStashMenu_Click" Height="22" Background="#FF0D2C49" Foreground="White" BorderBrush="White"/>
@@ -20,32 +20,32 @@
                         <ContextMenu Name="moreButtonContextMenu" >
                             <MenuItem x:Name="analyzeMenu" Header="Analyze" Click="analyzeMenu_Click" >
                                 <MenuItem.Icon>
-                                    <Image Source="C:\Users\ThomasGH\Documents\Project\Resources\services-64.ico" />
+                                    <Image Source="Resources\services-64.ico" />
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem x:Name="globalSearchMenu" Header="Global Search" Click="globalSearchMenu_Click" >
                                 <MenuItem.Icon>
-                                    <Image Source="C:\Users\ThomasGH\Documents\Project\Resources\search-12-64.ico" />
+                                    <Image Source="Resources\search-12-64.ico" />
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem x:Name="graphMenu" Header="Graph" Click="graphMenu_Click" >
                                 <MenuItem.Icon>
-                                    <Image Source="C:\Users\ThomasGH\Documents\Project\Resources\line-chart-64.ico" />
+                                    <Image Source="Resources\line-chart-64.ico" />
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem x:Name="advancedQueryMenu" Header="Advanced Query" >
                                 <MenuItem.Icon>
-                                    <Image Source="C:\Users\ThomasGH\Documents\Project\Resources\database-64.ico" />
+                                    <Image Source="Resources\database-64.ico" />
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem x:Name="logStashMenu" Header="Stash Logs" Click="logStashMenu_Click" >
                                 <MenuItem.Icon>
-                                    <Image Source="C:\Users\ThomasGH\Documents\Project\Resources\upload-2-64.ico" />
+                                    <Image Source="Resources\upload-2-64.ico" />
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem x:Name="infoMenu" Header="Info" Click="infoMenu_Click" >
                                 <MenuItem.Icon>
-                                    <Image Source="C:\Users\ThomasGH\Documents\Project\Resources\info-2-64.ico" />
+                                    <Image Source="Resources\info-2-64.ico" />
                                 </MenuItem.Icon>
                             </MenuItem>
                             
@@ -119,17 +119,17 @@
                     <ContextMenu>
                         <MenuItem x:Name="filterOnMenuItem" Header="Filter on" Click="filterOnMenuItem_Click" >
                             <MenuItem.Icon>
-                                <Image Source="C:\Users\ThomasGH\Documents\Project\Resources\empty-filter-64.ico" />
+                                <Image Source="Resources\empty-filter-64.ico" />
                             </MenuItem.Icon>
                         </MenuItem>
                         <MenuItem x:Name="copyCell" Header="Copy cell" Click="copyCell_Click"  >
                             <MenuItem.Icon>
-                                <Image Source="C:\Users\ThomasGH\Documents\Project\Resources\copy-single.ico" />
+                                <Image Source="Resources\copy-single.ico" />
                             </MenuItem.Icon>
                         </MenuItem>
                         <MenuItem x:Name="copyAlll" Header="Copy row" Command="Copy" >
                             <MenuItem.Icon>
-                                <Image Source="C:\Users\ThomasGH\Documents\Project\Resources\copy-64.ico" />
+                                <Image Source="Resources\copy-64.ico" />
                             </MenuItem.Icon>
                         </MenuItem>
                     </ContextMenu>

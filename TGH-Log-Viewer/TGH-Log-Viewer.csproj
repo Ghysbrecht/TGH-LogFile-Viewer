@@ -13,6 +13,7 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,7 +26,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -63,6 +63,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -194,7 +195,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -220,6 +221,57 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\skyline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\skyline_bird1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\vives.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\copy-64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\copy-single.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\database-64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\empty-filter-64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon-logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\info-2-64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\line-chart-64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ok-64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\search-12-64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\services-64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\services-64-W.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\text-file-64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\upload-2-64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\TGH-LogViewer-Logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
