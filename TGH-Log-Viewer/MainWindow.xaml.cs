@@ -145,7 +145,7 @@ namespace TGH_Log_Viewer
         {
             String strSeperator = "/";
             int totalPages = (int)(queryBuilder.getLastResponseHits() / appSettings.defaultRecords) + 1;
-            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage > totalPages) currentPage = totalPages - 1;
             if ((currentPage > 98) && totalPages > 999) strSeperator = " /\n";
             pageLabel.Content = (currentPage + 1) + strSeperator + totalPages;
         }
@@ -158,7 +158,6 @@ namespace TGH_Log_Viewer
                 leftButton.IsEnabled = true;
                 rightButton.IsEnabled = true;
                 mainDataGrid.ItemsSource = loglines;
-                mainScrollWindow.Visibility = Visibility.Visible;
                 rowLabel.Content = loglines.Count;
                 if (appSettings.autoTime && loglines.Count > 0)
                 {
@@ -258,11 +257,15 @@ namespace TGH_Log_Viewer
         //Sidebar - When entering while the filter textbox is in focus OR Arrowdown for sugestions
         private void filterTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter) filterOnColumnName(dropDownFilterName, filterTextBox.Text);
+            if (e.Key == Key.Enter)
+            {
+                currentPage = 0;
+                filterOnColumnName(dropDownFilterName, filterTextBox.Text);
+            }
             else if (e.Key == Key.Down) openContextMenu();
             else
             {
-                if(timer1 == null)
+                if (timer1 == null)
                 {
                     timer1 = new Timer(1000);
                     timer1.Elapsed += new ElapsedEventHandler(HandleTimerElapsed);
@@ -309,7 +312,7 @@ namespace TGH_Log_Viewer
         //Topbar - Main - Get data button
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (appSettings == null) setSettings(new AppSettings());
+            if (appSettings == null || database == null) setSettings(new AppSettings());
             if (database.isValid())
             {
                 new Task(getAllData).Start();
@@ -451,8 +454,8 @@ namespace TGH_Log_Viewer
         //Sidebar - Enable filter
         private void applyFilterButton_Click(object sender, RoutedEventArgs e)
         {
+            currentPage = 0;
             filterOnColumnName(dropDownFilterName, filterTextBox.Text);
-            //new Task(() => { filterOnColumnName(dropDownFilterName, filterTextBox.Text); }).Start();
         }
         //Sidebar - Hide the 'hide columns' selector when clicking the header label
         private void Label_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

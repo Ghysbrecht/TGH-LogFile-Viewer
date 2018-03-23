@@ -81,61 +81,56 @@
         </DockPanel>
 
         <!-- Databox -->
-        <ScrollViewer x:Name="mainScrollWindow" HorizontalAlignment="Left" Margin="151,74,0,0" VerticalAlignment="Top" PanningMode="Both" CanContentScroll="True" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" PreviewMouseWheel="mainScrollWindows_PreviewMouseWheel" BorderBrush="Black">
-            <ScrollViewer.Background>
-                <SolidColorBrush Color="Black" Opacity="0"/>
-            </ScrollViewer.Background>
-            <DataGrid x:Name="mainDataGrid" MinWidth="532" MinHeight="400" HeadersVisibility="Column" AutoGenerateColumns="False" AlternationCount="2" BorderBrush="White" CanUserDeleteRows="False" ClipToBounds="True" IsReadOnly="True" IsTextSearchEnabled="True" AlternatingRowBackground="#FFB2CDDA" Foreground="Black" TextOptions.TextFormattingMode="Display" Background="White" MouseRightButtonUp="mainDataGrid_MouseRightButtonUp" MouseDoubleClick="mainDataGrid_MouseDoubleClick">
-                <DataGrid.DataContext>
-                    <local:LogLine/>
-                </DataGrid.DataContext>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Timestamp"  Binding="{Binding timestamp, StringFormat=\{0:yyyy-MM-dd HH:mm:ss\} }"/>
-                    <DataGridTextColumn Header="Filename"  Binding="{Binding filename}"/>
-                    <DataGridTextColumn Header="Logtype"  Binding="{Binding logtype}"/>
-                    <DataGridTextColumn Header="Loglevel"  Binding="{Binding loglevel}"/>
-                    <DataGridTextColumn Header="Process"  Binding="{Binding process}"/>
-                    <DataGridTextColumn Header="Function"  Binding="{Binding function}"/>
-                    <DataGridTextColumn Header="PID"  Binding="{Binding PID}"/>
-                    <DataGridTextColumn Header="TID"  Binding="{Binding TID}"/>
-                    <DataGridTextColumn Header="Message"  Binding="{Binding messagedata}"  MinWidth="310" MaxWidth="950">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style>
-                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                                <Setter Property="TextBlock.MaxHeight" Value="50"/>
-                                <Setter Property="TextBlock.TextTrimming" Value="CharacterEllipsis"/>
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-                </DataGrid.Columns>
-                <DataGrid.ColumnHeaderStyle>
-                    <Style TargetType="{x:Type DataGridColumnHeader}">
-                        <Setter Property="Background" Value="#34495e"/>
-                        <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="Padding" Value="5,5,5,5"/>
-                    </Style>
-                </DataGrid.ColumnHeaderStyle>
-                <DataGrid.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem x:Name="filterOnMenuItem" Header="Filter on" Click="filterOnMenuItem_Click" >
-                            <MenuItem.Icon>
-                                <Image Source="Resources\empty-filter-64.ico" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem x:Name="copyCell" Header="Copy cell" Click="copyCell_Click"  >
-                            <MenuItem.Icon>
-                                <Image Source="Resources\copy-single.ico" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                        <MenuItem x:Name="copyAlll" Header="Copy row" Command="Copy" >
-                            <MenuItem.Icon>
-                                <Image Source="Resources\copy-64.ico" />
-                            </MenuItem.Icon>
-                        </MenuItem>
-                    </ContextMenu>
-                </DataGrid.ContextMenu>
-            </DataGrid>
-        </ScrollViewer>
+        <DataGrid HorizontalAlignment="Left" Margin="151,74,0,0" x:Name="mainDataGrid" MinWidth="532" MinHeight="400" HeadersVisibility="Column" AutoGenerateColumns="False" AlternationCount="2" BorderBrush="White" CanUserDeleteRows="False" ClipToBounds="True" IsReadOnly="True" IsTextSearchEnabled="True" AlternatingRowBackground="#FFB2CDDA" Foreground="Black" TextOptions.TextFormattingMode="Display" Background="White" MouseRightButtonUp="mainDataGrid_MouseRightButtonUp" MouseDoubleClick="mainDataGrid_MouseDoubleClick">
+            <DataGrid.DataContext>
+                <local:LogLine/>
+            </DataGrid.DataContext>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Timestamp"  Binding="{Binding timestamp, StringFormat=\{0:yyyy-MM-dd HH:mm:ss\} }"/>
+                <DataGridTextColumn Header="Filename"  Binding="{Binding filename}"/>
+                <DataGridTextColumn Header="Logtype"  Binding="{Binding logtype}"/>
+                <DataGridTextColumn Header="Loglevel"  Binding="{Binding loglevel}"/>
+                <DataGridTextColumn Header="Process"  Binding="{Binding process}"/>
+                <DataGridTextColumn Header="Function"  Binding="{Binding function}"/>
+                <DataGridTextColumn Header="PID"  Binding="{Binding PID}"/>
+                <DataGridTextColumn Header="TID"  Binding="{Binding TID}"/>
+                <DataGridTextColumn Header="Message"  Binding="{Binding messagedata}"  MinWidth="310" MaxWidth="950">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style>
+                            <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                            <Setter Property="TextBlock.MaxHeight" Value="50"/>
+                            <Setter Property="TextBlock.TextTrimming" Value="CharacterEllipsis"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="#34495e"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Padding" Value="5,5,5,5"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="filterOnMenuItem" Header="Filter on" Click="filterOnMenuItem_Click" >
+                        <MenuItem.Icon>
+                            <Image Source="Resources\empty-filter-64.ico" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="copyCell" Header="Copy cell" Click="copyCell_Click"  >
+                        <MenuItem.Icon>
+                            <Image Source="Resources\copy-single.ico" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="copyAlll" Header="Copy row" Command="Copy" >
+                        <MenuItem.Icon>
+                            <Image Source="Resources\copy-64.ico" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
 
         <!-- Side Box -->
         <DockPanel HorizontalAlignment="Left" Height="auto" MinHeight="200" LastChildFill="False" Margin="10,74,0,0" VerticalAlignment="Top" Width="136" Background="#FF2C3E50">
