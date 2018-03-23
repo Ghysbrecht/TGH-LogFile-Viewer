@@ -10,7 +10,7 @@ namespace TGH_Log_Viewer
     {
         // DEFAULT VALUES --------------------------------------------------
         private const string defElasticip = "localhost:9200";
-        private const string defDefaultIndex = "maintest";
+        private const string defDefaultIndex = "tghlogstasher";
         private const int defDefaultRecords = 100;
         private const bool defAutoTime = false;
         // -----------------------------------------------------------------
