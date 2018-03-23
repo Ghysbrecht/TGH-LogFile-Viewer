@@ -81,52 +81,62 @@ namespace TGH_Log_Viewer
                 switch (columnName)
                 {
                     case "Filename":
-                        setupDataGrid(queryBuilder.filterOnFilename(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
+                        fillGrid(queryBuilder.filterOnFilename(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
                         break;
                     case "Function":
-                        setupDataGrid(queryBuilder.filterOnFunction(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
+                        fillGrid(queryBuilder.filterOnFunction(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
                         break;
                     case "Process":
-                        setupDataGrid(queryBuilder.filterOnProcess(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
+                        fillGrid(queryBuilder.filterOnProcess(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
                         break;
                     case "PID":
-                        setupDataGrid(queryBuilder.filterOnPID(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
+                        fillGrid(queryBuilder.filterOnPID(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
                         break;
                     case "TID":
-                        setupDataGrid(queryBuilder.filterOnTID(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
+                        fillGrid(queryBuilder.filterOnTID(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
                         break;
                     case "Loglevel":
-                        setupDataGrid(queryBuilder.filterOnLoglevel(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
+                        fillGrid(queryBuilder.filterOnLoglevel(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
                         break;
                     case "Logtype":
-                        setupDataGrid(queryBuilder.filterOnLogtype(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
+                        fillGrid(queryBuilder.filterOnLogtype(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
                         break;
                     case "Message":
-                        setupDataGrid(queryBuilder.filterOnMessage(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
+                        fillGrid(queryBuilder.filterOnMessage(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
                         break;
                     case "Timestamp":
                         if (fromTimeDate.Value == null && toTimeDate.Value == null) fromTimeDate.Text = filterContent;
                         else toTimeDate.Text = filterContent;
                         break;
                     case "global":
-                        setupDataGrid(queryBuilder.globalSearch(filterContent, currentPage * appSettings.defaultRecords, appSettings.defaultRecords));
+                        fillGrid(queryBuilder.globalSearch(filterContent, currentPage * appSettings.defaultRecords, appSettings.defaultRecords));
                         break;
                     default:
                         MessageBox.Show("Not yet supported for this column!");
                         logger.debug("Filtered on column that is not supported! -> " + columnName);
                         break;
                 }
-                if (queryBuilder.getLastError() != "") MessageBox.Show("WARNING: " + queryBuilder.getLastError());
             }
-            else MessageBox.Show("Fitlering disabled! No database connection.");
+            else MessageBox.Show("Filtering disabled! No database connection.");
         }
         //General - Requery the last query with the new offset
         private void updatePageDataGrid()
         {
-            if (queryBuilder != null)
-            {
-                setupDataGrid(queryBuilder.lastQueryNewPage(currentPage * appSettings.defaultRecords, appSettings.defaultRecords));
-            }
+            if (queryBuilder != null) fillGrid(queryBuilder.lastQueryNewPage(currentPage * appSettings.defaultRecords, appSettings.defaultRecords));
+        }
+        //General - Get all data
+        private void getAllData()
+        {
+            fillGrid(queryBuilder.getAllData(currentPage, appSettings.defaultRecords));
+        }
+        //General - Fill the grid during an async call by invoking the setupDataGrid method
+        private void fillGrid(List<LogLine> loglines)
+        {
+            Dispatcher.BeginInvoke(new Action(() => {
+                setupDataGrid(loglines);
+                if (queryBuilder.getLastError() != "") MessageBox.Show("WARNING: " + queryBuilder.getLastError());
+            }));
+            
         }
 
         //Topbar - Update the page counter in the top right
@@ -301,8 +311,7 @@ namespace TGH_Log_Viewer
             if (appSettings == null) setSettings(new AppSettings());
             if (database.isValid())
             {
-                setupDataGrid(queryBuilder.getAllData(currentPage, appSettings.defaultRecords));
-                if (queryBuilder.getLastError() != "") MessageBox.Show("WARNING: " + queryBuilder.getLastError());
+                new Task(getAllData).Start();
             }
             else MessageBox.Show("No connection to a database!");
         }
@@ -313,7 +322,7 @@ namespace TGH_Log_Viewer
             {
                 currentPage -= 1;
                 updatePageCount();
-                updatePageDataGrid();
+                new Task(updatePageDataGrid).Start();
             }
         }
         //Topbar - Pages - Right button page selection
@@ -323,7 +332,7 @@ namespace TGH_Log_Viewer
             {
                 currentPage += 1;
                 updatePageCount();
-                updatePageDataGrid();
+                new Task(updatePageDataGrid).Start();
             }
         }
         //Topbar - Settings - Open settings window
@@ -345,7 +354,7 @@ namespace TGH_Log_Viewer
                 {
                     if (queryBuilder != null) queryBuilder.setTimeBounds(leftTimeBound, rightTimeBound);
                     currentPage = 0;
-                    updatePageDataGrid();
+                    new Task(updatePageDataGrid).Start();
                 }
                 else MessageBox.Show("End date is earlier then start date!");
 
@@ -395,7 +404,7 @@ namespace TGH_Log_Viewer
                 Console.WriteLine("Filtering on empty string! Ignoring...");
             } else
             {
-                filterOnColumnName(rightClickColumnName, rightClickContent);
+                new Task(() => { filterOnColumnName(rightClickColumnName, rightClickContent); }).Start();
                 setFilter(rightClickColumnName, rightClickContent);
             } 
         }
@@ -433,6 +442,7 @@ namespace TGH_Log_Viewer
         private void applyFilterButton_Click(object sender, RoutedEventArgs e)
         {
             filterOnColumnName(dropDownFilterName, filterTextBox.Text);
+            //new Task(() => { filterOnColumnName(dropDownFilterName, filterTextBox.Text); }).Start();
         }
         //Sidebar - Hide the 'hide columns' selector when clicking the header label
         private void Label_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -463,7 +473,7 @@ namespace TGH_Log_Viewer
                 {
                     currentPage = enteredPage - 1;
                     updatePageCount();
-                    updatePageDataGrid();
+                    new Task(updatePageDataGrid).Start();
                 }
                 else MessageBox.Show("Page number not valid!");
             }
@@ -475,7 +485,7 @@ namespace TGH_Log_Viewer
             if (queryBuilder != null) queryBuilder.setTimeBoundsDefault();
             fromTimeDate.Text = "";
             toTimeDate.Text = "";
-            updatePageDataGrid();
+            new Task(updatePageDataGrid).Start();
         }
 
         //Datagrid - Cell right clicked
