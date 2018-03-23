@@ -28,15 +28,17 @@ namespace TGH_Log_Viewer
         String logStasherPath = "";
         String remoteToolPath = "";
 
-        String elasticIp, mainIndex;
+        public String elasticIp { get; set; }
+        public String mainIndex { get; set; }
+        bool done;
         string[] txtFiles;
 
         public LogManagerWindow()
         {
             InitializeComponent();
             setPaths(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location));
+            done = false;
         }
-
 
         // ------- GENERAL -------
         //Error thrower when a step is incorrect
@@ -70,6 +72,11 @@ namespace TGH_Log_Viewer
             executingPath = executingPath.Remove(executingPath.LastIndexOf('\\'));
             logStasherPath = executingPath + "\\LocalLogStash";
             remoteToolPath = executingPath + "\\RemoteLogStash";
+        }
+        //Return if the parser had exited succesfully
+        public bool succesParse()
+        {
+            return done;
         }
 
 
@@ -122,6 +129,7 @@ namespace TGH_Log_Viewer
                 using(Process proc = Process.Start(start))
                 {
                     proc.WaitForExit();
+                    done = true;
                     Console.WriteLine("Script exited with code: " + proc.ExitCode);
                 }
             } catch (System.ComponentModel.Win32Exception e)

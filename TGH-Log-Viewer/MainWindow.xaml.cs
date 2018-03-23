@@ -50,6 +50,7 @@ namespace TGH_Log_Viewer
 
             assignCheckListeners();
             dropDownFilterName = "";
+            appSettings = new AppSettings();
 
             logger.debug("=== Starting TGH Log Viewer ===");
 
@@ -387,11 +388,20 @@ namespace TGH_Log_Viewer
             globalSearchWindow.ShowDialog();
             if (globalSearchWindow.getSearch() != "") filterOnColumnName("global", globalSearchWindow.getSearch());
         }
-        //Topbar - Extra - Clicking the GLOBAL SEARCH button in the extra contextmenu
+        //Topbar - Extra - Clicking the LOGSTASH button in the extra contextmenu
         private void logStashMenu_Click(object sender, RoutedEventArgs e)
         {
             LogManagerWindow logManagerWindow = new LogManagerWindow();
             logManagerWindow.ShowDialog();
+            if (logManagerWindow.succesParse())
+            {
+                System.Windows.Forms.DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Logparser finished, do you want to copy the server settings to the current log viewer?", "Parser finished!", System.Windows.Forms.MessageBoxButtons.YesNo);
+                if (dialogResult == System.Windows.Forms.DialogResult.Yes)
+                {
+                    appSettings.defaultIndex = logManagerWindow.mainIndex;
+                    appSettings.elasticip = logManagerWindow.elasticIp;
+                }
+            }
         }
 
         //Datagrid - Contextmenu 'filter on'
