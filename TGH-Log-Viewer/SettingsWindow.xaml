@@ -24,8 +24,9 @@
         <RadioButton Name="onAutoTimeButton" Content="ON" Margin="110,165,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="40" Height="20" Padding="0" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" KeyUp="Button_KeyUp"/>
         <RadioButton Name="offAutoTimeButton" IsChecked="True" Content="OFF" Margin="160,165,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="40" Height="20" Padding="0" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" KeyUp="Button_KeyUp"/>
         
-        <Button Width="70" Height="25" Margin="105,198,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="SAVE" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="Button_Confirm" KeyUp="Button_KeyUp"/>
-
+        <Button Width="70" Height="25" Margin="5,198,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="SAVE" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="Button_Confirm" KeyUp="Button_KeyUp"/>
+        <Button Width="100" Height="25" Margin="80,198,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="SET AS DEFAULT" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="Button_SetDefault" ToolTip="When starting the application, the defaults are loaded" />
+        <Button Width="100" Height="25" Margin="185,198,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="LOAD DEFAULTS" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="Button_GetDefault" ToolTip="Load the default values" />
 
     </Grid>
 </Window>

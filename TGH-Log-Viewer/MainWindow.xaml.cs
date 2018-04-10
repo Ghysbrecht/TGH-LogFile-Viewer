@@ -51,6 +51,8 @@ namespace TGH_Log_Viewer
             assignCheckListeners();
             dropDownFilterName = "";
             appSettings = new AppSettings();
+            appSettings = appSettings.restoreFromFile();
+            //if (appSettings == null) appSettings = new AppSettings();
 
             logger.debug("=== Starting TGH Log Viewer ===");
 

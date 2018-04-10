@@ -23,10 +23,7 @@ namespace TGH_Log_Viewer
             if (appSettings == null) appSettings = new AppSettings();
             InitializeComponent();
             this.settings = appSettings;
-            serverTextBox.Text = settings.elasticip;
-            defaultIndexTextBox.Text = settings.defaultIndex;
-            defaultRecordsTextBox.Text = settings.defaultRecords.ToString();
-            onAutoTimeButton.IsChecked = settings.autoTime;
+            fillTextBoxes();
         }
         private void Button_Confirm(object sender, RoutedEventArgs e)
         {
@@ -64,6 +61,25 @@ namespace TGH_Log_Viewer
             settings.defaultIndex = defaultIndexTextBox.Text;
             settings.defaultRecords = parseFieldNumber(defaultRecordsTextBox);
             settings.autoTime = (bool)onAutoTimeButton.IsChecked;
+        }
+
+        private void fillTextBoxes()
+        {
+            serverTextBox.Text = settings.elasticip;
+            defaultIndexTextBox.Text = settings.defaultIndex;
+            defaultRecordsTextBox.Text = settings.defaultRecords.ToString();
+            onAutoTimeButton.IsChecked = settings.autoTime;
+        }
+
+        private void Button_SetDefault(object sender, RoutedEventArgs e)
+        {
+            saveAll();
+            settings.saveToFile();
+        }
+        private void Button_GetDefault(object sender, RoutedEventArgs e)
+        {
+            settings = settings.restoreFromFile();
+            fillTextBoxes();
         }
     }
 }
