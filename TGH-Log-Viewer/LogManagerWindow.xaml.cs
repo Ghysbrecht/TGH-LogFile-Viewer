@@ -16,6 +16,7 @@ using System.Text.RegularExpressions;
 using System.IO;
 using System.Diagnostics;
 using System.Timers;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace TGH_Log_Viewer
 {
@@ -248,41 +249,45 @@ namespace TGH_Log_Viewer
         //Leftclick - SELECT LOG FOLDER - Select a folder where the logfiles are
         private void selectFolderButton_Click(object sender, RoutedEventArgs e)
         {
-            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            var dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+            dialog.Title = "Select the folder where the logfiles are stored.";
+            Window parentWindow = Window.GetWindow(this);
+            CommonFileDialogResult result = dialog.ShowDialog(parentWindow);
+
+            if (result == CommonFileDialogResult.Ok)
             {
-                dialog.Description = "Select the folder where the logfiles are stored.";
-                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-                if (result == System.Windows.Forms.DialogResult.OK)
+                logfilesPath = dialog.FileName;
+                Console.WriteLine("Path: " + logfilesPath);
+                if((Button)sender == selectFolderButton)
                 {
-                    logfilesPath = dialog.SelectedPath;
-                    Console.WriteLine("Path: " + logfilesPath);
-                    if((Button)sender == selectFolderButton)
-                    {
-                        pathTextBox.Text = logfilesPath;
-                        checkForTextFiles(logfilesPath, numberFilesFoundLabel);
-                    } else
-                    {
-                        pathRTextBox.Text = logfilesPath;
-                        checkForTextFiles(logfilesPath, numberRFilesFoundLabel);
-                    }
+                    pathTextBox.Text = logfilesPath;
+                    checkForTextFiles(logfilesPath, numberFilesFoundLabel);
+                } else
+                {
+                    pathRTextBox.Text = logfilesPath;
+                    checkForTextFiles(logfilesPath, numberRFilesFoundLabel);
                 }
             }
+            
         }
         //Leftclick - SELECT SCRIPT FOLDER - Open directory explorer to select de script folder
         private void selectScriptButton_Click(object sender, RoutedEventArgs e)
         {
-            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            var dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+            dialog.Title = "Select the folder where the script is stored.";
+            dialog.DefaultDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            Window parentWindow = Window.GetWindow(this);
+            CommonFileDialogResult result = dialog.ShowDialog(parentWindow);
+
+            if (result == CommonFileDialogResult.Ok)
             {
-                dialog.Description = "Select the folder where the script is stored.";
-                dialog.SelectedPath = AppDomain.CurrentDomain.BaseDirectory;
-                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-                if (result == System.Windows.Forms.DialogResult.OK)
-                {
-                    if ((Button)sender == selectScriptButton) logStasherPath = dialog.SelectedPath;
-                    else remoteToolPath = dialog.SelectedPath;
-                    Console.WriteLine("Script Path: " + dialog.SelectedPath);
-                }
+                if ((Button)sender == selectScriptButton) logStasherPath = dialog.FileName;
+                else remoteToolPath = dialog.FileName;
+                Console.WriteLine("Script Path: " + dialog.FileName);
             }
+            
         }
         //Leftclick - CHECK - Check if the entered path is ok
         private void Button_Click(object sender, RoutedEventArgs e)
