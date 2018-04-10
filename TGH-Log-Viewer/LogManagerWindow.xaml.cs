@@ -321,7 +321,7 @@ namespace TGH_Log_Viewer
             if (!checkIp(ip, port, new TimeSpan(0, 0, 1))) aok = disablePart(ipCheckMark, "No connection to the server!");
             else ipCheckMark.Visibility = Visibility.Visible;
 
-            if (!checkIndex(index)) aok = disablePart(indexCheckMark, "Index name not valid");
+            if (!checkIndex(index)) aok = disablePart(indexCheckMark, "Index name not valid! Name must follow these rules: \n \n - Must not contain: \\ / * ? “ < > | \n - Must not start with: . .. _ - + \n - Must be lower case");
             else indexCheckMark.Visibility = Visibility.Visible;
 
             if (aok)
