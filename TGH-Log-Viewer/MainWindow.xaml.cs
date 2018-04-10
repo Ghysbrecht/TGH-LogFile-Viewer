@@ -391,7 +391,10 @@ namespace TGH_Log_Viewer
         {
             GlobalSearchWindow globalSearchWindow = new GlobalSearchWindow();
             globalSearchWindow.ShowDialog();
-            if (globalSearchWindow.getSearch() != "") filterOnColumnName("global", globalSearchWindow.getSearch());
+            if (globalSearchWindow.getSearch() != "") {
+                currentPage = 0;
+                filterOnColumnName("global", globalSearchWindow.getSearch());
+            }
         }
         //Topbar - Extra - Clicking the LOGSTASH button in the extra contextmenu
         private void logStashMenu_Click(object sender, RoutedEventArgs e)
