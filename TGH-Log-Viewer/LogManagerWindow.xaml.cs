@@ -27,6 +27,7 @@ namespace TGH_Log_Viewer
         String logfilesPath = "";
         String logStasherPath = "";
         String remoteToolPath = "";
+        String defaultRemoteElasticIp = "10.11.101.65:9200";
 
         public String elasticIp { get; set; }
         public String mainIndex { get; set; }
@@ -173,6 +174,11 @@ namespace TGH_Log_Viewer
                 using (Process proc = Process.Start(start))
                 {
                     proc.WaitForExit();
+                    done = true;
+                    if (remoteElasticCheck.IsChecked == true) elasticIp = remoteElasticIp + ":" + remoteElasticPort;
+                    else elasticIp = defaultRemoteElasticIp;
+                    mainIndex = index;
+                    Console.WriteLine("Remote script finished, storing these values for later retrieval: index -> " + index + "  Elastic IP -> " + elasticIp);
                     Console.WriteLine("Script exited with code: " + proc.ExitCode);
                 }
             } catch (System.ComponentModel.Win32Exception e)
