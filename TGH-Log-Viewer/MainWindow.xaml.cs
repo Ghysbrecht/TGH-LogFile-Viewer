@@ -29,6 +29,7 @@ namespace TGH_Log_Viewer
         GraphWindow graphWindow;
 
         int currentPage = 0;
+        int currentScrollOffset = 0;
 
         String rightClickColumnName = "";
         String rightClickContent = "";
@@ -52,10 +53,33 @@ namespace TGH_Log_Viewer
             dropDownFilterName = "";
             appSettings = new AppSettings();
             appSettings = appSettings.restoreFromFile();
-            //if (appSettings == null) appSettings = new AppSettings();
 
             logger.debug("=== Starting TGH Log Viewer ===");
 
+            mainDataGrid.Loaded += attachScrollViewerListener;
+
+        }
+
+        private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            ScrollViewer scrollViewer = sender as ScrollViewer;
+            
+            Console.WriteLine("Scrolloffset: " + scrollViewer.ContentVerticalOffset);
+            Console.WriteLine("Vertical Viewport: " + scrollViewer.ViewportHeight);
+
+            if (scrollViewer.ContentVerticalOffset + scrollViewer.ViewportHeight > mainDataGrid.Items.Count - 1)
+            {
+                Console.WriteLine("UPDATING SCROLLVIEWER WITH NEW DATA");
+                currentScrollOffset++;
+                new Task(appendScroll).Start();
+            }
+            
+
+        }
+        //General - Append the next block of data to the current set.
+        private void appendScroll()
+        {
+            fillGrid(queryBuilder.lastQueryNewPage((currentPage + currentScrollOffset ) * appSettings.defaultRecords, appSettings.defaultRecords),true);
         }
 
         //General - Set the settings for this project
@@ -133,13 +157,47 @@ namespace TGH_Log_Viewer
             fillGrid(queryBuilder.getAllData(currentPage, appSettings.defaultRecords));
         }
         //General - Fill the grid during an async call by invoking the setupDataGrid method
-        private void fillGrid(List<LogLine> loglines)
+        private void fillGrid(List<LogLine> loglines, bool append = false)
         {
             Dispatcher.BeginInvoke(new Action(() => {
-                setupDataGrid(loglines);
+                setupDataGrid(loglines, append);
                 if (queryBuilder.getLastError() != "") MessageBox.Show("WARNING: " + queryBuilder.getLastError());
             }));
             
+        }
+        //General - Get visual child
+        private static T getVisualChild<T>(DependencyObject parent) where T : Visual
+        {
+            Console.WriteLine("Starting child finder...");
+            T child = default(T);
+
+            int numVisuals = VisualTreeHelper.GetChildrenCount(parent);
+            Console.WriteLine("Parent of item: " + VisualTreeHelper.GetParent(parent).ToString());
+            Console.WriteLine("Item: " + parent.ToString());
+            Console.WriteLine("Found " + numVisuals + " children.");
+            for (int i = 0; i < numVisuals; i++)
+            {
+                Visual v = (Visual)VisualTreeHelper.GetChild(parent, i);
+                child = v as T;
+                if (child == null)
+                {
+                    Console.WriteLine("Child " + i + " was NULL! NEEEXT");
+                    child = getVisualChild<T>(v);
+                }
+                if (child != null)
+                {
+                    
+                    break;
+                }
+            }
+            return child;
+        }
+        //General - Attach ScrollViewer Listener
+        private void attachScrollViewerListener(Object sender, RoutedEventArgs e)
+        {
+            ScrollViewer scrollViewer = getVisualChild<ScrollViewer>(mainDataGrid);
+            if (scrollViewer != null) scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
+            else logger.debug("No scrollviewer found!");
         }
 
         //Topbar - Update the page counter in the top right
@@ -153,23 +211,28 @@ namespace TGH_Log_Viewer
         }
 
         //Datagrid - Updates the dataGrid with data
-        private void setupDataGrid(IReadOnlyCollection<LogLine> loglines)
+        private void setupDataGrid(IReadOnlyCollection<LogLine> loglines, bool append = false)
         {
             if (loglines != null)
             {
                 leftButton.IsEnabled = true;
                 rightButton.IsEnabled = true;
-                mainDataGrid.ItemsSource = loglines;
-                rowLabel.Content = loglines.Count;
+                if (!append)
+                {
+                    currentScrollOffset = 0;
+                    mainDataGrid.Items.Clear();
+                }
+                foreach (LogLine logline in loglines) { mainDataGrid.Items.Add(logline); }
+                rowLabel.Content = mainDataGrid.Items.Count;
                 if (appSettings.autoTime && loglines.Count > 0)
                 {
-                    fromTimeDate.Value = loglines.First().timestamp;
-                    toTimeDate.Value = loglines.Last().timestamp;
+                    fromTimeDate.Value = ((LogLine)mainDataGrid.Items.GetItemAt(0)).timestamp;
+                    toTimeDate.Value = ((LogLine)mainDataGrid.Items.GetItemAt(mainDataGrid.Items.Count - 1)).timestamp;
                 }
                 updatePageCount();
                 if (graphWindow != null) graphWindow.createFromData(loglines);
             }
-            else logger.debug("Seting up datagrid failed -> Data is null");
+            else logger.debug("Setting up datagrid failed -> Data is null");
         }
 
         //Sidebar - Add the onContextCheck handler to all menuItems in the filter contextmenu
