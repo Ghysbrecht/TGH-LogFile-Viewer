@@ -86,7 +86,7 @@
                 <local:LogLine/>
             </DataGrid.DataContext>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Timestamp"  Binding="{Binding timestamp, StringFormat=\{0:yyyy-MM-dd HH:mm:ss.fff\} }"/>
+                <DataGridTextColumn Header="Timestamp"  Binding="{Binding timestamp, StringFormat=\{0:yyyy-MM-dd HH:mm:ss.fff\}}" MinWidth="140"/>
                 <DataGridTextColumn Header="Filename"  Binding="{Binding filename}"/>
                 <DataGridTextColumn Header="Logtype"  Binding="{Binding logtype}"/>
                 <DataGridTextColumn Header="Loglevel"  Binding="{Binding loglevel}"/>
@@ -94,7 +94,7 @@
                 <DataGridTextColumn Header="Function"  Binding="{Binding function}"/>
                 <DataGridTextColumn Header="PID"  Binding="{Binding PID}"/>
                 <DataGridTextColumn Header="TID"  Binding="{Binding TID}"/>
-                <DataGridTextColumn Header="Message"  Binding="{Binding messagedata}"  Width="*">
+                <DataGridTextColumn Header="Message"  Binding="{Binding messagedata}" MinWidth="180" Width="*">
                     <DataGridTextColumn.ElementStyle>
                         <Style>
                             <Setter Property="TextBlock.TextWrapping" Value="Wrap" />

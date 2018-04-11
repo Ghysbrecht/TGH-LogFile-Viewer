@@ -27,6 +27,7 @@ namespace TGH_Log_Viewer
 
         AppSettings appSettings;
         GraphWindow graphWindow;
+        ScrollViewer scrollViewer;
 
         int currentPage = 0;
         int currentScrollOffset = 0;
@@ -59,29 +60,11 @@ namespace TGH_Log_Viewer
             mainDataGrid.Loaded += attachScrollViewerListener;
 
         }
-
-        private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
-        {
-            ScrollViewer scrollViewer = sender as ScrollViewer;
-            
-            Console.WriteLine("Scrolloffset: " + scrollViewer.ContentVerticalOffset);
-            Console.WriteLine("Vertical Viewport: " + scrollViewer.ViewportHeight);
-
-            if (scrollViewer.ContentVerticalOffset + scrollViewer.ViewportHeight > mainDataGrid.Items.Count - 1)
-            {
-                Console.WriteLine("UPDATING SCROLLVIEWER WITH NEW DATA");
-                currentScrollOffset++;
-                new Task(appendScroll).Start();
-            }
-            
-
-        }
         //General - Append the next block of data to the current set.
         private void appendScroll()
         {
             fillGrid(queryBuilder.lastQueryNewPage((currentPage + currentScrollOffset ) * appSettings.defaultRecords, appSettings.defaultRecords),true);
         }
-
         //General - Set the settings for this project
         private void setSettings(AppSettings settings)
         {
@@ -168,25 +151,19 @@ namespace TGH_Log_Viewer
         //General - Get visual child
         private static T getVisualChild<T>(DependencyObject parent) where T : Visual
         {
-            Console.WriteLine("Starting child finder...");
             T child = default(T);
 
             int numVisuals = VisualTreeHelper.GetChildrenCount(parent);
-            Console.WriteLine("Parent of item: " + VisualTreeHelper.GetParent(parent).ToString());
-            Console.WriteLine("Item: " + parent.ToString());
-            Console.WriteLine("Found " + numVisuals + " children.");
             for (int i = 0; i < numVisuals; i++)
             {
                 Visual v = (Visual)VisualTreeHelper.GetChild(parent, i);
                 child = v as T;
                 if (child == null)
                 {
-                    Console.WriteLine("Child " + i + " was NULL! NEEEXT");
                     child = getVisualChild<T>(v);
                 }
                 if (child != null)
                 {
-                    
                     break;
                 }
             }
@@ -195,7 +172,7 @@ namespace TGH_Log_Viewer
         //General - Attach ScrollViewer Listener
         private void attachScrollViewerListener(Object sender, RoutedEventArgs e)
         {
-            ScrollViewer scrollViewer = getVisualChild<ScrollViewer>(mainDataGrid);
+            scrollViewer = getVisualChild<ScrollViewer>(mainDataGrid);
             if (scrollViewer != null) scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
             else logger.debug("No scrollviewer found!");
         }
@@ -220,6 +197,7 @@ namespace TGH_Log_Viewer
                 if (!append)
                 {
                     currentScrollOffset = 0;
+                    if (scrollViewer != null) scrollViewer.ScrollToTop();
                     mainDataGrid.Items.Clear();
                 }
                 foreach (LogLine logline in loglines) { mainDataGrid.Items.Add(logline); }
@@ -371,7 +349,18 @@ namespace TGH_Log_Viewer
                 openContextMenu();
             }));
         }
+        //Datagrid - Event fires when scrolled in the datagrid
+        private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            ScrollViewer scrollViewer = sender as ScrollViewer;
 
+            if (scrollViewer.ContentVerticalOffset + scrollViewer.ViewportHeight > mainDataGrid.Items.Count - 1)
+            {
+                Console.WriteLine("Reached end of page, retrieving new data.");
+                currentScrollOffset++;
+                new Task(appendScroll).Start();
+            }
+        }
 
         //---- LEFT CLICK LISTENERS ----
         //Topbar - Main - Get data button
