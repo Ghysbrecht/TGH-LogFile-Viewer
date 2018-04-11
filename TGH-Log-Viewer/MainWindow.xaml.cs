@@ -117,8 +117,8 @@ namespace TGH_Log_Viewer
                     case "Timestamp":
                         Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            if (fromTimeDate.Value == null && toTimeDate.Value == null) fromTimeDate.Text = filterContent.Remove(filterContent.LastIndexOf('.'));
-                            else toTimeDate.Text = filterContent.Remove(filterContent.LastIndexOf('.'));
+                            if (fromTimeDate.Value == null && toTimeDate.Value == null) fromTimeDate.Text = filterContent;
+                            else toTimeDate.Text = filterContent; 
                             bottomStatusText.Text = "Ready";
                         }));
                         break;
@@ -442,6 +442,15 @@ namespace TGH_Log_Viewer
 
             }
             else MessageBox.Show("Dates not valid!");
+        }
+        //Topbar - Clear Filter - Clicked the clear filter button
+        private void clearButton_Click(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Right clicked on filter!");
+            if (queryBuilder != null) queryBuilder.setTimeBoundsDefault();
+            fromTimeDate.Text = "";
+            toTimeDate.Text = "";
+            new Task(updatePageDataGrid).Start();
         }
         //Topbar - Extra - Clicking the INFO button in the extra contextmenu
         private void infoMenu_Click(object sender, RoutedEventArgs e)
