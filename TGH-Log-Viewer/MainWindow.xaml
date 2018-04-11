@@ -93,14 +93,14 @@
                 <DataGridTextColumn Header="Logtype"  Binding="{Binding logtype}"/>
                 <DataGridTextColumn Header="Loglevel"  Binding="{Binding loglevel}"/>
                 <DataGridTextColumn Header="Process"  Binding="{Binding process}"/>
-                <DataGridTextColumn Header="Function"  Binding="{Binding function}"/>
+                <DataGridTextColumn Header="Function"  Binding="{Binding function}" MaxWidth="300"/>
                 <DataGridTextColumn Header="PID"  Binding="{Binding PID}"/>
                 <DataGridTextColumn Header="TID"  Binding="{Binding TID}"/>
                 <DataGridTextColumn Header="Message"  Binding="{Binding messagedata}" MinWidth="180" Width="*">
                     <DataGridTextColumn.ElementStyle>
                         <Style>
                             <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
-                            <Setter Property="TextBlock.MaxHeight" Value="50"/>
+                            <Setter Property="TextBlock.MaxHeight" Value="40"/>
                             <Setter Property="TextBlock.TextTrimming" Value="CharacterEllipsis"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
