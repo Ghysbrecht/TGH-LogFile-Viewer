@@ -58,7 +58,6 @@ namespace TGH_Log_Viewer
             logger.debug("=== Starting TGH Log Viewer ===");
 
             mainDataGrid.Loaded += attachScrollViewerListener;
-
         }
         //General - Append the next block of data to the current set.
         private void appendScroll()
@@ -354,7 +353,7 @@ namespace TGH_Log_Viewer
         {
             ScrollViewer scrollViewer = sender as ScrollViewer;
 
-            if (scrollViewer.ContentVerticalOffset + scrollViewer.ViewportHeight > mainDataGrid.Items.Count - 1)
+            if (mainDataGrid.Items.Count > 0 && scrollViewer.ContentVerticalOffset + scrollViewer.ViewportHeight > mainDataGrid.Items.Count - 1)
             {
                 Console.WriteLine("Reached end of page, retrieving new data.");
                 currentScrollOffset++;

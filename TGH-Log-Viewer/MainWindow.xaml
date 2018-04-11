@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:TGH_Log_Viewer"
         mc:Ignorable="d"
-        Title="TGH Log Viewer" Height="512.392" Width="718.66" MinWidth="870" MinHeight="512">
+        Title="Skyline Log Viewer" Height="512.392" Width="718.66" MinWidth="870" MinHeight="512">
     <Grid Background="#FF2C3E50">
         <!-- Topbox -->
         <DockPanel HorizontalAlignment="Left" Height="59" LastChildFill="False" Margin="10,10,0,0" VerticalAlignment="Top" Width="830" Background="#FF34495E">
