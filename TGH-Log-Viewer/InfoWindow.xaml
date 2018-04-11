@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Info" Height="150" Width="200" MinHeight="150" MinWidth="200" ResizeMode="NoResize">
     <Grid>
-        <Label Content="Made by Thomas Ghysbrecht &#10;QA by Tom V.          v0.1 Beta" HorizontalAlignment="Left" VerticalAlignment="Top" Height="42" Width="185" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FF34495E"/>
+        <Label Content="Made by Thomas Ghysbrecht &#10;                 v0.1 Beta" HorizontalAlignment="Left" VerticalAlignment="Top" Height="42" Width="185" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FF34495E"/>
         <Image HorizontalAlignment="Left" Height="50" Margin="30,50,0,0" VerticalAlignment="Top" Width="50" Source="Resources\skyline_bird1.png"/>
         <Image HorizontalAlignment="Left" Height="70" Margin="95,42,0,0" VerticalAlignment="Top" Width="70" Source="Resources\vives.jpg" />
 

@@ -58,6 +58,7 @@ namespace TGH_Log_Viewer
             logger.debug("=== Starting TGH Log Viewer ===");
 
             mainDataGrid.Loaded += attachScrollViewerListener;
+            bottomStatusText.Text = "Ready";
         }
         //General - Append the next block of data to the current set.
         private void appendScroll()
@@ -114,19 +115,33 @@ namespace TGH_Log_Viewer
                         fillGrid(queryBuilder.filterOnMessage(currentPage * appSettings.defaultRecords, appSettings.defaultRecords, filterContent));
                         break;
                     case "Timestamp":
-                        if (fromTimeDate.Value == null && toTimeDate.Value == null) fromTimeDate.Text = filterContent;
-                        else toTimeDate.Text = filterContent;
+                        Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            if (fromTimeDate.Value == null && toTimeDate.Value == null) fromTimeDate.Text = filterContent.Remove(filterContent.LastIndexOf('.'));
+                            else toTimeDate.Text = filterContent.Remove(filterContent.LastIndexOf('.'));
+                            bottomStatusText.Text = "Ready";
+                        }));
                         break;
                     case "global":
                         fillGrid(queryBuilder.globalSearch(filterContent, currentPage * appSettings.defaultRecords, appSettings.defaultRecords));
                         break;
                     default:
-                        MessageBox.Show("Not yet supported for this column!");
-                        logger.debug("Filtered on column that is not supported! -> " + columnName);
+                        Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            MessageBox.Show("Not yet supported for this column!");
+                            logger.debug("Filtered on column that is not supported! -> " + columnName);
+                            bottomStatusText.Text = "Ready";
+                        }));
                         break;
                 }
             }
-            else MessageBox.Show("Filtering disabled! No database connection.");
+            else
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    MessageBox.Show("Filtering disabled! No database connection.");
+                }));
+            }
         }
         //General - Requery the last query with the new offset
         private void updatePageDataGrid()
@@ -210,6 +225,7 @@ namespace TGH_Log_Viewer
                 if (graphWindow != null) graphWindow.createFromData(loglines);
             }
             else logger.debug("Setting up datagrid failed -> Data is null");
+            bottomStatusText.Text = "Ready";
         }
 
         //Sidebar - Add the onContextCheck handler to all menuItems in the filter contextmenu
@@ -296,7 +312,7 @@ namespace TGH_Log_Viewer
             scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
             e.Handled = true;
         }
-        //Sidebar - When entering while the filter textbox is in focus OR Arrowdown for sugestions
+        //Sidebar - When entering while the filter textbox is in focus OR Arrow down for sugestions
         private void filterTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -352,9 +368,13 @@ namespace TGH_Log_Viewer
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             ScrollViewer scrollViewer = sender as ScrollViewer;
+            long totalHits = 0;
+            if (queryBuilder != null) totalHits = queryBuilder.getLastResponseHits();
+            int displayedHits = mainDataGrid.Items.Count;
 
-            if (mainDataGrid.Items.Count > 0 && scrollViewer.ContentVerticalOffset + scrollViewer.ViewportHeight > mainDataGrid.Items.Count - 1)
+            if (displayedHits > 0 && currentPage * appSettings.defaultRecords + displayedHits < totalHits  && scrollViewer.ContentVerticalOffset + scrollViewer.ViewportHeight > mainDataGrid.Items.Count - 1)
             {
+                bottomStatusText.Text = "Getting Data";
                 Console.WriteLine("Reached end of page, retrieving new data.");
                 currentScrollOffset++;
                 new Task(appendScroll).Start();
@@ -368,6 +388,7 @@ namespace TGH_Log_Viewer
             if (appSettings == null || database == null) setSettings(new AppSettings());
             if (database.isValid())
             {
+                bottomStatusText.Text = "Getting Data";
                 new Task(getAllData).Start();
             }
             else MessageBox.Show("No connection to a database!");
@@ -379,6 +400,7 @@ namespace TGH_Log_Viewer
             {
                 currentPage -= 1;
                 updatePageCount();
+                bottomStatusText.Text = "Getting Data";
                 new Task(updatePageDataGrid).Start();
             }
         }
@@ -389,16 +411,18 @@ namespace TGH_Log_Viewer
             {
                 currentPage += 1;
                 updatePageCount();
+                bottomStatusText.Text = "Getting Data";
                 new Task(updatePageDataGrid).Start();
             }
         }
         //Topbar - Settings - Open settings window
         private void settingsButton_Click(object sender, RoutedEventArgs e)
         {
+            bottomStatusText.Text = "Settings Open";
             SettingsWindow settingsWindow = new SettingsWindow(appSettings);
             settingsWindow.ShowDialog();
             setSettings(settingsWindow.getAppSettings());
-
+            bottomStatusText.Text = "Ready";
         }
         //Topbar - Filter - Clicked the filter button
         private void filterButton_Click(object sender, RoutedEventArgs e)
@@ -411,6 +435,7 @@ namespace TGH_Log_Viewer
                 {
                     if (queryBuilder != null) queryBuilder.setTimeBounds(leftTimeBound, rightTimeBound);
                     currentPage = 0;
+                    bottomStatusText.Text = "Getting Data";
                     new Task(updatePageDataGrid).Start();
                 }
                 else MessageBox.Show("End date is earlier then start date!");
@@ -421,8 +446,10 @@ namespace TGH_Log_Viewer
         //Topbar - Extra - Clicking the INFO button in the extra contextmenu
         private void infoMenu_Click(object sender, RoutedEventArgs e)
         {
+            bottomStatusText.Text = "Info Open";
             InfoWindow infoWindow = new InfoWindow();
             infoWindow.ShowDialog();
+            bottomStatusText.Text = "Ready";
         }
         //Topbar - Extra - Clicking the GRAPH button in the extra contextmenu
         private void graphMenu_Click(object sender, RoutedEventArgs e)
@@ -434,23 +461,28 @@ namespace TGH_Log_Viewer
         //Topbar - Extra - Clicking the ANALYZE button in the extra contextmenu
         private void analyzeMenu_Click(object sender, RoutedEventArgs e)
         {
+            bottomStatusText.Text = "Analyze Open";
             AnalyzeWindow analyzeWindow = new AnalyzeWindow();
-            analyzeWindow.Show();
+            analyzeWindow.ShowDialog();
+            bottomStatusText.Text = "Ready";
         }
         //Topbar - Extra - Clicking the GLOBAL SEARCH button in the extra contextmenu
         private void globalSearchMenu_Click(object sender, RoutedEventArgs e)
         {
             GlobalSearchWindow globalSearchWindow = new GlobalSearchWindow();
+            bottomStatusText.Text = "Global Search Open";
             globalSearchWindow.ShowDialog();
             if (globalSearchWindow.getSearch() != "") {
                 currentPage = 0;
                 filterOnColumnName("global", globalSearchWindow.getSearch());
             }
+            bottomStatusText.Text = "Ready";
         }
         //Topbar - Extra - Clicking the LOGSTASH button in the extra contextmenu
         private void logStashMenu_Click(object sender, RoutedEventArgs e)
         {
             LogManagerWindow logManagerWindow = new LogManagerWindow();
+            bottomStatusText.Text = "Log Manager Open";
             logManagerWindow.ShowDialog();
             if (logManagerWindow.succesParse())
             {
@@ -461,6 +493,7 @@ namespace TGH_Log_Viewer
                     appSettings.elasticip = logManagerWindow.elasticIp;
                 }
             }
+            bottomStatusText.Text = "Ready";
         }
 
         //Datagrid - Contextmenu 'filter on'
@@ -473,6 +506,7 @@ namespace TGH_Log_Viewer
                 Console.WriteLine("Filtering on empty string! Ignoring...");
             } else
             {
+                bottomStatusText.Text = "Getting Data";
                 new Task(() => { filterOnColumnName(rightClickColumnName, rightClickContent); }).Start();
                 setFilter(rightClickColumnName, rightClickContent);
             } 
