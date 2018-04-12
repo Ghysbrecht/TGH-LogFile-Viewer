@@ -134,6 +134,7 @@
       <DependentUpon>PageNumberWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ParsedLogLines.cs" />
+    <Compile Include="SearchRequest.cs" />
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>

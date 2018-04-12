@@ -19,6 +19,9 @@ namespace TGH_Log_Viewer
         long lastHits = 0;
         String lastError = "";
 
+        List<SearchRequest> searchHistory;
+
+
         public LLQueryBuilder(ElasticLowLevelClient client)
         {
             setClient(client);
@@ -26,6 +29,7 @@ namespace TGH_Log_Viewer
             mainIndex = "maintest";
             setElasticSettings();
             logger.debug("QueryBuilder created!");
+            searchHistory = new List<SearchRequest>();
         }
 
         public void setClient(ElasticLowLevelClient client)
@@ -39,9 +43,9 @@ namespace TGH_Log_Viewer
             mainIndex = index;
         }
 
-        public List<LogLine> getAllData(int offset, int records)
+        public List<LogLine> getAllData(int offset, int records, bool saveInHistory = true)
         {
-            return toLogLines(filterOn("all", "", offset, records));
+            return toLogLines(filterOn("all", "", offset, records, saveInHistory));
         }
 
         public List<LogLine> filterOnFilename(int offset, int records, String term)
@@ -86,8 +90,9 @@ namespace TGH_Log_Viewer
             return toLogLines(filterOn("messagedata", term, offset, records));
         }
 
-        private String filterOn(String column, String message, int offset, int records)
+        private String filterOn(String column, String message, int offset, int records, bool saveInHistory = true)
         {
+            if(saveInHistory) searchHistory.Add(new SearchRequest(message, column));
             logger.debug("Filtering on: OF:" + offset + " RE:" + records + " COL:" + column + " -> " + (message.Length <= 50 ? message : message.Substring(0,50)));
             lastExecuted = column;
             savedTerm = message;
@@ -122,9 +127,9 @@ namespace TGH_Log_Viewer
             return suggestionFactory.getSuggestionsFromJson(json);
         }
 
-        public List<LogLine> globalSearch(String term, int offset, int records)
+        public List<LogLine> globalSearch(String term, int offset, int records, bool saveInHistory = true)
         {
-            return toLogLines(filterOn("global", term, offset, records));
+            return toLogLines(filterOn("global", term, offset, records,saveInHistory));
         }
 
         private List<LogLine> toLogLines(String json)
@@ -142,9 +147,48 @@ namespace TGH_Log_Viewer
 
         public List<LogLine> lastQueryNewPage(int offset, int records)
         {
-            if (lastExecuted == "all") return getAllData(offset, records);
-            else if (lastExecuted == "global") return globalSearch(savedTerm, offset, records);
-            else return toLogLines(filterOn(lastExecuted, savedTerm, offset, records));
+            return requeryPrevious(0, offset, records);
+        }
+
+        public List<LogLine> previousQuery(int offset, int records)
+        {
+            if(searchHistory.Count > 1) searchHistory.Remove(searchHistory.Last());
+            return lastQueryNewPage(offset, records);
+        }
+
+        public SearchRequest getLastQueryData()
+        {
+            return (searchHistory.Count > 0) ? searchHistory.Last() : new SearchRequest("", "");
+        }
+
+
+        //Requery a query that was once executed 0 = most recent, 1 = that one before that etc.
+        public List<LogLine> requeryPrevious(int historyIndex,int offset, int records)
+        {
+            Console.WriteLine("Requested previous query: historyIndex -> " + historyIndex + "   Ammount of history objects: " + searchHistory.Count );
+            if(historyIndex < 0 || historyIndex >= searchHistory.Count)
+            {
+                logger.error("RequeryPrevious index out of range!");
+                historyIndex = 0;
+            }
+            int elementNumber = searchHistory.Count - (historyIndex + 1);
+            if (elementNumber >= 0 && elementNumber < searchHistory.Count)
+            {
+                if (historyIndex == 0) return reExecute(searchHistory.ElementAt(elementNumber), offset, records, false);
+                else return reExecute(searchHistory.ElementAt(elementNumber), offset, records);
+            }
+            else
+            {
+                logger.error("RequeryPrevious - No elements in history!");
+                return null;
+            }
+        }
+
+        private List<LogLine> reExecute(SearchRequest request, int offset, int records, bool saveInHistory = true)
+        {
+            if (request.searchColumn == "all") return getAllData(offset, records, saveInHistory);
+            else if (request.searchColumn == "global") return globalSearch(request.searchTerm, offset, records, saveInHistory);
+            else return toLogLines(filterOn(request.searchColumn, request.searchTerm, offset, records, saveInHistory));
         }
 
         public void setTimeBounds(DateTime leftBound, DateTime rightBound)

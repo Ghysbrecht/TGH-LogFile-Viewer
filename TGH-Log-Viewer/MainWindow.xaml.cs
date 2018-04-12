@@ -150,6 +150,16 @@ namespace TGH_Log_Viewer
         {
             if (queryBuilder != null) fillGrid(queryBuilder.lastQueryNewPage(currentPage * appSettings.defaultRecords, appSettings.defaultRecords));
         }
+        //General - Return to the previous query
+        private void returnToPreviousQuery()
+        {
+            if (queryBuilder != null)
+            {
+                fillGrid(queryBuilder.previousQuery(currentPage * appSettings.defaultRecords, appSettings.defaultRecords));
+                SearchRequest lastRequest = queryBuilder.getLastQueryData();
+                setFilter(lastRequest.searchColumn, lastRequest.searchTerm);
+            }
+        }
         //General - Get all data
         private void getAllData()
         {
@@ -283,21 +293,22 @@ namespace TGH_Log_Viewer
             if (columnName != "Timestamp")
             {
                 setFilterButtonText(columnName);
-                filterTextBox.Text = rightClickContent;
+                filterTextBox.Text = searchTerm;
                 onlyCheckColumn(columnName);
             }
         }
         //Sidebar - Only checkmark this specific column in the contextmenu
-        private void onlyCheckColumn(String columName)
+        private void onlyCheckColumn(String columnName)
         {
+            columnName = columnName.ToLower();
             foreach (MenuItem menuItem in columnFilterContextMenu.Items)
             {
-                if (menuItem.IsChecked && ((String)menuItem.Header != columName))
+                if (menuItem.IsChecked && (((String)menuItem.Header).ToLower() != columnName))
                 {
                     menuItem.IsChecked = false;
                     menuItem.IsCheckable = true;
                 }
-                else if ((String)menuItem.Header == columName)
+                else if (((String)menuItem.Header).ToLower() == columnName)
                 {
                     menuItem.IsChecked = true;
                     menuItem.IsCheckable = false;
@@ -340,7 +351,6 @@ namespace TGH_Log_Viewer
 
 
         // ----------------- EVENTLISTENERS -----------------
-        
         //Topbar - Change pagenumber to entered value when clicking out the textbox
         private void pageNumberLabel_LostFocus(object sender, RoutedEventArgs e)
         {
@@ -619,7 +629,14 @@ namespace TGH_Log_Viewer
                 hideColumnsLabel.Content = "       HIDE COLUMNS     \u25BD";
             }
         }
+        //Sidebar - Previous filter
+        private void previousFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            currentPage = 0;
+            returnToPreviousQuery();
+        }
 
+        
 
         //---- RIGHT CLICK LISTENERS ----
         //Topbar - Right clicked the page counter in top right
