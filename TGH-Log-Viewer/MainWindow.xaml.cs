@@ -72,6 +72,7 @@ namespace TGH_Log_Viewer
             database = new LLDatabase(appSettings.elasticip, appSettings.defaultIndex);
             if (database.isValid())
             {
+                bottomDBStatusText.Text = "Connected";
                 client = database.getClient();
                 if (queryBuilder == null) queryBuilder = new LLQueryBuilder(client);
                 else queryBuilder.setClient(client);
@@ -79,6 +80,7 @@ namespace TGH_Log_Viewer
             }
             else
             {
+                bottomDBStatusText.Text = "No connection";
                 MessageBox.Show("Connection failed! Check your settings...");
                 logger.debug("setSettings failed! -> elastic ip: " + appSettings.elasticip + " elastic index" + appSettings.defaultIndex);
             }
@@ -199,6 +201,7 @@ namespace TGH_Log_Viewer
             if (currentPage > totalPages) currentPage = totalPages - 1;
             if ((currentPage > 98) && totalPages > 999) strSeperator = " /\n";
             pageLabel.Content = (currentPage + 1) + strSeperator + totalPages;
+            bottomBarTotalHitsText.Text = ""+(int)queryBuilder.getLastResponseHits();
         }
 
         //Datagrid - Updates the dataGrid with data
