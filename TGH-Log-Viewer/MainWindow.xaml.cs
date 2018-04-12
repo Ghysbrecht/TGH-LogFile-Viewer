@@ -192,16 +192,48 @@ namespace TGH_Log_Viewer
             if (scrollViewer != null) scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
             else logger.debug("No scrollviewer found!");
         }
+        //General - Translate a string to int if possible.
+        private int toInteger(String stringVar)
+        {
+            int j;
+            if (Int32.TryParse(stringVar, out j)) return j;
+            else
+            {
+                logger.error("String could not be converted! Value -> " + stringVar);
+                return -1;
+            }
+        }
 
         //Topbar - Update the page counter in the top right
         private void updatePageCount()
         {
-            String strSeperator = "/";
+            String strSeperator = "/ ";
             int totalPages = (int)(queryBuilder.getLastResponseHits() / appSettings.defaultRecords) + 1;
             if (currentPage > totalPages) currentPage = totalPages - 1;
-            if ((currentPage > 98) && totalPages > 999) strSeperator = " /\n";
-            pageLabel.Content = (currentPage + 1) + strSeperator + totalPages;
-            bottomBarTotalHitsText.Text = ""+(int)queryBuilder.getLastResponseHits();
+            pageTotalLabel.Content = strSeperator + totalPages;
+            pageNumberLabel.Text = "" + (currentPage + 1);
+            bottomBarTotalHitsText.Text = "" + (int)queryBuilder.getLastResponseHits();
+        }
+        //Topbar - Set the pagenumber to a different value after checking
+        private void setPageNumber(int enteredPage)
+        {
+            if (queryBuilder != null)
+            {
+                if (enteredPage < ((int)(queryBuilder.getLastResponseHits() / appSettings.defaultRecords)) && enteredPage > 0)
+                {
+                    if (currentPage != enteredPage - 1)
+                    {
+                        currentPage = enteredPage - 1;
+                        updatePageCount();
+                        new Task(updatePageDataGrid).Start();
+                    } 
+                }
+                else
+                {
+                    updatePageCount();
+                    MessageBox.Show("Page number not valid!");
+                }
+            }
         }
 
         //Datagrid - Updates the dataGrid with data
@@ -308,6 +340,20 @@ namespace TGH_Log_Viewer
 
 
         // ----------------- EVENTLISTENERS -----------------
+        
+        //Topbar - Change pagenumber to entered value when clicking out the textbox
+        private void pageNumberLabel_LostFocus(object sender, RoutedEventArgs e)
+        {
+            setPageNumber(toInteger((sender as TextBox).Text));
+        }
+        //Topbar - Change the pagenumber to the changed value when pressing enter
+        private void pageNumberLabel_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                setPageNumber(toInteger((sender as TextBox).Text));
+            }
+        }
         //Datagrid - Makes the scrollview scrollable with mousewheel
         private void mainScrollWindows_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
@@ -581,18 +627,11 @@ namespace TGH_Log_Viewer
         {
             PageNumberWindow pageWindow = new PageNumberWindow();
             pageWindow.ShowDialog();
-            int enteredPage = pageWindow.getPageNumber();
-            if (queryBuilder != null)
-            {
-                if (enteredPage < ((int)(queryBuilder.getLastResponseHits() / appSettings.defaultRecords)))
-                {
-                    currentPage = enteredPage - 1;
-                    updatePageCount();
-                    new Task(updatePageDataGrid).Start();
-                }
-                else MessageBox.Show("Page number not valid!");
-            }
+            setPageNumber(pageWindow.getPageNumber());
         }
+
+        
+
         //Topbar - Right clicked the filter button (set time to default)
         private void filterButton_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -658,6 +697,5 @@ namespace TGH_Log_Viewer
             else (sender as Xceed.Wpf.Toolkit.DateTimePicker).Text = "";
         }
 
-        
     }
 }
