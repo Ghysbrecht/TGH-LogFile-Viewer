@@ -349,8 +349,16 @@ namespace TGH_Log_Viewer
         }
 
 
-
         // ----------------- EVENTLISTENERS -----------------
+        //General - When back mouse button is pressed, return to previous filter
+        private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.XButton1)
+            {
+                currentPage = 0;
+                returnToPreviousQuery();
+            }
+        }
         //Topbar - Change pagenumber to entered value when clicking out the textbox
         private void pageNumberLabel_LostFocus(object sender, RoutedEventArgs e)
         {
