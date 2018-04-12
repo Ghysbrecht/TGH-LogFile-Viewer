@@ -172,6 +172,7 @@
                     </TextBox.ContextMenu>
                 </TextBox>
                 <Button Name="applyFilterButton" Height="26" Content="APPLY" Background="#FF0D2C49" Foreground="White" BorderBrush="White" Click="applyFilterButton_Click"/>
+                <Button Name="clearFilterButton" Height="26" Content="CLEAR" Background="#FF0D2C49" Foreground="White" BorderBrush="White" BorderThickness="1,0,1,1" Click="Button_Click"/>
             </StackPanel>
         </DockPanel>
         
