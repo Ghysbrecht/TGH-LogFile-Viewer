@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TGH_Log_Viewer"
         mc:Ignorable="d"
-        Title="Info" Height="150" Width="200" MinHeight="150" MinWidth="200" ResizeMode="NoResize">
+        Title="Info" Height="195.334" Width="200" MinHeight="150" MinWidth="200" ResizeMode="NoResize">
     <Grid>
-        <Label Content="Made by Thomas Ghysbrecht &#10;                 v0.1 Beta" HorizontalAlignment="Left" VerticalAlignment="Top" Height="42" Width="185" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FF34495E"/>
-        <Image HorizontalAlignment="Left" Height="50" Margin="30,50,0,0" VerticalAlignment="Top" Width="50" Source="Resources\skyline_bird1.png"/>
-        <Image HorizontalAlignment="Left" Height="70" Margin="95,42,0,0" VerticalAlignment="Top" Width="70" Source="Resources\vives.jpg" />
+        <Label Content="Made by Thomas Ghysbrecht &#10;                 v0.1 Beta" HorizontalAlignment="Left" VerticalAlignment="Top" Height="42" Width="194" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Background="#FF34495E"/>
+        <Image HorizontalAlignment="Left" Height="50" Margin="31,91,0,0" VerticalAlignment="Top" Width="50" Source="Resources\skyline_bird1.png"/>
+        <Image HorizontalAlignment="Left" Height="70" Margin="94,80,0,0" VerticalAlignment="Top" Width="70" Source="Resources\vives.jpg" />
+        <Label Content="Click here to view the guide!" HorizontalAlignment="Center" Margin="0,54,0,0" VerticalAlignment="Top" Width="194" Background="#FF34495E" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MouseLeftButtonDown="Label_MouseLeftButtonDown"/>
 
 
     </Grid>

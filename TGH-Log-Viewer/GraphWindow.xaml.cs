@@ -147,7 +147,15 @@ namespace TGH_Log_Viewer
             rectangle.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF0D2C49"));
             rectangle.Stroke = new SolidColorBrush(Colors.White);
 
+            long timeDiff = (endDate.Subtract(startDate).Ticks)/totalBars;
+            DateTime startTimeBar = startDate.Add(new TimeSpan(timeDiff * barNumber));
+            DateTime endTimeBar = startDate.Add(new TimeSpan(timeDiff * (barNumber+1)));
 
+            ToolTip tooltip = new ToolTip();
+
+            tooltip.Content = "Start time = "+ startTimeBar.ToString("yyy-MM-dd HH:mm:ss.fff") +"\nStop time = " + endTimeBar.ToString("yyy-MM-dd HH:mm:ss.fff");
+            rectangle.ToolTip = tooltip;
+            
             return rectangle;
         }
         //Triggered when the window is resized

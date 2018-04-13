@@ -721,6 +721,5 @@ namespace TGH_Log_Viewer
             if (sender as TextBox != null) (sender as TextBox).Text = "";
             else (sender as Xceed.Wpf.Toolkit.DateTimePicker).Text = "";
         }
-
     }
 }

@@ -189,6 +189,8 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="30"/>
                             <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="20"/>
                         </Grid.ColumnDefinitions>
                     </Grid>
                 </ItemsPanelTemplate>
@@ -207,6 +209,10 @@
             </StatusBarItem>
             <StatusBarItem Grid.Column="5">
                 <TextBlock Name="bottomBarTotalHitsText" Text="NA" />
+            </StatusBarItem>
+            <Separator Grid.Column="6" Width="1" Background="Black"/>
+            <StatusBarItem Grid.Column="7">
+                <Image Source="Resources\question-mark-4-64.ico" Height="12" MouseLeftButtonDown="infoMenu_Click"/>
             </StatusBarItem>
         </StatusBar>
     </Grid>

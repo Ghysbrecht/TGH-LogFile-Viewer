@@ -280,5 +280,8 @@
   <ItemGroup>
     <Resource Include="Resources\TGH-LogViewer-Logo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\question-mark-4-64.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
