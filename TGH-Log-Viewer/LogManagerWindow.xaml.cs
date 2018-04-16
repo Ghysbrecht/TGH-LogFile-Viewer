@@ -139,7 +139,7 @@ namespace TGH_Log_Viewer
                 MessageBox.Show("ERROR! " + e.Message);
             }
 
-}
+        }
         //Prepare for execution of the remote script
         private void prepareRScript()
         {

@@ -77,6 +77,8 @@ namespace TGH_Log_Viewer
                 if (queryBuilder == null) queryBuilder = new LLQueryBuilder(client);
                 else queryBuilder.setClient(client);
                 queryBuilder.setMainIndex(appSettings.defaultIndex);
+                queryBuilder.setFileExclusions(appSettings.exclusions);
+                enableComponents();
             }
             else
             {
@@ -84,6 +86,11 @@ namespace TGH_Log_Viewer
                 MessageBox.Show("Connection failed! Check your settings...");
                 logger.debug("setSettings failed! -> elastic ip: " + appSettings.elasticip + " elastic index" + appSettings.defaultIndex);
             }
+        }
+        //General - Enable elements after succesfull DB connection
+        private void enableComponents()
+        {
+            exclusionMenu.IsEnabled = true;
         }
         //General - Filter on a given column name
         private void filterOnColumnName(String columnName, String filterContent)
@@ -571,6 +578,16 @@ namespace TGH_Log_Viewer
             }
             bottomStatusText.Text = "Ready";
         }
+        //Topbar - Extra - Clicking the EXCLUDE FILES button in the extra contextmenu
+        private void exclusionMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ExclusionWindow window = new ExclusionWindow(queryBuilder, appSettings);
+            bottomStatusText.Text = "Exclusions Open";
+            window.ShowDialog();
+            appSettings = window.getSettings();
+            queryBuilder.setFileExclusions(appSettings.exclusions);
+            bottomStatusText.Text = "Ready";
+        }
 
         //Datagrid - Contextmenu 'filter on'
         private void filterOnMenuItem_Click(object sender, RoutedEventArgs e)
@@ -721,5 +738,7 @@ namespace TGH_Log_Viewer
             if (sender as TextBox != null) (sender as TextBox).Text = "";
             else (sender as Xceed.Wpf.Toolkit.DateTimePicker).Text = "";
         }
+
+        
     }
 }

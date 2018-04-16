@@ -22,6 +22,7 @@ namespace TGH_Log_Viewer
         public string defaultIndex { get; set; }
         public int defaultRecords { get; set; }
         public bool autoTime { get; set; }
+        public List<FileExclusion> exclusions { get; set; }
 
         private string saveLocation;
 
@@ -33,6 +34,7 @@ namespace TGH_Log_Viewer
             this.defaultIndex = defaultIndex;
             defaultRecords = defDefaultRecords;
             autoTime = defAutoTime;
+            exclusions = new List<FileExclusion>();
         }
 
         public AppSettings() : this(defElasticip, defDefaultIndex)

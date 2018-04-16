@@ -169,4 +169,10 @@
   <data name="question_mark_4_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\question-mark-4-64.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="delete_property_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\delete-property-64.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="x_mark_3_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\x-mark-3-64.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

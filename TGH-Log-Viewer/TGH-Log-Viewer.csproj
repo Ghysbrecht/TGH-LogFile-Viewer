@@ -114,6 +114,12 @@
     <Compile Include="CellValueWindow.xaml.cs">
       <DependentUpon>CellValueWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ExclusionWindow.xaml.cs">
+      <DependentUpon>ExclusionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FileExclusion.cs" />
+    <Compile Include="LogFile.cs" />
+    <Compile Include="LogFileFactory.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="GlobalSearchWindow.xaml.cs">
       <DependentUpon>GlobalSearchWindow.xaml</DependentUpon>
@@ -134,12 +140,17 @@
       <DependentUpon>PageNumberWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ParsedLogLines.cs" />
+    <Compile Include="Resources\IEnums.cs" />
     <Compile Include="SearchRequest.cs" />
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SuggestionFactory.cs" />
     <Page Include="AnalyzeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ExclusionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -282,6 +293,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\question-mark-4-64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\delete-property-64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\x-mark-3-64.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

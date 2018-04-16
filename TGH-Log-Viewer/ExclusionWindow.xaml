@@ -1,0 +1,52 @@
+﻿<Window x:Class="TGH_Log_Viewer.ExclusionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TGH_Log_Viewer"
+        mc:Ignorable="d"
+        Title="Exclusions" Height="500" Width="500" ResizeMode="NoResize" Loaded="Window_Loaded">
+    <Grid Background="#FF34495E">
+        <Border Height="39" VerticalAlignment="Top" BorderBrush="White" BorderThickness="1" Margin="5,5,5,0" />
+        <Label Content="Exclude files by entering the file name (term) or a wilcard string. &#x0a;Click UPDATE to check what files are now used. Click SAVE to use these settings." Foreground="White" HorizontalAlignment="Left" Margin="5,3,0,0" VerticalAlignment="Top"/>
+        
+        <ComboBox Name="typeBox" HorizontalAlignment="Left" Margin="5,48,0,0" VerticalAlignment="Top" Width="90" BorderBrush="White" Background="White" Height="23"/>
+        <TextBox Name="ruleBox" HorizontalAlignment="Left" Height="23" Margin="99,48,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="292" BorderBrush="#FFA8A8A8" VerticalContentAlignment="Center" KeyDown="ruleBox_KeyDown"/>
+        <Button Name="addButton" Content="ADD" HorizontalAlignment="Left" Margin="395,48,0,0" VerticalAlignment="Top" Width="84" Height="23" BorderBrush="White" Background="#FF0D2C49" Foreground="White" Click="addButton_Click"/>
+
+        <Button Name="updateButton" Content="UPDATE" Width="90" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,75,0,0" BorderBrush="White" Foreground="White" Background="#FF0D2C49" Click="Update_Click" />
+        <Button Name="saveButton" Content="SAVE" Width="90" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="99,75,0,0" BorderBrush="White" Foreground="White" Background="#FF0D2C49" Click="saveButton_Click" />
+        <Button Name="defaultButton" Content="SET DEFAULT" Width="91" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="193,75,0,0" BorderBrush="White" Foreground="White" Background="#FF0D2C49" Click="defaultButton_Click" />
+        
+        <ListBox Name="filesList" HorizontalAlignment="Left" Margin="5,103,0,5" MaxWidth="279" MinWidth="279" BorderBrush="White" FontFamily="Consolas" MouseDoubleClick="filesList_MouseDoubleClick"/>
+
+        <Button Name="excludeBakButton" Content="EXL BAK" Width="84" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="395,75,0,0" BorderBrush="White" Foreground="White" Background="#FF0D2C49" Click="excludeBakButton_Click" />
+
+        <DataGrid HorizontalAlignment="Right" Margin="0,103,5,5" x:Name="exclusionsGrid" Width="190" HeadersVisibility="Column" AutoGenerateColumns="False" AlternationCount="2" BorderBrush="White" BorderThickness="1" CanUserDeleteRows="True" ClipToBounds="True" IsReadOnly="False" IsTextSearchEnabled="True" AlternatingRowBackground="#FFB2CDDA" Foreground="Black" TextOptions.TextFormattingMode="Display" Background="White" >
+            <DataGrid.DataContext>
+                <local:FileExclusion/>
+            </DataGrid.DataContext>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Type" Binding="{Binding type}" Width="70" />
+                <DataGridTextColumn Header="Rule" Binding="{Binding rule}" Width="*"/>
+            </DataGrid.Columns>
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="#34495e"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Padding" Value="5,5,5,5"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="removeLine" Header="Delete" Click="removeLine_Click" >
+                        <MenuItem.Icon>
+                            <Image Source="Resources/x-mark-3-64.ico" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        
+    </Grid>
+</Window>

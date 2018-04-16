@@ -93,6 +93,16 @@ namespace TGH_Log_Viewer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
+        public static System.Drawing.Icon delete_property_64 {
+            get {
+                object obj = ResourceManager.GetObject("delete_property_64", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
         public static System.Drawing.Icon empty_filter_64 {
             get {
                 object obj = ResourceManager.GetObject("empty_filter_64", resourceCulture);
@@ -227,6 +237,16 @@ namespace TGH_Log_Viewer.Properties {
             get {
                 object obj = ResourceManager.GetObject("vives", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        public static System.Drawing.Icon x_mark_3_64 {
+            get {
+                object obj = ResourceManager.GetObject("x_mark_3_64", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }

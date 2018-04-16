@@ -44,6 +44,11 @@
                                     <Image Source="Resources\upload-2-64.ico" />
                                 </MenuItem.Icon>
                             </MenuItem>
+                            <MenuItem x:Name="exclusionMenu" Header="Exclude Files" Click="exclusionMenu_Click" IsEnabled="False">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/delete-property-64.ico" />
+                                </MenuItem.Icon>
+                            </MenuItem>
                             <MenuItem x:Name="infoMenu" Header="Info" Click="infoMenu_Click" >
                                 <MenuItem.Icon>
                                     <Image Source="Resources\info-2-64.ico" />
