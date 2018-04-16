@@ -574,6 +574,7 @@ namespace TGH_Log_Viewer
                 {
                     appSettings.defaultIndex = logManagerWindow.mainIndex;
                     appSettings.elasticip = logManagerWindow.elasticIp;
+                    setSettings(appSettings);
                 }
             }
             bottomStatusText.Text = "Ready";
