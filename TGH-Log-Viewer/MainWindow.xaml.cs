@@ -587,6 +587,7 @@ namespace TGH_Log_Viewer
             window.ShowDialog();
             appSettings = window.getSettings();
             queryBuilder.setFileExclusions(appSettings.exclusions);
+            updatePageDataGrid();
             bottomStatusText.Text = "Ready";
         }
 
