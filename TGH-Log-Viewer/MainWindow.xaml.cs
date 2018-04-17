@@ -459,6 +459,7 @@ namespace TGH_Log_Viewer
         //Topbar - Main - Get data button
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (sender as Button == clearFilterButton) setFilter("", "");
             if (appSettings == null || database == null) setSettings(new AppSettings());
             if (database.isValid())
             {
