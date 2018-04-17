@@ -40,3 +40,18 @@ This is my bachelor's thesis. I am attending my last year at Vives Brugge (Campu
 -	FEATURE – Data grid headers are now fixed when scrolling.
 -	BUG – Indexes are now default ‘tghlogstasher’.
 -	BUG – Icons are now visible.
+
+##### V0.1.4:
+-	FEATURE – Settings are now saved when closing the application
+-	FEATURE – Added infinite scrolling (Automatically loads new data while scrolling)
+-	FEATURE – Status bar
+-	FEATURE – You can go back to previous filters with the back button or back mouse button
+-	FEATURE – Time is shown while hovering over bars in the graph
+-	FEATURE – Files can be excluded from all
+-	IMPROVEMENT – Replaced folder selector with better version
+-	IMPROVEMENT – Index error now includes the index naming rules
+-	IMPROVEMENT – Milliseconds are now shown in datagrid
+-	IMPROVEMENT – Page number can be edited in top right  
+-	BUG – Main datagrid now expands to the full available width
+-	OTHER – Renamed to Skyline Log Viewer
+-	OTHER – Guide is linked on the info page
