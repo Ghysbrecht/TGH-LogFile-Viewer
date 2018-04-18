@@ -31,6 +31,8 @@ namespace TGH_Log_Viewer
 
         int currentPage = 0;
         int currentScrollOffset = 0;
+        bool windowIsDocked = false;
+        IReadOnlyCollection<LogLine> logBuffer;
 
         String rightClickColumnName = "";
         String rightClickContent = "";
@@ -209,7 +211,7 @@ namespace TGH_Log_Viewer
             if (scrollViewer != null) scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
             else logger.debug("No scrollviewer found!");
         }
-        //General - Translate a string to int if possible.
+        //General - Translate a string to int if possible
         private int toInteger(String stringVar)
         {
             int j;
@@ -219,6 +221,38 @@ namespace TGH_Log_Viewer
                 logger.error("String could not be converted! Value -> " + stringVar);
                 return -1;
             }
+        }
+        //General - Spawn a graph window in a seperate window or dock it to the main one
+        public bool spawnGraphWindow()
+        {
+            Console.WriteLine("In spawnGraphWindow....");
+            if (graphWindow == null || (!graphWindow.IsLoaded && !graphWindow.getDocked()) || graphWindow.restartInWindow())
+            {
+                Console.WriteLine("Creating graphWindow");
+                if (graphWindow != null)
+                {
+                    Console.WriteLine("Creating graph with settings: number->" + graphWindow.numberOfBars + "  type->" + graphWindow.graphType);
+                    graphWindow = new GraphWindow(graphWindow.numberOfBars, graphWindow.graphType);
+                }
+                else graphWindow = new GraphWindow();
+                graphWindow.attachMainMethod(spawnGraphWindow);
+                if(logBuffer != null) graphWindow.createFromData(logBuffer);
+                windowIsDocked = false;
+                refreshDockedView(mainDockPanel.ActualHeight, mainDockPanel.ActualWidth);
+                dockFrame.Content = null;
+                while (dockFrame.NavigationService.RemoveBackEntry() != null) ;
+                dockFrame.UpdateLayout();
+                graphWindow.Show();
+            }
+             else if (graphWindow.restartInDock())
+            {
+                Console.WriteLine("Graph will be restarted in docked modus...");
+                graphWindow.setDocked(true);
+                dockFrame.Content = graphWindow.Content;
+                windowIsDocked = true;
+                refreshDockedView(mainDockPanel.ActualHeight, mainDockPanel.ActualWidth);
+            }
+            return true;
         }
 
         //Topbar - Update the page counter in the top right
@@ -258,6 +292,7 @@ namespace TGH_Log_Viewer
         {
             if (loglines != null)
             {
+                logBuffer = loglines;
                 leftButton.IsEnabled = true;
                 rightButton.IsEnabled = true;
                 if (!append)
@@ -538,10 +573,9 @@ namespace TGH_Log_Viewer
         //Topbar - Extra - Clicking the GRAPH button in the extra contextmenu
         private void graphMenu_Click(object sender, RoutedEventArgs e)
         {
-            graphWindow = new GraphWindow();
-            graphWindow.Show();
-            graphWindow.refresh();
+            spawnGraphWindow();
         }
+
         //Topbar - Extra - Clicking the ANALYZE button in the extra contextmenu
         private void analyzeMenu_Click(object sender, RoutedEventArgs e)
         {
@@ -742,6 +776,27 @@ namespace TGH_Log_Viewer
             else (sender as Xceed.Wpf.Toolkit.DateTimePicker).Text = "";
         }
 
-        
+        //TESTESTEST
+        private void DockPanel_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            refreshDockedView(e.NewSize.Height, e.NewSize.Width);
+        }
+
+        private void refreshDockedView(double height, double width)
+        {
+            Console.WriteLine("In refreshDockedView -> height: " + height + "width: " + width + "  --- STATE: " + windowIsDocked);
+            if (windowIsDocked)
+            {
+                mainDataGrid.Height = (height / 2) - 5;
+                dockFrame.Height = (height / 2);
+                dockFrame.Width = width;
+            }
+            else
+            {
+                mainDataGrid.Height = height;
+                dockFrame.Height = 0;
+                dockFrame.Width = 0;
+            }
+        }
     }
 }

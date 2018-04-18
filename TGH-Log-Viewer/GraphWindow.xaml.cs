@@ -16,15 +16,25 @@ namespace TGH_Log_Viewer
 {
     public partial class GraphWindow : Window
     {
-        int numberOfBars = 30;
+        public int numberOfBars { get; set;}
         int[] barsArray;
         DateTime startDate, endDate;
-        String graphType = "bar";
+        public String graphType { get; set; }
         IReadOnlyCollection<LogLine> loglines;
+        bool restartInDockBool = false;
+        bool restartInWindowBool = false;
+        bool isDocked = false;
+        Func<bool> mainMethod;
 
-        public GraphWindow()
+        public GraphWindow(int barNumber = 30, String type = "bar")
         {
             InitializeComponent();
+            numberOfBars = barNumber;
+            graphType = type;
+
+            datapointNumberBox.Value = (short)numberOfBars;
+            if (graphType == "bar") barRadioButton.IsChecked = true;
+            else lineRadioButton.IsChecked = true;
         }
         //Create a graph from logdata
         public void createFromData(IReadOnlyCollection<LogLine> loglines)
@@ -156,6 +166,7 @@ namespace TGH_Log_Viewer
             tooltip.Content = "Start time = "+ startTimeBar.ToString("yyy-MM-dd HH:mm:ss.fff") +"\nStop time = " + endTimeBar.ToString("yyy-MM-dd HH:mm:ss.fff");
             rectangle.ToolTip = tooltip;
             
+            
             return rectangle;
         }
         //Triggered when the window is resized
@@ -207,6 +218,62 @@ namespace TGH_Log_Viewer
             if (timeSpan.TotalDays > 0) stringBuilder.Append(Math.Round(timeSpan.TotalDays % 365,0) + "d ");
             stringBuilder.Append(Math.Round(timeSpan.TotalHours % 24,0) + "h " + Math.Round(timeSpan.TotalMinutes % 60,0) + "m " + Math.Round(timeSpan.TotalSeconds % 60,3) + "s ");
             return stringBuilder.ToString();
+        }
+
+        public Boolean restartInDock()
+        {
+            if (restartInDockBool)
+            {
+                restartInDockBool = false;
+                return true;
+            }
+            else return false;
+        }
+        public Boolean restartInWindow()
+        {
+            if (restartInWindowBool)
+            {
+                restartInWindowBool = false;
+                return true;
+            }
+            else return false;
+        }
+        public void setDocked(bool status)
+        {
+            isDocked = status;
+        }
+
+        public bool getDocked()
+        {
+            return isDocked;
+        }
+
+        private void dockButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (isDocked) {
+                restartInWindowBool = true;
+                setDockButton(false);
+                mainMethod();
+            } 
+            else
+            {
+                //this.Close();
+                this.Close();
+                setDockButton(true);
+                restartInDockBool = true;
+                mainMethod();
+            }
+        }
+
+        public void attachMainMethod(Func<bool> method)
+        {
+            mainMethod = method;
+        }
+
+        public void setDockButton(bool undock)
+        {
+            if (undock) dockButton.Content = "UNDOCK";
+            else dockButton.Content = "DOCK";
         }
     }
 }

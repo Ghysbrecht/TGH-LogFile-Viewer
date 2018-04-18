@@ -27,5 +27,7 @@
         <Label Name="singleBarTitleLabel" Content="ONE BAR :" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,70,0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Width="70" FontSize="10" Height="25"/>
         <Label Name="totalLabel" Content="TIME" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="120,0,0,18" Width="120" VerticalContentAlignment="Center" Height="25"/>
         <Label Name="singleBarLabel" Content="TIME" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="120,0,0,0" VerticalContentAlignment="Center" Width="120" Height="25"/>
+
+        <Button Name="dockButton" Height="30" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="330,5,0,0" Content="DOCK" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="dockButton_Click" />
     </Grid>
 </Window>
