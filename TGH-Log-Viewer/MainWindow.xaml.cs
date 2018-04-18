@@ -222,6 +222,25 @@ namespace TGH_Log_Viewer
                 return -1;
             }
         }
+        //General - Filter on time
+        private void filterOnTime()
+        {
+            if ((fromTimeDate.Value != null) && (toTimeDate.Value != null))
+            {
+                DateTime leftTimeBound = (DateTime)fromTimeDate.Value;
+                DateTime rightTimeBound = (DateTime)toTimeDate.Value;
+                if (rightTimeBound.Subtract(leftTimeBound).TotalSeconds > 0)
+                {
+                    if (queryBuilder != null) queryBuilder.setTimeBounds(leftTimeBound, rightTimeBound);
+                    currentPage = 0;
+                    bottomStatusText.Text = "Getting Data";
+                    new Task(updatePageDataGrid).Start();
+                }
+                else MessageBox.Show("End date is earlier then start date!");
+
+            }
+            else MessageBox.Show("Dates not valid!");
+        }
         //General - Spawn a graph window in a seperate window or dock it to the main one
         public bool spawnGraphWindow()
         {
@@ -236,6 +255,7 @@ namespace TGH_Log_Viewer
                 }
                 else graphWindow = new GraphWindow();
                 graphWindow.attachMainMethod(spawnGraphWindow);
+                graphWindow.attachFilterMethod(filterFromGraph);
                 if(logBuffer != null) graphWindow.createFromData(logBuffer);
                 windowIsDocked = false;
                 refreshDockedView(mainDockPanel.ActualHeight, mainDockPanel.ActualWidth);
@@ -252,6 +272,16 @@ namespace TGH_Log_Viewer
                 windowIsDocked = true;
                 refreshDockedView(mainDockPanel.ActualHeight, mainDockPanel.ActualWidth);
             }
+            return true;
+        }
+        public bool filterFromGraph(String tooltip)
+        {
+            String startTime = tooltip.Substring(tooltip.IndexOf('=') + 2, 23);
+            String stopTime = tooltip.Substring(tooltip.LastIndexOf('=') + 2, 23);
+
+            fromTimeDate.Text = startTime;
+            toTimeDate.Text = stopTime;
+            filterOnTime();
             return true;
         }
 
@@ -537,21 +567,7 @@ namespace TGH_Log_Viewer
         //Topbar - Filter - Clicked the filter button
         private void filterButton_Click(object sender, RoutedEventArgs e)
         {
-            if ((fromTimeDate.Value != null) && (toTimeDate.Value != null))
-            {
-                DateTime leftTimeBound = (DateTime)fromTimeDate.Value;
-                DateTime rightTimeBound = (DateTime)toTimeDate.Value;
-                if (rightTimeBound.Subtract(leftTimeBound).TotalSeconds > 0)
-                {
-                    if (queryBuilder != null) queryBuilder.setTimeBounds(leftTimeBound, rightTimeBound);
-                    currentPage = 0;
-                    bottomStatusText.Text = "Getting Data";
-                    new Task(updatePageDataGrid).Start();
-                }
-                else MessageBox.Show("End date is earlier then start date!");
-
-            }
-            else MessageBox.Show("Dates not valid!");
+            filterOnTime();
         }
         //Topbar - Clear Filter - Clicked the clear filter button
         private void clearButton_Click(object sender, RoutedEventArgs e)

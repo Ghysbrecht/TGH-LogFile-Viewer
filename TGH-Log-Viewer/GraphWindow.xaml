@@ -12,7 +12,7 @@
         <Rectangle Width="15" Height="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Fill="White" Margin="7,0,0,40"/>
         <Label Name="maxBarNumber" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4,42,0,0" Width="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" Content="0" FontSize="10" Padding="1"/>
         
-        <Grid Name="barGrid" Margin="30,40,10,40" Background="#FF34495E" SizeChanged="barGrid_SizeChanged" />
+        <Grid Name="barGrid" Margin="30,40,10,40" Background="#FF34495E" SizeChanged="barGrid_SizeChanged" MouseMove="barGrid_MouseMove" MouseLeftButtonDown="barGrid_MouseLeftButtonDown" MouseLeftButtonUp="barGrid_MouseLeftButtonUp" />
         
         <Label Name="startLabel" Content="&#9655; Start" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="25,0,0,7"/>
         <Label Name="endLabel" Content="End &#9665;" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,7"/>
