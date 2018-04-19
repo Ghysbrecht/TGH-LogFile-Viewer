@@ -18,16 +18,16 @@
         <Label Name="endLabel" Content="End &#9665;" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,7"/>
 
         <Button Name="refreshButton" Height="30" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,5,0,0" Content="REFRESH" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="refreshButton_Click" />
-        <RadioButton Name="barRadioButton" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="110,6,0,0" Content="BAR" Foreground="White" BorderBrush="#FF0D2C49" IsChecked="True"/>
-        <RadioButton Name="lineRadioButton"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="110,22,0,0" Content="LINE" Foreground="White" BorderBrush="#FF0D2C49" />
-        <xctk:ShortUpDown Name="datapointNumberBox" Value="30" Width="50" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="White" Margin="250,10,0,0" Maximum="100" Minimum="5" />
-        <Label Content="DATAPOINTS:" Foreground="White" Height="20" Margin="175,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Padding="0,0,0,0" VerticalContentAlignment="Center" />
+        <RadioButton Name="barRadioButton" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="175,6,0,0" Content="BAR" Foreground="White" BorderBrush="#FF0D2C49" IsChecked="True"/>
+        <RadioButton Name="lineRadioButton"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="175,22,0,0" Content="LINE" Foreground="White" BorderBrush="#FF0D2C49" />
+        <xctk:ShortUpDown Name="datapointNumberBox" Value="30" Width="50" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="White" Margin="310,10,0,0" Maximum="100" Minimum="5" />
+        <Label Content="DATAPOINTS:" Foreground="White" Height="20" Margin="235,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Padding="0,0,0,0" VerticalContentAlignment="Center" />
 
         <Label Name="totalTitleLabel" Content="TOTAL :" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,70,18" HorizontalContentAlignment="Right" Width="70" VerticalContentAlignment="Center" FontSize="10" Height="25"/>
         <Label Name="singleBarTitleLabel" Content="ONE BAR :" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,70,0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Width="70" FontSize="10" Height="25"/>
         <Label Name="totalLabel" Content="TIME" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="120,0,0,18" Width="120" VerticalContentAlignment="Center" Height="25"/>
         <Label Name="singleBarLabel" Content="TIME" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="120,0,0,0" VerticalContentAlignment="Center" Width="120" Height="25"/>
 
-        <Button Name="dockButton" Height="30" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="330,5,0,0" Content="DOCK" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="dockButton_Click" />
+        <Button Name="dockButton" Height="30" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="95,5,0,0" Content="DOCK" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="dockButton_Click" />
     </Grid>
 </Window>
