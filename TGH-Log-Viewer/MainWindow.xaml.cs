@@ -32,7 +32,9 @@ namespace TGH_Log_Viewer
         int currentPage = 0;
         int currentScrollOffset = 0;
         bool windowIsDocked = false;
+        bool useGlobalTime = false;
         IReadOnlyCollection<LogLine> logBuffer;
+        DateTime leftTimeBound, rightTimeBound;
 
         String rightClickColumnName = "";
         String rightClickContent = "";
@@ -157,16 +159,30 @@ namespace TGH_Log_Viewer
         //General - Requery the last query with the new offset
         private void updatePageDataGrid()
         {
-            if (queryBuilder != null) fillGrid(queryBuilder.lastQueryNewPage(currentPage * appSettings.defaultRecords, appSettings.defaultRecords));
+            if (queryBuilder != null)
+            {
+                fillGrid(queryBuilder.lastQueryNewPage(currentPage * appSettings.defaultRecords, appSettings.defaultRecords,useGlobalTime));
+                if (useGlobalTime) useGlobalTime = false;
+            }
+        }
+        //General - Requery the last query with the new dates
+        private void updateDateDataGrid()
+        {
+            if (queryBuilder != null) fillGrid(queryBuilder.lastQueryNewDates(leftTimeBound, rightTimeBound, currentPage * appSettings.defaultRecords, appSettings.defaultRecords));
         }
         //General - Return to the previous query
-        private void returnToPreviousQuery()
+        private void returnToPreviousQuery(bool forceOldTime = false)
         {
             if (queryBuilder != null)
             {
-                fillGrid(queryBuilder.previousQuery(currentPage * appSettings.defaultRecords, appSettings.defaultRecords));
+                fillGrid(queryBuilder.previousQuery());
                 SearchRequest lastRequest = queryBuilder.getLastQueryData();
                 setFilter(lastRequest.searchColumn, lastRequest.searchTerm);
+                fromTimeDate.Text = lastRequest.startDate.ToString("yyy-MM-dd HH:mm:ss.fff");
+                toTimeDate.Text = lastRequest.endDate.ToString("yyy-MM-dd HH:mm:ss.fff");
+                currentPage = lastRequest.offset / lastRequest.records;
+                currentScrollOffset = 0;
+
             }
         }
         //General - Get all data
@@ -227,14 +243,13 @@ namespace TGH_Log_Viewer
         {
             if ((fromTimeDate.Value != null) && (toTimeDate.Value != null))
             {
-                DateTime leftTimeBound = (DateTime)fromTimeDate.Value;
-                DateTime rightTimeBound = (DateTime)toTimeDate.Value;
+                leftTimeBound = (DateTime)fromTimeDate.Value;
+                rightTimeBound = (DateTime)toTimeDate.Value;
                 if (rightTimeBound.Subtract(leftTimeBound).TotalSeconds > 0)
                 {
-                    if (queryBuilder != null) queryBuilder.setTimeBounds(leftTimeBound, rightTimeBound);
                     currentPage = 0;
                     bottomStatusText.Text = "Getting Data";
-                    new Task(updatePageDataGrid).Start();
+                    new Task(updateDateDataGrid).Start();
                 }
                 else MessageBox.Show("End date is earlier then start date!");
 
@@ -244,10 +259,8 @@ namespace TGH_Log_Viewer
         //General - Spawn a graph window in a seperate window or dock it to the main one
         public bool spawnGraphWindow()
         {
-            Console.WriteLine("In spawnGraphWindow....");
             if (graphWindow == null || (!graphWindow.IsLoaded && !graphWindow.getDocked()) || graphWindow.restartInWindow())
             {
-                Console.WriteLine("Creating graphWindow");
                 if (graphWindow != null)
                 {
                     Console.WriteLine("Creating graph with settings: number->" + graphWindow.numberOfBars + "  type->" + graphWindow.graphType);
@@ -343,6 +356,22 @@ namespace TGH_Log_Viewer
             }
             else logger.debug("Setting up datagrid failed -> Data is null");
             bottomStatusText.Text = "Ready";
+        }
+        //Datagrid - Refresh the docked item using these height and width settings.
+        private void refreshDockedView(double height, double width)
+        {
+            if (windowIsDocked)
+            {
+                mainDataGrid.Height = (height / 2) - 5;
+                dockFrame.Height = (height / 2);
+                dockFrame.Width = width;
+            }
+            else
+            {
+                mainDataGrid.Height = height;
+                dockFrame.Height = 0;
+                dockFrame.Width = 0;
+            }
         }
 
         //Sidebar - Add the onContextCheck handler to all menuItems in the filter contextmenu
@@ -519,6 +548,11 @@ namespace TGH_Log_Viewer
                 new Task(appendScroll).Start();
             }
         }
+        //DataGrid - Resize the docked element when the frame is resized.
+        private void DockPanel_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            refreshDockedView(e.NewSize.Height, e.NewSize.Width);
+        }
 
         //---- LEFT CLICK LISTENERS ----
         //Topbar - Main - Get data button
@@ -572,10 +606,10 @@ namespace TGH_Log_Viewer
         //Topbar - Clear Filter - Clicked the clear filter button
         private void clearButton_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Right clicked on filter!");
             if (queryBuilder != null) queryBuilder.setTimeBoundsDefault();
             fromTimeDate.Text = "";
             toTimeDate.Text = "";
+            useGlobalTime = true;
             new Task(updatePageDataGrid).Start();
         }
         //Topbar - Extra - Clicking the INFO button in the extra contextmenu
@@ -711,7 +745,7 @@ namespace TGH_Log_Viewer
         private void previousFilterButton_Click(object sender, RoutedEventArgs e)
         {
             currentPage = 0;
-            returnToPreviousQuery();
+            returnToPreviousQuery(true);
         }
 
         
@@ -724,9 +758,6 @@ namespace TGH_Log_Viewer
             pageWindow.ShowDialog();
             setPageNumber(pageWindow.getPageNumber());
         }
-
-        
-
         //Topbar - Right clicked the filter button (set time to default)
         private void filterButton_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
@@ -792,27 +823,5 @@ namespace TGH_Log_Viewer
             else (sender as Xceed.Wpf.Toolkit.DateTimePicker).Text = "";
         }
 
-        //TESTESTEST
-        private void DockPanel_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            refreshDockedView(e.NewSize.Height, e.NewSize.Width);
-        }
-
-        private void refreshDockedView(double height, double width)
-        {
-            Console.WriteLine("In refreshDockedView -> height: " + height + "width: " + width + "  --- STATE: " + windowIsDocked);
-            if (windowIsDocked)
-            {
-                mainDataGrid.Height = (height / 2) - 5;
-                dockFrame.Height = (height / 2);
-                dockFrame.Width = width;
-            }
-            else
-            {
-                mainDataGrid.Height = height;
-                dockFrame.Height = 0;
-                dockFrame.Width = 0;
-            }
-        }
     }
 }
