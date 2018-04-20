@@ -111,9 +111,21 @@ namespace TGH_Log_Viewer
                 Console.WriteLine("Copying: " + file);
                 File.Copy(file, logStasherPath + "\\LogFiles\\" + file.Substring(file.LastIndexOf('\\') + 1), false);
             }
-            infoLabel.Content = "Executing script...";
-            executeScript(logStasherPath, elasticIp, mainIndex);
-            infoLabel.Content = "Done!";
+
+            bool indexExists = new LLQueryBuilder(new LLDatabase(elasticIp, mainIndex).getClient()).indexExists(mainIndex);
+            MessageBoxResult result = MessageBoxResult.Cancel;
+            if (indexExists)
+            {
+                result = MessageBox.Show("Index already exists in DB, do you want to continue?", "Index Exists", MessageBoxButton.YesNo, MessageBoxImage.Information);
+            }
+
+            if(result == MessageBoxResult.Yes)
+            {
+                infoLabel.Content = "Executing script...";
+                executeScript(logStasherPath, elasticIp, mainIndex);
+                infoLabel.Content = "Done!";
+            } else infoLabel.Content = "Canceled!";
+
             runScriptButton.IsEnabled = true;
         }
         //Execute the local script

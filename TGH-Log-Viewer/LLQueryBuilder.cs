@@ -30,7 +30,6 @@ namespace TGH_Log_Viewer
             setClient(client);
             setTimeBoundsDefault();
             mainIndex = "maintest";
-            setElasticSettings();
             logger.debug("QueryBuilder created!");
             searchHistory = new List<SearchRequest>();
         }
@@ -262,7 +261,6 @@ namespace TGH_Log_Viewer
         {
             return (searchHistory.Count > 0) ? searchHistory.Last() : new SearchRequest("", "", new DateTime(), new DateTime(),0,100);
         }
-
         //Print the current history
         public void historyDebug()
         {
@@ -316,10 +314,16 @@ namespace TGH_Log_Viewer
         {
             return IndexItemFactory.getIndexItemsFromJson(getAllIndices());
         }
+        //Delete the index
         public void deleteIndex(String index)
         {
             var response = client.IndicesDelete<StringResponse>(index);
-            Console.WriteLine("Deleted index with status:" + response.Success);  
+            logger.debug("Deleted index with status:" + response.Success);  
+        }
+        //Check if in index exists
+        public bool indexExists(String index)
+        {
+            return client.IndicesExists<StringResponse>(index).HttpStatusCode == 200;
         }
     }
 }
