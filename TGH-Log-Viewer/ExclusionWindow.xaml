@@ -17,10 +17,11 @@
         <Button Name="updateButton" Content="UPDATE" Width="90" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,75,0,0" BorderBrush="White" Foreground="White" Background="#FF0D2C49" Click="Update_Click" />
         <Button Name="saveButton" Content="SAVE" Width="90" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="99,75,0,0" BorderBrush="White" Foreground="White" Background="#FF0D2C49" Click="saveButton_Click" />
         <Button Name="defaultButton" Content="SET DEFAULT" Width="91" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="193,75,0,0" BorderBrush="White" Foreground="White" Background="#FF0D2C49" Click="defaultButton_Click" />
-        
-        <ListBox Name="filesList" HorizontalAlignment="Left" Margin="5,103,0,5" MaxWidth="279" MinWidth="279" BorderBrush="White" FontFamily="Consolas" MouseDoubleClick="filesList_MouseDoubleClick"/>
+
+        <ListBox Name="filesList" HorizontalAlignment="Left" Margin="5,103,0,5" MaxWidth="279" MinWidth="279" BorderBrush="White" FontFamily="Consolas" MouseDoubleClick="filesList_MouseDoubleClick" SelectionMode="Extended"/>
 
         <Button Name="excludeBakButton" Content="EXL BAK" Width="84" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="395,75,0,0" BorderBrush="White" Foreground="White" Background="#FF0D2C49" Click="excludeBakButton_Click" />
+        <Button Name="addSelectionButton" Content="&#11191;" Width="30" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="290,75,0,0" BorderBrush="White" Foreground="White" Background="#FF0D2C49" Click="addSelectionButton_Click" FontSize="24" Padding="1,-6,0,0" Grid.IsSharedSizeScope="True" VerticalContentAlignment="Top" RenderTransformOrigin="0.5,0.522" />
 
         <DataGrid HorizontalAlignment="Right" Margin="0,103,5,5" x:Name="exclusionsGrid" Width="190" HeadersVisibility="Column" AutoGenerateColumns="False" AlternationCount="2" BorderBrush="White" BorderThickness="1" CanUserDeleteRows="True" ClipToBounds="True" IsReadOnly="False" IsTextSearchEnabled="True" AlternatingRowBackground="#FFB2CDDA" Foreground="Black" TextOptions.TextFormattingMode="Display" Background="White" >
             <DataGrid.DataContext>

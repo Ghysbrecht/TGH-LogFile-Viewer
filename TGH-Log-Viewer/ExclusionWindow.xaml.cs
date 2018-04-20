@@ -121,9 +121,7 @@ namespace TGH_Log_Viewer
         private void filesList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (filesList.SelectedItem != null) {
-                String selected = filesList.SelectedItem.ToString();
-                selected = selected.Remove(selected.IndexOf("(") - 1).TrimEnd(' ');
-                list.Add(new FileExclusion(selected, IEnums.ExclusionType.Term));
+                addExclusionFromListString(filesList.SelectedItem.ToString());
                 refreshRuleList();
             }
         }
@@ -132,6 +130,20 @@ namespace TGH_Log_Viewer
         {
             settings.exclusions = list;
             settings.saveToFile();
+        }
+
+        private void addSelectionButton_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (String excl in filesList.SelectedItems) {
+                addExclusionFromListString(excl);
+            }
+            refreshRuleList();
+        }
+
+        private void addExclusionFromListString(String selected)
+        {
+            selected = selected.Remove(selected.IndexOf("(") - 1).TrimEnd(' ');
+            list.Add(new FileExclusion(selected, IEnums.ExclusionType.Term));
         }
     }
 }
