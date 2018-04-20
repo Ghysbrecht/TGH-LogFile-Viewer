@@ -95,6 +95,7 @@ namespace TGH_Log_Viewer
         private void enableComponents()
         {
             exclusionMenu.IsEnabled = true;
+            indexMenu.IsEnabled = true;
         }
         //General - Filter on a given column name
         private void filterOnColumnName(String columnName, String filterContent)
@@ -675,6 +676,14 @@ namespace TGH_Log_Viewer
             updatePageDataGrid();
             bottomStatusText.Text = "Ready";
         }
+        //Topbar - Extra - Clicking the INDEX MENU button in the extra contextmenu
+        private void indexMenu_Click(object sender, RoutedEventArgs e)
+        {
+            IndexWindow window = new IndexWindow(queryBuilder);
+            bottomStatusText.Text = "Index Menu Open";
+            window.ShowDialog();
+            bottomStatusText.Text = "Ready";
+        }
 
         //Datagrid - Contextmenu 'filter on'
         private void filterOnMenuItem_Click(object sender, RoutedEventArgs e)
@@ -815,6 +824,7 @@ namespace TGH_Log_Viewer
 
             }
         }
+        
 
         //Sidebar - Remove all in the filter textbox when you doubleclick it
         private void TextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)

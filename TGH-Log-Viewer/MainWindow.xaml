@@ -49,12 +49,16 @@
                                     <Image Source="Resources/delete-property-64.ico" />
                                 </MenuItem.Icon>
                             </MenuItem>
+                            <MenuItem x:Name="indexMenu" Header="Edit Indices" Click="indexMenu_Click" IsEnabled="False">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/data-configuration-64.ico" />
+                                </MenuItem.Icon>
+                            </MenuItem>
                             <MenuItem x:Name="infoMenu" Header="Info" Click="infoMenu_Click" >
                                 <MenuItem.Icon>
                                     <Image Source="Resources\info-2-64.ico" />
                                 </MenuItem.Icon>
                             </MenuItem>
-
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>

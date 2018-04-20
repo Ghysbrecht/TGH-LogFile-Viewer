@@ -1,0 +1,41 @@
+﻿<Window x:Class="TGH_Log_Viewer.IndexWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TGH_Log_Viewer"
+        mc:Ignorable="d"
+        Title="IndexWindow" Height="400" Width="400">
+    <Grid Background="#FF34495E">
+        <DataGrid VerticalAlignment="Top" HorizontalAlignment="Left" Height="315" Margin="5,5,5,5" x:Name="indexItemGrid" Width="auto" HeadersVisibility="Column" AutoGenerateColumns="False" AlternationCount="2" BorderBrush="White" BorderThickness="1" CanUserDeleteRows="True" ClipToBounds="True" IsReadOnly="False" IsTextSearchEnabled="True" AlternatingRowBackground="#FFB2CDDA" Foreground="Black" TextOptions.TextFormattingMode="Display" Background="White" FontFamily="Consolas" >
+            <DataGrid.DataContext>
+                <local:IndexItem/>
+            </DataGrid.DataContext>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Index" Binding="{Binding index}" Width="*" />
+                <DataGridTextColumn Header="Count" Binding="{Binding count}" Width="100"/>
+                <DataGridTextColumn Header="Size" Binding="{Binding size}" Width="100"/>
+            </DataGrid.Columns>
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="#34495e"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Padding" Value="5,5,5,5"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="removeLine" Header="Delete" Click="removeLine_Click" >
+                        <MenuItem.Icon>
+                            <Image Source="Resources/x-mark-3-64.ico" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+
+        <Button Name="saveButton" Content="SAVE" Height="30" Width="80" Background="#FF0D2C49" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5,0,0,5" Click="saveButton_Click" />
+        <Button Name="clearChangesButton" Content="CLEAR CHANGES" Height="30" Width="110" Background="#FF0D2C49" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="90,0,0,5" Click="clearChangesButton_Click" />
+        
+    </Grid>
+</Window>

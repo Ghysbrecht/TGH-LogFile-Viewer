@@ -13,9 +13,10 @@ namespace TGH_Log_Viewer
         LogLineFactory logLineFactory = new LogLineFactory();
         SuggestionFactory suggestionFactory = new SuggestionFactory();
         LogFileFactory logFileFactory = new LogFileFactory();
+        IndexItemFactory IndexItemFactory = new IndexItemFactory();
         Logger logger = new Logger();
 
-        String  mainIndex;
+        String mainIndex;
         DateTime leftBound, rightBound;
         long lastHits = 0;
         String lastError = "";
@@ -131,11 +132,11 @@ namespace TGH_Log_Viewer
         //Main FILTER ON method used by all the other ones
         private String filterOn(SearchRequest request, bool saveInHistory = true)
         {
-            if(saveInHistory) searchHistory.Add(request);
+            if (saveInHistory) searchHistory.Add(request);
             //historyDebug();
             leftBound = request.startDate;
             rightBound = request.endDate;
-            logger.debug("Filtering on: OF:" + request.offset + " RE:" + request.records + " COL:" + request.searchColumn + " -> " + (request.searchTerm.Length <= 50 ? request.searchTerm : request.searchTerm.Substring(0,50)));
+            logger.debug("Filtering on: OF:" + request.offset + " RE:" + request.records + " COL:" + request.searchColumn + " -> " + (request.searchTerm.Length <= 50 ? request.searchTerm : request.searchTerm.Substring(0, 50)));
 
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("{\"from\":" + request.offset + ",\"size\":" + request.records + ","); //From & Size
@@ -143,7 +144,7 @@ namespace TGH_Log_Viewer
             stringBuilder.Append("\"query\":{\"bool\":{\"must\":[");
             //MUST
             if (request.searchColumn == "all") stringBuilder.Append("{\"match_all\":{}}");
-            else if (request.searchColumn == "global") stringBuilder.Append("{\"multi_match\": {\"query\": \" "+ request.searchTerm + "\"}}");
+            else if (request.searchColumn == "global") stringBuilder.Append("{\"multi_match\": {\"query\": \" " + request.searchTerm + "\"}}");
             else stringBuilder.Append("{\"match_phrase\":{\"" + request.searchColumn + "\":\"" + request.searchTerm + "\"}}"); //Match Phrase
 
             stringBuilder.Append("],\"must_not\":[");
@@ -151,8 +152,8 @@ namespace TGH_Log_Viewer
             appendFileExlusions(fileExclusions, stringBuilder);
 
             stringBuilder.Append("],\"filter\":[{\"range\":{\"@timestamp\":{");
-            stringBuilder.Append("\"gte\":\"" + Math.Round(request.startDate.Subtract(new DateTime(1970,1,1,0,0,0,DateTimeKind.Utc)).TotalMilliseconds,0)  + "\",");
-            stringBuilder.Append("\"lt\":\"" + Math.Round(request.endDate.Subtract(new DateTime(1970,1,1,0,0,0,DateTimeKind.Utc)).TotalMilliseconds,0)  + "\"}}}]}}}");
+            stringBuilder.Append("\"gte\":\"" + Math.Round(request.startDate.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds, 0) + "\",");
+            stringBuilder.Append("\"lt\":\"" + Math.Round(request.endDate.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds, 0) + "\"}}}]}}}");
 
             return executeQuery(mainIndex, stringBuilder.ToString());
         }
@@ -173,7 +174,7 @@ namespace TGH_Log_Viewer
             return suggestionFactory.getSuggestionsFromJson(json);
         }
 
-        
+
         //--- GENERAL ---
         //Convert the JSON to a List of LogLines
         private List<LogLine> toLogLines(String json)
@@ -200,6 +201,22 @@ namespace TGH_Log_Viewer
             catch (Exception e)
             {
                 logger.error("Exception when trying to execute a query! -> " + e.Message);
+                lastError = e.Message;
+                return "";
+            }
+        }
+        private String getAllIndices()
+        {
+            try
+            {
+                CatIndicesRequestParameters param = new CatIndicesRequestParameters();
+                param.Format = "json";
+                var response = client.CatIndices<StringResponse>(param);
+                return response.Body;
+            }
+            catch (Exception e)
+            {
+                logger.error("Exception when trying to retrieve indices! -> " + e.Message);
                 lastError = e.Message;
                 return "";
             }
@@ -275,7 +292,7 @@ namespace TGH_Log_Viewer
         {
             return logFileFactory.getLogFilesFromJson(json);
         }
-
+        //Append the exlusions
         private void appendFileExlusions(List<FileExclusion> exclusions, StringBuilder stringBuilder)
         {
             if (exclusions != null && exclusions.Count > 0)
@@ -293,5 +310,16 @@ namespace TGH_Log_Viewer
             }
         }
 
+        //--- INDEXES ---
+        //Get all the indices that in the db
+        public List<IndexItem> getAllIndexItems()
+        {
+            return IndexItemFactory.getIndexItemsFromJson(getAllIndices());
+        }
+        public void deleteIndex(String index)
+        {
+            var response = client.IndicesDelete<StringResponse>(index);
+            Console.WriteLine("Deleted index with status:" + response.Success);  
+        }
     }
 }

@@ -118,6 +118,11 @@
       <DependentUpon>ExclusionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="FileExclusion.cs" />
+    <Compile Include="IndexItem.cs" />
+    <Compile Include="IndexItemFactory.cs" />
+    <Compile Include="IndexWindow.xaml.cs">
+      <DependentUpon>IndexWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LogFile.cs" />
     <Compile Include="LogFileFactory.cs" />
     <Compile Include="Logger.cs" />
@@ -159,6 +164,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GraphWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="IndexWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -299,6 +308,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\x-mark-3-64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\data-configuration-64.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
