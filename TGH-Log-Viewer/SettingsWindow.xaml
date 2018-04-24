@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TGH_Log_Viewer"
         mc:Ignorable="d"
-        Title="SettingsWindow" Height="267" Width="305" ResizeMode="NoResize">
+        Title="SettingsWindow" Height="300" Width="305" ResizeMode="NoResize">
     <Grid Background="#FF2C3E50">
         <Border BorderBrush="White" BorderThickness="1" HorizontalAlignment="Left" Height="92" Margin="5,5,0,0" VerticalAlignment="Top" Width="280" Background="#FF34495E"/>
-        <Border BorderBrush="White" BorderThickness="1" HorizontalAlignment="Left" Height="92" Margin="5,101,0,0" VerticalAlignment="Top" Width="280" Background="#FF34495E"/>
+        <Border BorderBrush="White" BorderThickness="1" HorizontalAlignment="Left" Height="125" Margin="5,101,0,0" VerticalAlignment="Top" Width="280" Background="#FF34495E"/>
         
         <Label Name="serverSettingsLabel" Width="280" Height="27" Content="SERVER" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" Foreground="#FF2C3E50" HorizontalContentAlignment="Center" FontWeight="ExtraBold" FontFamily="Calibri"/>
         <TextBox Name="serverTextBox" Width="166" Height="20" Text="localhost:9200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="110,40,0,0" BorderBrush="White" Padding="3,0,0,0" KeyUp="Button_KeyUp"/>
@@ -20,13 +20,18 @@
         <TextBox Name="defaultRecordsTextBox" Width="166" Height="20" Text="100" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="110,137,0,0" BorderBrush="White" KeyUp="Button_KeyUp"/>
         <Label Name="recordsLabel" Width="100" Height="20" Content="Records / Page:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,137,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontSize="11" Padding="1" />
 
-        <Label Name="enableAutoTime" Width="100" Height="20" Content="Auto Time:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,165,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontSize="11" Padding="1" />
-        <RadioButton Name="onAutoTimeButton" Content="ON" Margin="110,165,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="40" Height="20" Padding="0" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" KeyUp="Button_KeyUp"/>
-        <RadioButton Name="offAutoTimeButton" IsChecked="True" Content="OFF" Margin="160,165,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="40" Height="20" Padding="0" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" KeyUp="Button_KeyUp"/>
-        
-        <Button Width="70" Height="25" Margin="5,198,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="SAVE" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="Button_Confirm" KeyUp="Button_KeyUp"/>
-        <Button Width="100" Height="25" Margin="80,198,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="SET AS DEFAULT" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="Button_SetDefault" ToolTip="When starting the application, the defaults are loaded" />
-        <Button Width="100" Height="25" Margin="185,198,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Content="LOAD DEFAULTS" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="Button_GetDefault" ToolTip="Load the default values" />
+        <Label  Name="enableAutoTime" Width="100" Height="20" Content="Auto Time:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,165,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontSize="11" Padding="1" />
+        <RadioButton GroupName="One" Name="onAutoTimeButton" Content="ON" Margin="110,165,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="40" Height="20" Padding="0" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" KeyUp="Button_KeyUp"/>
+        <RadioButton GroupName="One" Name="offAutoTimeButton" IsChecked="True" Content="OFF" Margin="160,165,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="40" Height="20" Padding="0" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" KeyUp="Button_KeyUp"/>
+
+        <Label Name="enableAutoScroll" Width="100" Height="20" Content="Auto Scroll:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,193,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontSize="11" Padding="1" />
+        <RadioButton GroupName="Two" Name="onAutoScrollButton" IsChecked="True" Content="ON" Margin="110,193,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="40" Height="20" Padding="0" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" KeyUp="Button_KeyUp"/>
+        <RadioButton GroupName="Two" Name="offAutoScrollButton"  Content="OFF" Margin="160,193,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="40" Height="20" Padding="0" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" KeyUp="Button_KeyUp"/>
+
+
+        <Button Width="70" Height="25" Margin="5,0,0,5" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="SAVE" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="Button_Confirm" KeyUp="Button_KeyUp"/>
+        <Button Width="100" Height="25" Margin="80,0,0,5" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="SET AS DEFAULT" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="Button_SetDefault" ToolTip="When starting the application, the defaults are loaded" />
+        <Button Width="100" Height="25" Margin="185,0,0,5" HorizontalAlignment="Left" VerticalAlignment="Bottom" Content="LOAD DEFAULTS" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="Button_GetDefault" ToolTip="Load the default values" />
 
     </Grid>
 </Window>

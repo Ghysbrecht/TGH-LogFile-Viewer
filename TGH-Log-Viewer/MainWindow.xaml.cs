@@ -536,17 +536,20 @@ namespace TGH_Log_Viewer
         //Datagrid - Event fires when scrolled in the datagrid
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            ScrollViewer scrollViewer = sender as ScrollViewer;
-            long totalHits = 0;
-            if (queryBuilder != null) totalHits = queryBuilder.getLastResponseHits();
-            int displayedHits = mainDataGrid.Items.Count;
-
-            if (displayedHits > 0 && currentPage * appSettings.defaultRecords + displayedHits < totalHits  && scrollViewer.ContentVerticalOffset + scrollViewer.ViewportHeight > mainDataGrid.Items.Count - 1)
+            if (appSettings.autoScroll)
             {
-                bottomStatusText.Text = "Getting Data";
-                Console.WriteLine("Reached end of page, retrieving new data.");
-                currentScrollOffset++;
-                new Task(appendScroll).Start();
+                ScrollViewer scrollViewer = sender as ScrollViewer;
+                long totalHits = 0;
+                if (queryBuilder != null) totalHits = queryBuilder.getLastResponseHits();
+                int displayedHits = mainDataGrid.Items.Count;
+
+                if (displayedHits > 0 && currentPage * appSettings.defaultRecords + displayedHits < totalHits && scrollViewer.ContentVerticalOffset + scrollViewer.ViewportHeight > mainDataGrid.Items.Count - 1)
+                {
+                    bottomStatusText.Text = "Getting Data";
+                    Console.WriteLine("Reached end of page, retrieving new data.");
+                    currentScrollOffset++;
+                    new Task(appendScroll).Start();
+                }
             }
         }
         //DataGrid - Resize the docked element when the frame is resized.

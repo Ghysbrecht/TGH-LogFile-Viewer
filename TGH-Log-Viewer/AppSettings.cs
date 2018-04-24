@@ -15,6 +15,7 @@ namespace TGH_Log_Viewer
         private const string defDefaultIndex = "tghlogstasher";
         private const int defDefaultRecords = 100;
         private const bool defAutoTime = false;
+        private const bool defAutoScroll = true;
         private const string filename = "DefaultAppSettings.xml";
         // -----------------------------------------------------------------
 
@@ -22,6 +23,7 @@ namespace TGH_Log_Viewer
         public string defaultIndex { get; set; }
         public int defaultRecords { get; set; }
         public bool autoTime { get; set; }
+        public bool autoScroll { get; set; }
         public List<FileExclusion> exclusions { get; set; }
 
         private string saveLocation;
@@ -34,6 +36,7 @@ namespace TGH_Log_Viewer
             this.defaultIndex = defaultIndex;
             defaultRecords = defDefaultRecords;
             autoTime = defAutoTime;
+            autoScroll = defAutoScroll;
             exclusions = new List<FileExclusion>();
         }
 

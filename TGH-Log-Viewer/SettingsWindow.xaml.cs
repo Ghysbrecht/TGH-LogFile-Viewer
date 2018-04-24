@@ -61,6 +61,7 @@ namespace TGH_Log_Viewer
             settings.defaultIndex = defaultIndexTextBox.Text;
             settings.defaultRecords = parseFieldNumber(defaultRecordsTextBox);
             settings.autoTime = (bool)onAutoTimeButton.IsChecked;
+            settings.autoScroll = (bool)onAutoScrollButton.IsChecked;
         }
 
         private void fillTextBoxes()
@@ -69,6 +70,7 @@ namespace TGH_Log_Viewer
             defaultIndexTextBox.Text = settings.defaultIndex;
             defaultRecordsTextBox.Text = settings.defaultRecords.ToString();
             onAutoTimeButton.IsChecked = settings.autoTime;
+            onAutoScrollButton.IsChecked = settings.autoScroll;
         }
 
         private void Button_SetDefault(object sender, RoutedEventArgs e)
