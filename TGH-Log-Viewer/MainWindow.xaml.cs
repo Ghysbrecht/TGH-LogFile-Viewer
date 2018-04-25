@@ -28,6 +28,7 @@ namespace TGH_Log_Viewer
         AppSettings appSettings;
         GraphWindow graphWindow;
         ScrollViewer scrollViewer;
+        ThemeManager themeManager;
 
         int currentPage = 0;
         int currentScrollOffset = 0;
@@ -58,6 +59,9 @@ namespace TGH_Log_Viewer
             dropDownFilterName = "";
             appSettings = new AppSettings();
             appSettings = appSettings.restoreFromFile();
+
+            themeManager = new ThemeManager();
+            themeManager.setTheme(appSettings.themeNumber);
 
             logger.debug("=== Starting TGH Log Viewer ===");
 
@@ -687,6 +691,14 @@ namespace TGH_Log_Viewer
             window.ShowDialog();
             bottomStatusText.Text = "Ready";
         }
+        //Topbar - Extra - Clicking the CHANGE THEME button on the extra contextmenu
+        private void themeMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ThemeWindow window = new ThemeWindow(themeManager, appSettings);
+            bottomStatusText.Text = "Theme Menu Open";
+            window.ShowDialog();
+            bottomStatusText.Text = "Ready";
+        }
 
         //Datagrid - Contextmenu 'filter on'
         private void filterOnMenuItem_Click(object sender, RoutedEventArgs e)
@@ -827,7 +839,7 @@ namespace TGH_Log_Viewer
 
             }
         }
-        
+
 
         //Sidebar - Remove all in the filter textbox when you doubleclick it
         private void TextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)

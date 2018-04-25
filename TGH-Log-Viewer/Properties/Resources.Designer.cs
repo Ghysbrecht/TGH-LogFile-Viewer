@@ -81,6 +81,24 @@ namespace TGH_Log_Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to #FF0D2C49.
+        /// </summary>
+        public static string DarkAccentColor {
+            get {
+                return ResourceManager.GetString("DarkAccentColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #FF2C3E50.
+        /// </summary>
+        public static string DarkDefaultColor {
+            get {
+                return ResourceManager.GetString("DarkDefaultColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         public static System.Drawing.Icon data_configuration_64 {
@@ -141,6 +159,15 @@ namespace TGH_Log_Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to #FF34495E.
+        /// </summary>
+        public static string LightDefaultColor {
+            get {
+                return ResourceManager.GetString("LightDefaultColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         public static System.Drawing.Icon line_chart_64 {
@@ -151,11 +178,50 @@ namespace TGH_Log_Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Logo_Black {
+            get {
+                object obj = ResourceManager.GetObject("Logo_Black", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Logo_White {
+            get {
+                object obj = ResourceManager.GetObject("Logo_White", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #FFFFFFFF.
+        /// </summary>
+        public static string MainOutlineColor {
+            get {
+                return ResourceManager.GetString("MainOutlineColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         public static System.Drawing.Icon ok_64 {
             get {
                 object obj = ResourceManager.GetObject("ok_64", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        public static System.Drawing.Icon paint_brush_64 {
+            get {
+                object obj = ResourceManager.GetObject("paint_brush_64", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -211,22 +277,21 @@ namespace TGH_Log_Viewer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to #00000000.
+        /// </summary>
+        public static string SubOutlineColor {
+            get {
+                return ResourceManager.GetString("SubOutlineColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         public static System.Drawing.Icon text_file_64 {
             get {
                 object obj = ResourceManager.GetObject("text_file_64", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap TGH_LogViewer_Logo {
-            get {
-                object obj = ResourceManager.GetObject("TGH_LogViewer_Logo", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

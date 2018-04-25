@@ -1,0 +1,78 @@
+﻿<Window x:Class="TGH_Log_Viewer.ThemeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TGH_Log_Viewer"
+        mc:Ignorable="d"
+        Title="Themes" Height="340" Width="300" >
+    <Grid Background="{DynamicResource DarkDefaultColor}">
+        <Label Content="Select the theme you want to use:" Foreground="{DynamicResource MainTextColor}" HorizontalContentAlignment="Center"/>
+        <StackPanel Margin="0,30,0,0" >
+            <WrapPanel Height="50" Background="{DynamicResource LightDefaultColor}"  >
+                <Label Content="Blue" Foreground="{DynamicResource MainTextColor}" Width="70" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                <Rectangle Width="15" Margin="5,0,0,0" Fill="{DynamicResource DarkAccentColor1}" ToolTip="DarkAccentColor"/>
+                <Rectangle Width="15" Fill="{DynamicResource DarkDefaultColor1}"   ToolTip="DarkDefaultColor"/>
+                <Rectangle Width="15" Fill="{DynamicResource LightDefaultColor1}"  ToolTip="LightDefaultColor"/>
+                <Rectangle Width="15" Fill="{DynamicResource MainTextColor1}"      ToolTip="MainTextColor"/>
+                <Rectangle Width="15" Fill="{DynamicResource SubTextColor1}"       ToolTip="SubTextColor" />
+                <Rectangle Width="15" Fill="{DynamicResource MainOutlineColor1}"   ToolTip="MainOutlineColor" />
+                <Rectangle Width="15" Fill="{DynamicResource SubOutlineColor1}"    ToolTip="SubOutlineColor" />
+                <Rectangle Width="15" Fill="{DynamicResource MainDataGridColor1}"  ToolTip="MainDataGridColor" />
+                <Rectangle Width="15" Fill="{DynamicResource SubDataGridColor1}"   ToolTip="SubDataGridColor" />
+                <Rectangle Width="15" Fill="{DynamicResource BottomBarColor1}"     ToolTip="BottomBarColor" />
+                <Rectangle Width="15" Fill="{DynamicResource BottomBarTextColor1}" ToolTip="BottomBarTextColor"  />
+                <RadioButton Name="Radio1" VerticalContentAlignment="Center" HorizontalAlignment="Right" Margin="20,0,0,0" Checked="Radio_Checked" GroupName="group"  />
+            </WrapPanel>
+
+            <WrapPanel Margin="0,5,0,0" Height="50" Background="{DynamicResource LightDefaultColor}" >
+                <Label Content="Grayscale" Foreground="{DynamicResource MainTextColor}" Width="70" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                <Rectangle Width="15" Margin="5,0,0,0" Fill="{DynamicResource DarkAccentColor2}" ToolTip="DarkAccentColor"/>
+                <Rectangle Width="15" Fill="{DynamicResource DarkDefaultColor2}"   ToolTip="DarkDefaultColor"/>
+                <Rectangle Width="15" Fill="{DynamicResource LightDefaultColor2}"  ToolTip="LightDefaultColor"/>
+                <Rectangle Width="15" Fill="{DynamicResource MainTextColor2}"      ToolTip="MainTextColor"/>
+                <Rectangle Width="15" Fill="{DynamicResource SubTextColor2}"       ToolTip="SubTextColor" />
+                <Rectangle Width="15" Fill="{DynamicResource MainOutlineColor2}"   ToolTip="MainOutlineColor" />
+                <Rectangle Width="15" Fill="{DynamicResource SubOutlineColor2}"    ToolTip="SubOutlineColor" />
+                <Rectangle Width="15" Fill="{DynamicResource MainDataGridColor2}"  ToolTip="MainDataGridColor" />
+                <Rectangle Width="15" Fill="{DynamicResource SubDataGridColor2}"   ToolTip="SubDataGridColor" />
+                <Rectangle Width="15" Fill="{DynamicResource BottomBarColor2}"     ToolTip="BottomBarColor" />
+                <Rectangle Width="15" Fill="{DynamicResource BottomBarTextColor2}" ToolTip="BottomBarTextColor"  />
+                <RadioButton Name="Radio2" VerticalContentAlignment="Center" HorizontalAlignment="Right"  Checked="Radio_Checked" Margin="20,0,0,0" GroupName="group" />
+            </WrapPanel>
+
+            <WrapPanel Margin="0,5,0,0" Height="50" Background="{DynamicResource LightDefaultColor}" >
+                <Label Content="Dark" Foreground="{DynamicResource MainTextColor}" Width="70" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                <Rectangle Width="15" Margin="5,0,0,0" Fill="{DynamicResource DarkAccentColor2}" ToolTip="DarkAccentColor"/>
+                <Rectangle Width="15" Fill="{DynamicResource DarkDefaultColor3}"   ToolTip="DarkDefaultColor"/>
+                <Rectangle Width="15" Fill="{DynamicResource LightDefaultColor3}"  ToolTip="LightDefaultColor"/>
+                <Rectangle Width="15" Fill="{DynamicResource MainTextColor3}"      ToolTip="MainTextColor"/>
+                <Rectangle Width="15" Fill="{DynamicResource SubTextColor3}"       ToolTip="SubTextColor" />
+                <Rectangle Width="15" Fill="{DynamicResource MainOutlineColor3}"   ToolTip="MainOutlineColor" />
+                <Rectangle Width="15" Fill="{DynamicResource SubOutlineColor3}"    ToolTip="SubOutlineColor" />
+                <Rectangle Width="15" Fill="{DynamicResource MainDataGridColor3}"  ToolTip="MainDataGridColor" />
+                <Rectangle Width="15" Fill="{DynamicResource SubDataGridColor3}"   ToolTip="SubDataGridColor" />
+                <Rectangle Width="15" Fill="{DynamicResource BottomBarColor3}"     ToolTip="BottomBarColor" />
+                <Rectangle Width="15" Fill="{DynamicResource BottomBarTextColor3}" ToolTip="BottomBarTextColor"  />
+                <RadioButton Name="Radio3" VerticalContentAlignment="Center" HorizontalAlignment="Right"  Checked="Radio_Checked" Margin="20,0,0,0" GroupName="group" />
+            </WrapPanel>
+
+            <WrapPanel Margin="0,5,0,0" Height="50" Background="{DynamicResource LightDefaultColor}" >
+                <Label Content="Rainbow" Foreground="{DynamicResource MainTextColor}" Width="70" Height="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                <Rectangle Width="15" Margin="5,0,0,0" Fill="{DynamicResource DarkAccentColor4}" ToolTip="DarkAccentColor"/>
+                <Rectangle Width="15" Fill="{DynamicResource DarkDefaultColor4}"   ToolTip="DarkDefaultColor"/>
+                <Rectangle Width="15" Fill="{DynamicResource LightDefaultColor4}"  ToolTip="LightDefaultColor"/>
+                <Rectangle Width="15" Fill="{DynamicResource MainTextColor4}"      ToolTip="MainTextColor"/>
+                <Rectangle Width="15" Fill="{DynamicResource SubTextColor4}"       ToolTip="SubTextColor" />
+                <Rectangle Width="15" Fill="{DynamicResource MainOutlineColor4}"   ToolTip="MainOutlineColor" />
+                <Rectangle Width="15" Fill="{DynamicResource SubOutlineColor4}"    ToolTip="SubOutlineColor" />
+                <Rectangle Width="15" Fill="{DynamicResource MainDataGridColor4}"  ToolTip="MainDataGridColor" />
+                <Rectangle Width="15" Fill="{DynamicResource SubDataGridColor4}"   ToolTip="SubDataGridColor" />
+                <Rectangle Width="15" Fill="{DynamicResource BottomBarColor4}"     ToolTip="BottomBarColor" />
+                <Rectangle Width="15" Fill="{DynamicResource BottomBarTextColor4}" ToolTip="BottomBarTextColor"  />
+                <RadioButton Name="Radio4" VerticalContentAlignment="Center" HorizontalAlignment="Right"  Checked="Radio_Checked" Margin="20,0,0,0" GroupName="group" />
+            </WrapPanel>
+            <Button Content="SET DEFAULT" HorizontalAlignment="Center" Width="100" Height="30" Margin="0,15,0,0" Background="{DynamicResource DarkAccentColor}" BorderBrush="{DynamicResource MainOutlineColor}" Foreground="{DynamicResource MainTextColor}" Click="Button_Click" KeyDown="Button_KeyDown"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -179,8 +179,10 @@ namespace TGH_Log_Viewer
             rectangle.VerticalAlignment = VerticalAlignment.Bottom;
             rectangle.HorizontalAlignment = HorizontalAlignment.Left;
 
-            rectangle.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF0D2C49"));
-            rectangle.Stroke = new SolidColorBrush(Colors.White);
+            //rectangle.Fill = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF0D2C49"));
+            rectangle.Fill = (SolidColorBrush)Application.Current.FindResource("DarkAccentColor");
+            //rectangle.Stroke = new SolidColorBrush(Colors.White);
+            rectangle.Stroke = (SolidColorBrush)Application.Current.FindResource("MainOutlineColor");
 
             long timeDiff = (endDate.Subtract(startDate).Ticks) / totalBars;
             DateTime startTimeBar = startDate.Add(new TimeSpan(timeDiff * barNumber));
@@ -233,7 +235,8 @@ namespace TGH_Log_Viewer
             line.Y1 = y1;
             line.Y2 = y2;
 
-            line.Stroke = new SolidColorBrush(Colors.White);
+            //line.Stroke = new SolidColorBrush(Colors.White);
+            line.Stroke = (SolidColorBrush)Application.Current.FindResource("MainOutlineColor");
             line.StrokeThickness = 2;
 
             return line;

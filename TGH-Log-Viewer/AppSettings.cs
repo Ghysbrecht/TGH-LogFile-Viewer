@@ -16,12 +16,14 @@ namespace TGH_Log_Viewer
         private const int defDefaultRecords = 100;
         private const bool defAutoTime = false;
         private const bool defAutoScroll = true;
-        private const string filename = "DefaultAppSettings.xml";
+        private const string defFilename = "DefaultAppSettings.xml";
+        private const int defThemeNumber = 1;
         // -----------------------------------------------------------------
 
         public string elasticip { get; set; }
         public string defaultIndex { get; set; }
         public int defaultRecords { get; set; }
+        public int themeNumber { get; set; }
         public bool autoTime { get; set; }
         public bool autoScroll { get; set; }
         public List<FileExclusion> exclusions { get; set; }
@@ -31,12 +33,13 @@ namespace TGH_Log_Viewer
         public AppSettings(String elasticip, string defaultIndex)
         {
             String executingPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
-            saveLocation = executingPath + "\\" + filename;
+            saveLocation = executingPath + "\\" + defFilename;
             this.elasticip = elasticip;
             this.defaultIndex = defaultIndex;
             defaultRecords = defDefaultRecords;
             autoTime = defAutoTime;
             autoScroll = defAutoScroll;
+            themeNumber = defThemeNumber;
             exclusions = new List<FileExclusion>();
         }
 

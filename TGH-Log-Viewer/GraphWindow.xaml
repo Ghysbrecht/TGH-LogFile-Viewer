@@ -7,27 +7,27 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="Graph" Height="400" Width="600" MinHeight="400" MinWidth="600">
-    <Grid Background="#FF2C3E50">
-        <Rectangle Width="15" Height="1" VerticalAlignment="Top" HorizontalAlignment="Left" Fill="White" Margin="7,40,0,0"/>
-        <Rectangle Width="15" Height="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Fill="White" Margin="7,0,0,40"/>
-        <Label Name="maxBarNumber" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4,42,0,0" Width="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" Content="0" FontSize="10" Padding="1"/>
-        
-        <Grid Name="barGrid" Margin="30,40,10,40" Background="#FF34495E" SizeChanged="barGrid_SizeChanged" MouseMove="barGrid_MouseMove" MouseLeftButtonDown="barGrid_MouseLeftButtonDown" MouseLeftButtonUp="barGrid_MouseLeftButtonUp" />
-        
-        <Label Name="startLabel" Content="&#9655; Start" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="25,0,0,7"/>
-        <Label Name="endLabel" Content="End &#9665;" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,7"/>
+    <Grid Background="{DynamicResource DarkDefaultColor}">
+        <Rectangle Width="15" Height="1" VerticalAlignment="Top" HorizontalAlignment="Left" Fill="{DynamicResource MainOutlineColor}" Margin="7,40,0,0"/>
+        <Rectangle Width="15" Height="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Fill="{DynamicResource MainOutlineColor}" Margin="7,0,0,40"/>
+        <Label Name="maxBarNumber" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="4,42,0,0" Width="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="{DynamicResource MainTextColor}" Content="0" FontSize="10" Padding="1"/>
 
-        <Button Name="refreshButton" Height="30" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,5,0,0" Content="REFRESH" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="refreshButton_Click" />
-        <RadioButton Name="barRadioButton" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="175,6,0,0" Content="BAR" Foreground="White" BorderBrush="#FF0D2C49" IsChecked="True"/>
-        <RadioButton Name="lineRadioButton"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="175,22,0,0" Content="LINE" Foreground="White" BorderBrush="#FF0D2C49" />
-        <xctk:ShortUpDown Name="datapointNumberBox" Value="30" Width="50" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="White" Margin="310,10,0,0" Maximum="100" Minimum="5" />
-        <Label Content="DATAPOINTS:" Foreground="White" Height="20" Margin="235,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Padding="0,0,0,0" VerticalContentAlignment="Center" />
+        <Grid Name="barGrid" Margin="30,40,10,40" Background="{DynamicResource LightDefaultColor}" SizeChanged="barGrid_SizeChanged" MouseMove="barGrid_MouseMove" MouseLeftButtonDown="barGrid_MouseLeftButtonDown" MouseLeftButtonUp="barGrid_MouseLeftButtonUp" />
 
-        <Label Name="totalTitleLabel" Content="TOTAL :" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,70,18" HorizontalContentAlignment="Right" Width="70" VerticalContentAlignment="Center" FontSize="10" Height="25"/>
-        <Label Name="singleBarTitleLabel" Content="ONE BAR :" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,70,0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Width="70" FontSize="10" Height="25"/>
-        <Label Name="totalLabel" Content="TIME" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="120,0,0,18" Width="120" VerticalContentAlignment="Center" Height="25"/>
-        <Label Name="singleBarLabel" Content="TIME" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="120,0,0,0" VerticalContentAlignment="Center" Width="120" Height="25"/>
+        <Label Name="startLabel" Content="&#9655; Start" Foreground="{DynamicResource MainTextColor}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="25,0,0,7"/>
+        <Label Name="endLabel" Content="End &#9665;" Foreground="{DynamicResource MainTextColor}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,5,7"/>
 
-        <Button Name="dockButton" Height="30" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="95,5,0,0" Content="DOCK" Foreground="White" Background="#FF0D2C49" BorderBrush="White" Click="dockButton_Click" />
+        <Button Name="refreshButton" Height="30" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,5,0,0" Content="REFRESH" Foreground="{DynamicResource MainTextColor}" Background="{DynamicResource DarkAccentColor}" BorderBrush="{DynamicResource MainOutlineColor}" Click="refreshButton_Click" />
+        <RadioButton Name="barRadioButton" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="175,6,0,0" Content="BAR" Foreground="{DynamicResource MainTextColor}" BorderBrush="{DynamicResource DarkAccentColor}" IsChecked="True"/>
+        <RadioButton Name="lineRadioButton"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="175,22,0,0" Content="LINE" Foreground="{DynamicResource MainTextColor}" BorderBrush="{DynamicResource DarkAccentColor}" />
+        <xctk:ShortUpDown Name="datapointNumberBox" Value="30" Width="50" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="{DynamicResource MainOutlineColor}" Margin="310,10,0,0" Maximum="100" Minimum="5" />
+        <Label Content="DATAPOINTS:" Foreground="{DynamicResource MainTextColor}" Height="20" Margin="235,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Padding="0,0,0,0" VerticalContentAlignment="Center" />
+
+        <Label Name="totalTitleLabel" Content="TOTAL :" Foreground="{DynamicResource MainTextColor}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,70,18" HorizontalContentAlignment="Right" Width="70" VerticalContentAlignment="Center" FontSize="10" Height="25"/>
+        <Label Name="singleBarTitleLabel" Content="ONE BAR :" Foreground="{DynamicResource MainTextColor}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,70,0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Width="70" FontSize="10" Height="25"/>
+        <Label Name="totalLabel" Content="TIME" Foreground="{DynamicResource MainTextColor}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="120,0,0,18" Width="120" VerticalContentAlignment="Center" Height="25"/>
+        <Label Name="singleBarLabel" Content="TIME" Foreground="{DynamicResource MainTextColor}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="120,0,0,0" VerticalContentAlignment="Center" Width="120" Height="25"/>
+
+        <Button Name="dockButton" Height="30" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="95,5,0,0" Content="DOCK" Foreground="{DynamicResource MainTextColor}" Background="{DynamicResource DarkAccentColor}" BorderBrush="{DynamicResource MainOutlineColor}" Click="dockButton_Click" />
     </Grid>
 </Window>

@@ -164,6 +164,10 @@
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SuggestionFactory.cs" />
+    <Compile Include="ThemeManager.cs" />
+    <Compile Include="ThemeWindow.xaml.cs">
+      <DependentUpon>ThemeWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="AnalyzeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -216,6 +220,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ThemeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -312,9 +320,6 @@
     <Resource Include="Resources\upload-2-64.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\TGH-LogViewer-Logo.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\question-mark-4-64.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -325,6 +330,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\data-configuration-64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\paint-brush-64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Logo-Black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Logo-White.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

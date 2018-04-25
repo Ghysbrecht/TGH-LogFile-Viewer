@@ -4,6 +4,96 @@
              xmlns:local="clr-namespace:TGH_Log_Viewer"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        
+        <!-- ********************* MAIN *********************-->
+        <!-- MAIN --> 
+        <SolidColorBrush x:Key="DarkAccentColor" Color="#FF2E2E2E"/>
+        <SolidColorBrush x:Key="DarkDefaultColor" Color="#FF323232"/>
+        <SolidColorBrush x:Key="LightDefaultColor" Color="#FF494949"/>
+        <!-- TEXT -->
+        <SolidColorBrush x:Key="MainTextColor" Color="White"/>
+        <SolidColorBrush x:Key="SubTextColor" Color="#FF000000"/>
+        <!-- OUTLINE -->
+        <SolidColorBrush x:Key="MainOutlineColor" Color="Black"/>
+        <SolidColorBrush x:Key="SubOutlineColor" Color="#FF000000"/>
+        <!-- DATAGRID -->
+        <SolidColorBrush x:Key="MainDataGridColor" Color="#FFD1D1D1"/>
+        <SolidColorBrush x:Key="SubDataGridColor" Color="#FF9E9E9E"/>
+        <!-- BOTTOMBAR -->
+        <SolidColorBrush x:Key="BottomBarColor" Color="#FF272727"/>
+        <SolidColorBrush x:Key="BottomBarTextColor" Color="White"/>
+
+        <!-- ********************* MR.BLUESKY *********************-->
+        <!-- MAIN -->
+        <SolidColorBrush x:Key="DarkAccentColor1" Color="#FF0D2C49"/>
+        <SolidColorBrush x:Key="DarkDefaultColor1" Color="#FF2C3E50"/>
+        <SolidColorBrush x:Key="LightDefaultColor1" Color="#FF34495E"/>
+        <!-- TEXT -->
+        <SolidColorBrush x:Key="MainTextColor1" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="SubTextColor1" Color="#FF000000"/>
+        <!-- OUTLINE -->
+        <SolidColorBrush x:Key="MainOutlineColor1" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="SubOutlineColor1" Color="#FF000000"/>
+        <!-- DATAGRID -->
+        <SolidColorBrush x:Key="MainDataGridColor1" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="SubDataGridColor1" Color="#FFB2CDDA"/>
+        <!-- BOTTOMBAR -->
+        <SolidColorBrush x:Key="BottomBarColor1" Color="WhiteSmoke"/>
+        <SolidColorBrush x:Key="BottomBarTextColor1" Color="Black"/>
+
+        <!-- ********************* GRAYSCALE ********************* -->
+        <!-- MAIN -->
+        <SolidColorBrush x:Key="DarkAccentColor2" Color="#FFB2B2B2"/>
+        <SolidColorBrush x:Key="DarkDefaultColor2" Color="#FFCCCCCC"/>
+        <SolidColorBrush x:Key="LightDefaultColor2" Color="#FFE5E5E5"/>
+        <!-- TEXT -->
+        <SolidColorBrush x:Key="MainTextColor2" Color="Black"/>
+        <SolidColorBrush x:Key="SubTextColor2" Color="Black"/>
+        <!-- OUTLINE -->
+        <SolidColorBrush x:Key="MainOutlineColor2" Color="Black"/>
+        <SolidColorBrush x:Key="SubOutlineColor2" Color="Black"/>
+        <!-- DATAGRID -->
+        <SolidColorBrush x:Key="MainDataGridColor2" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="SubDataGridColor2" Color="#FFCFCFCF"/>
+        <!-- BOTTOMBAR -->
+        <SolidColorBrush x:Key="BottomBarColor2" Color="WhiteSmoke"/>
+        <SolidColorBrush x:Key="BottomBarTextColor2" Color="Black"/>
+
+        <!-- ********************* DARK ********************* -->
+        <!-- MAIN -->
+        <SolidColorBrush x:Key="DarkAccentColor3" Color="#FF2E2E2E"/>
+        <SolidColorBrush x:Key="DarkDefaultColor3" Color="#FF323232"/>
+        <SolidColorBrush x:Key="LightDefaultColor3" Color="#FF494949"/>
+        <!-- TEXT -->
+        <SolidColorBrush x:Key="MainTextColor3" Color="White"/>
+        <SolidColorBrush x:Key="SubTextColor3" Color="#FF000000"/>
+        <!-- OUTLINE -->
+        <SolidColorBrush x:Key="MainOutlineColor3" Color="Black"/>
+        <SolidColorBrush x:Key="SubOutlineColor3" Color="#FF000000"/>
+        <!-- DATAGRID -->
+        <SolidColorBrush x:Key="MainDataGridColor3" Color="#FFD1D1D1"/>
+        <SolidColorBrush x:Key="SubDataGridColor3" Color="#FF9E9E9E"/>
+        <!-- BOTTOMBAR -->
+        <SolidColorBrush x:Key="BottomBarColor3" Color="#FF272727"/>
+        <SolidColorBrush x:Key="BottomBarTextColor3" Color="White"/>
+
+        <!-- ********************* RAINBOW ********************* -->
+        <!-- MAIN -->
+        <SolidColorBrush x:Key="DarkAccentColor4" Color="#FFC10000"/>
+        <SolidColorBrush x:Key="DarkDefaultColor4" Color="#FF0012C5"/>
+        <SolidColorBrush x:Key="LightDefaultColor4" Color="#FFFFA404"/>
+        <!-- TEXT -->
+        <SolidColorBrush x:Key="MainTextColor4" Color="White"/>
+        <SolidColorBrush x:Key="SubTextColor4" Color="#FF000000"/>
+        <!-- OUTLINE -->
+        <SolidColorBrush x:Key="MainOutlineColor4" Color="#FF00A5B6"/>
+        <SolidColorBrush x:Key="SubOutlineColor4" Color="DarkRed"/>
+        <!-- DATAGRID -->
+        <SolidColorBrush x:Key="MainDataGridColor4" Color="#FF94E8B2"/>
+        <SolidColorBrush x:Key="SubDataGridColor4" Color="#FF6CC949"/>
+        <!-- BOTTOMBAR -->
+        <SolidColorBrush x:Key="BottomBarColor4" Color="#FF75008F"/>
+        <SolidColorBrush x:Key="BottomBarTextColor4" Color="White"/>
+
     </Application.Resources>
 </Application>

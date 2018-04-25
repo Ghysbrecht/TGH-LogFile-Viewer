@@ -5,18 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:TGH_Log_Viewer"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Skyline Log Viewer" Height="512.392" Width="718.66" MinWidth="870" MinHeight="512">
-    <Grid Background="#FF2C3E50" MouseDown="Grid_MouseDown">
-       
+
+    <Grid Background="{DynamicResource DarkDefaultColor}" MouseDown="Grid_MouseDown">
+        
         <!-- Topbox -->
-        <DockPanel HorizontalAlignment="Left" Height="59" LastChildFill="False" Margin="10,10,0,0" VerticalAlignment="Top" Width="830" Background="#FF34495E">
-            <Image Source="Resources/TGH-LogViewer-Logo.png" Margin="26,0"/>
-            <Grid Background="#FF34495E">
-                <Button Content="GET DATA" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Width="94" Click="Button_Click" Height="22" Background="#FF0D2C49" Foreground="White" BorderBrush="White"/>
-                <Button Content="PARSE DATA" HorizontalAlignment="Left" Margin="5,32,0,0" VerticalAlignment="Top" Width="94" Click="logStashMenu_Click" Height="22" Background="#FF0D2C49" Foreground="White" BorderBrush="White"/>
-                <Button Name="settingsButton" Content="SETTINGS" HorizontalAlignment="Left" Margin="104,5,0,0" VerticalAlignment="Top" Width="94" Height="22" Foreground="White" BorderBrush="White" Background="#FF0D2C49" Click="settingsButton_Click"/>
-                <Button Name="moreButton" Content="MORE" HorizontalAlignment="Left" Margin="104,32,0,0" VerticalAlignment="Top" Width="94" Height="22" Foreground="White" BorderBrush="White" Background="#FF0D2C49" ContextMenuService.IsEnabled="false" Click="Button_Click_1">
+        <Border BorderThickness="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,10,0,0" Width="135" Height="59" BorderBrush="{DynamicResource MainOutlineColor }" Panel.ZIndex="1" />
+        <DockPanel HorizontalAlignment="Left" Height="59" LastChildFill="False" Margin="10,10,0,0" VerticalAlignment="Top" Width="830" Background="{DynamicResource LightDefaultColor}">
+            <Image Source="Resources\Logo-White.png" Margin="20,-19,22,0" Height="100"/>
+            <Grid Background="{DynamicResource LightDefaultColor}">
+                <Button Content="GET DATA" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Width="94" Click="Button_Click" Height="22" Background="{DynamicResource DarkAccentColor}" Foreground="{DynamicResource MainTextColor}" BorderBrush="{DynamicResource MainOutlineColor}"/>
+                <Button Content="PARSE DATA" HorizontalAlignment="Left" Margin="5,32,0,0" VerticalAlignment="Top" Width="94" Click="logStashMenu_Click" Height="22" Background="{DynamicResource DarkAccentColor}" Foreground="{DynamicResource MainTextColor}" BorderBrush="{DynamicResource MainOutlineColor}"/>
+                <Button Name="settingsButton" Content="SETTINGS" HorizontalAlignment="Left" Margin="104,5,0,0" VerticalAlignment="Top" Width="94" Height="22" Foreground="{DynamicResource MainTextColor}" BorderBrush="{DynamicResource MainOutlineColor}" Background="{DynamicResource DarkAccentColor}" Click="settingsButton_Click"/>
+                <Button Name="moreButton" Content="MORE" HorizontalAlignment="Left" Margin="104,32,0,0" VerticalAlignment="Top" Width="94" Height="22" Foreground="{DynamicResource MainTextColor}" BorderBrush="{DynamicResource MainOutlineColor}" Background="{DynamicResource DarkAccentColor}" ContextMenuService.IsEnabled="false" Click="Button_Click_1">
                     <Button.ContextMenu>
                         <ContextMenu Name="moreButtonContextMenu" >
                             <MenuItem x:Name="analyzeMenu" Header="Analyze" Click="analyzeMenu_Click" >
@@ -54,6 +57,11 @@
                                     <Image Source="Resources/data-configuration-64.ico" />
                                 </MenuItem.Icon>
                             </MenuItem>
+                            <MenuItem x:Name="themeMenu" Header="Change Theme" Click="themeMenu_Click">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/paint-brush-64.ico" />
+                                </MenuItem.Icon>
+                            </MenuItem>
                             <MenuItem x:Name="infoMenu" Header="Info" Click="infoMenu_Click" >
                                 <MenuItem.Icon>
                                     <Image Source="Resources\info-2-64.ico" />
@@ -62,33 +70,33 @@
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>
-                <Separator Background="White" Height="55" Width="52" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Margin="188,2,0,2" Foreground="White" >
+                <Separator Background="{DynamicResource MainOutlineColor}" Height="55" Width="52" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Margin="188,2,0,2" Foreground="{DynamicResource MainOutlineColor}" >
                     <Separator.RenderTransform>
                         <TransformGroup>
                             <RotateTransform Angle="90"/>
                         </TransformGroup>
                     </Separator.RenderTransform>
                 </Separator>
-                <Label Content="From:" HorizontalAlignment="Left" Margin="220,3,0,0" VerticalAlignment="Top" Foreground="White" MouseDoubleClick="Label_MouseDoubleClick"/>
-                <Label Content="To:" HorizontalAlignment="Left" Margin="235,30,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.18,0.5" Background="{x:Null}" Foreground="White" MouseDoubleClick="Label_MouseDoubleClick_1"/>
-                <xctk:DateTimePicker Name="fromTimeDate" Width="157" Height="22" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="265,5,0,0" Format="Custom" FormatString="yyyy-MM-dd HH:mm:ss.fff" BorderBrush="White" ShowButtonSpinner="False" AutoCloseCalendar="True" />
-                <xctk:DateTimePicker Name="toTimeDate" Width="157" Height="22" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="265,32,0,0"  Format="Custom" FormatString="yyyy-MM-dd HH:mm:ss.fff" BorderBrush="White" ShowButtonSpinner="False" AutoCloseCalendar="True" />
-                <Button Name="filterButton" Content="FILTER" HorizontalAlignment="Left" Margin="435,5,0,0" VerticalAlignment="Top" Width="94" Height="22" Background="#FF0D2C49" Foreground="White" BorderBrush="White" Click="filterButton_Click" MouseRightButtonUp="filterButton_MouseRightButtonUp"/>
-                <Button Name="clearTimeFilterButton" Content="CLEAR" HorizontalAlignment="Left" Margin="435,32,0,0" VerticalAlignment="Top" Width="94" Height="22" Background="#FF0D2C49" Foreground="White" BorderBrush="White" Click="clearButton_Click"/>
-                <Separator Background="White" Height="55" Width="52" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Margin="519,2,0,2" Foreground="White" >
+                <Label Content="From:" HorizontalAlignment="Left" Margin="220,3,0,0" VerticalAlignment="Top" Foreground="{DynamicResource MainTextColor}" MouseDoubleClick="Label_MouseDoubleClick"/>
+                <Label Content="To:" HorizontalAlignment="Left" Margin="235,30,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.18,0.5" Foreground="{DynamicResource MainTextColor}" MouseDoubleClick="Label_MouseDoubleClick_1"/>
+                <xctk:DateTimePicker Name="fromTimeDate" Width="157" Height="22" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="265,5,0,0" Format="Custom" FormatString="yyyy-MM-dd HH:mm:ss.fff" BorderBrush="{DynamicResource MainOutlineColor}" ShowButtonSpinner="False" AutoCloseCalendar="True" />
+                <xctk:DateTimePicker Name="toTimeDate" Width="157" Height="22" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="265,32,0,0"  Format="Custom" FormatString="yyyy-MM-dd HH:mm:ss.fff" BorderBrush="{DynamicResource MainOutlineColor}" ShowButtonSpinner="False" AutoCloseCalendar="True" />
+                <Button Name="filterButton" Content="FILTER" HorizontalAlignment="Left" Margin="435,5,0,0" VerticalAlignment="Top" Width="94" Height="22" Background="{DynamicResource DarkAccentColor}" Foreground="{DynamicResource MainTextColor}" BorderBrush="{DynamicResource MainOutlineColor}" Click="filterButton_Click" MouseRightButtonUp="filterButton_MouseRightButtonUp"/>
+                <Button Name="clearTimeFilterButton" Content="CLEAR" HorizontalAlignment="Left" Margin="435,32,0,0" VerticalAlignment="Top" Width="94" Height="22" Background="{DynamicResource DarkAccentColor}" Foreground="{DynamicResource MainTextColor}" BorderBrush="{DynamicResource MainOutlineColor}" Click="clearButton_Click"/>
+                <Separator Background="{DynamicResource MainOutlineColor}" Height="55" Width="52" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Margin="519,2,0,2" Foreground="{DynamicResource MainOutlineColor}" >
                     <Separator.RenderTransform>
                         <TransformGroup>
                             <RotateTransform Angle="90"/>
                         </TransformGroup>
                     </Separator.RenderTransform>
                 </Separator>
-                <Button x:Name="leftButton" Content="&lt;" HorizontalAlignment="Left" Margin="560,10,0,0" VerticalAlignment="Top" Width="25" RenderTransformOrigin="0.28,0.2" VerticalContentAlignment="Center" Padding="1"  Height="25" BorderBrush="White" Foreground="White" Background="#FF0D2C49" Click="leftButton_Click"/>
-                <Button x:Name="rightButton" Content="&gt;" HorizontalAlignment="Left" Margin="650,10,0,0" VerticalAlignment="Top" Width="25" RenderTransformOrigin="0.28,0.2" VerticalContentAlignment="Center" Padding="1"  Height="25" Background="#FF0D2C49" Foreground="White" BorderBrush="White" Click="rightButton_Click"/>
-                <TextBox Name="pageNumberLabel" Height="17" Width="55" Text="1" HorizontalContentAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="590,6,0,0" Background="#00EE3E3E" BorderBrush="{x:Null}" Foreground="White" LostFocus="pageNumberLabel_LostFocus" KeyDown="pageNumberLabel_KeyDown"  />
-                <Label x:Name="pageTotalLabel" Content="/ NA" HorizontalAlignment="Left" Margin="590,20,0,0" VerticalAlignment="Top" Height="20" Width="54" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" MouseRightButtonUp="pageLabel_MouseRightButtonUp" Padding="0,1,0,5"/>
-                <Label x:Name="rowTitleLabel" Content="Rows: " HorizontalAlignment="Left" Margin="585,35,0,0" VerticalAlignment="Top" Width="44" Foreground="White"/>
-                <Label x:Name="rowLabel" Content="0" HorizontalAlignment="Left" Margin="625,35,0,0" VerticalAlignment="Top" Width="41" Background="{x:Null}" Foreground="White"/>
-                <Border BorderBrush="White" BorderThickness="1" HorizontalAlignment="Left" Height="59" Margin="-1,0,-16,0" VerticalAlignment="Top" Width="692" />
+                <Button x:Name="leftButton" Content="&lt;" HorizontalAlignment="Left" Margin="560,10,0,0" VerticalAlignment="Top" Width="25" RenderTransformOrigin="0.28,0.2" VerticalContentAlignment="Center" Padding="1"  Height="25" BorderBrush="{DynamicResource MainOutlineColor}" Foreground="{DynamicResource MainTextColor}" Background="{DynamicResource DarkAccentColor}" Click="leftButton_Click"/>
+                <Button x:Name="rightButton" Content="&gt;" HorizontalAlignment="Left" Margin="650,10,0,0" VerticalAlignment="Top" Width="25" RenderTransformOrigin="0.28,0.2" VerticalContentAlignment="Center" Padding="1"  Height="25" Background="{DynamicResource DarkAccentColor}" Foreground="{DynamicResource MainTextColor}" BorderBrush="{DynamicResource MainOutlineColor}" Click="rightButton_Click"/>
+                <TextBox Name="pageNumberLabel" Height="17" Width="55" Text="1" HorizontalContentAlignment="Center" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="590,6,0,0" Background="{DynamicResource LightDefaultColor}" BorderBrush="{x:Null}"  Foreground="{DynamicResource MainTextColor}" LostFocus="pageNumberLabel_LostFocus" KeyDown="pageNumberLabel_KeyDown"  />
+                <Label x:Name="pageTotalLabel" Content="/ NA" HorizontalAlignment="Left" Margin="590,20,0,0" VerticalAlignment="Top" Height="20" Width="54" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="{DynamicResource MainTextColor}" MouseRightButtonUp="pageLabel_MouseRightButtonUp" Padding="0,1,0,5"/>
+                <Label x:Name="rowTitleLabel" Content="Rows: " HorizontalAlignment="Left" Margin="585,35,0,0" VerticalAlignment="Top" Width="44" Foreground="{DynamicResource MainTextColor}"/>
+                <Label x:Name="rowLabel" Content="0" HorizontalAlignment="Left" Margin="625,35,0,0" VerticalAlignment="Top" Width="41" Background="{x:Null}" Foreground="{DynamicResource MainTextColor}"/>
+                <Border BorderBrush="{DynamicResource MainOutlineColor}" BorderThickness="1" HorizontalAlignment="Left" Height="59" Margin="-1,0,-16,0" VerticalAlignment="Top" Width="692" />
             </Grid>
         </DockPanel>
 
@@ -97,7 +105,7 @@
             
         
             <!-- Databox -->
-            <DataGrid DockPanel.Dock="Top" Height="200" HorizontalAlignment="Left"  x:Name="mainDataGrid" HeadersVisibility="Column" AutoGenerateColumns="False" AlternationCount="2" BorderBrush="White" CanUserDeleteRows="False" ClipToBounds="True" IsReadOnly="True" IsTextSearchEnabled="True" AlternatingRowBackground="#FFB2CDDA" Foreground="Black" TextOptions.TextFormattingMode="Display" Background="White" MouseRightButtonUp="mainDataGrid_MouseRightButtonUp" MouseDoubleClick="mainDataGrid_MouseDoubleClick">
+            <DataGrid DockPanel.Dock="Top" Height="200" HorizontalAlignment="Left"  x:Name="mainDataGrid" HeadersVisibility="Column" AutoGenerateColumns="False" AlternationCount="2" BorderBrush="{DynamicResource MainOutlineColor}" CanUserDeleteRows="False" ClipToBounds="True" IsReadOnly="True" IsTextSearchEnabled="True" AlternatingRowBackground="{DynamicResource SubDataGridColor}" Foreground="{DynamicResource SubTextColor}" TextOptions.TextFormattingMode="Display" Background="{DynamicResource MainDataGridColor}" MouseRightButtonUp="mainDataGrid_MouseRightButtonUp" MouseDoubleClick="mainDataGrid_MouseDoubleClick" AllowDrop="True">
                 <DataGrid.DataContext>
                     <local:LogLine/>
                 </DataGrid.DataContext>
@@ -122,8 +130,8 @@
                 </DataGrid.Columns>
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="{x:Type DataGridColumnHeader}">
-                        <Setter Property="Background" Value="#34495e"/>
-                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Background" Value="{DynamicResource LightDefaultColor}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource MainTextColor}"/>
                         <Setter Property="Padding" Value="5,5,5,5"/>
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
@@ -153,10 +161,10 @@
         </DockPanel>
 
         <!-- Side Box -->
-        <DockPanel HorizontalAlignment="Left" Height="auto" MinHeight="200" LastChildFill="False" Margin="10,74,0,0" VerticalAlignment="Top" Width="136" Background="#FF2C3E50">
+        <DockPanel HorizontalAlignment="Left" Height="auto" MinHeight="200" LastChildFill="False" Margin="10,74,0,0" VerticalAlignment="Top" Width="136" Background="{DynamicResource DarkDefaultColor}">
             <StackPanel>
-                <Label Name="hideColumnsLabel" Content="       HIDE COLUMNS" Height="26" Width="135" Padding="5,6,5,0" BorderBrush="White" Foreground="#FF2C3E50" FontFamily="Calibri" Background="#FFFFFF" FontWeight="ExtraBold" MouseLeftButtonDown="Label_MouseLeftButtonDown"/>
-                <ListBox x:Name="columnListBox" Width="135" SelectionMode="Multiple" SelectionChanged="columnListBox_SelectionChanged" Background="#FF34495E" BorderBrush="White" Foreground="White" FontFamily="Calibri">
+                <Label Name="hideColumnsLabel" Content="       HIDE COLUMNS" Height="26" Width="135" Padding="5,6,5,0" BorderBrush="{DynamicResource MainOutlineColor}" Foreground="{DynamicResource LightDefaultColor}" FontFamily="Calibri" Background="{DynamicResource MainOutlineColor}" FontWeight="ExtraBold" MouseLeftButtonDown="Label_MouseLeftButtonDown"/>
+                <ListBox x:Name="columnListBox" Width="135" SelectionMode="Multiple" SelectionChanged="columnListBox_SelectionChanged" Background="{DynamicResource LightDefaultColor}" BorderBrush="{DynamicResource MainOutlineColor}" Foreground="{DynamicResource MainTextColor}" FontFamily="Calibri">
                     <ListBoxItem Name="Timestamp">Timestamp</ListBoxItem>
                     <ListBoxItem Name="Filename">Filename</ListBoxItem>
                     <ListBoxItem Name="Logtype">Logtype</ListBoxItem>
@@ -167,10 +175,10 @@
                     <ListBoxItem Name="TID">TID</ListBoxItem>
                     <ListBoxItem Name="Message">Message</ListBoxItem>
                 </ListBox>
-                <Label Margin="0,6,0,0" Content="                FILTER" Height="26" Padding="5,6,5,0" BorderBrush="White" Foreground="#FF2C3E50" FontFamily="Calibri" Background="#FFFFFF" FontWeight="ExtraBold"/>
-                <Button Name="columnButton" Height="26" Content="COLUMN        &#9661;  " Background="#FF0D2C49" Foreground="White" BorderBrush="White" HorizontalContentAlignment="Right" Click="Button_Click_1" ContextMenuService.IsEnabled="false">
+                <Label Margin="0,6,0,0" Content="                FILTER" Height="26" Padding="5,6,5,0" BorderBrush="{DynamicResource MainOutlineColor}" Foreground="{DynamicResource LightDefaultColor}" FontFamily="Calibri" Background="{DynamicResource MainOutlineColor}" FontWeight="ExtraBold"/>
+                <Button Name="columnButton" Height="26" Content="COLUMN        &#9661;  " Background="{DynamicResource DarkAccentColor}" Foreground="{DynamicResource MainTextColor}" BorderBrush="{DynamicResource MainOutlineColor}" HorizontalContentAlignment="Right" Click="Button_Click_1" ContextMenuService.IsEnabled="false">
                     <Button.ContextMenu>
-                        <ContextMenu Name="columnFilterContextMenu" Background="White" >
+                        <ContextMenu Name="columnFilterContextMenu" Background="{DynamicResource MainDataGridColor}" >
                             <MenuItem Header="Filename" IsCheckable="True"/>
                             <MenuItem Header="Logtype" IsCheckable="True"/>
                             <MenuItem Header="Loglevel" IsCheckable="True"/>
@@ -182,20 +190,20 @@
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>
-                <TextBox Name="filterTextBox" Text="..." Height="24" BorderBrush="White" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MouseDoubleClick="TextBox_MouseDoubleClick" PreviewKeyDown="filterTextBox_KeyDown" >
+                <TextBox Name="filterTextBox" Text="..." Height="24" BorderBrush="{DynamicResource MainOutlineColor}" BorderThickness="1,0,1,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MouseDoubleClick="TextBox_MouseDoubleClick" PreviewKeyDown="filterTextBox_KeyDown" >
                     <TextBox.ContextMenu>
                         <ContextMenu Name="filterTextBoxContextMenu">
                         </ContextMenu>
                     </TextBox.ContextMenu>
                 </TextBox>
-                <Button Name="applyFilterButton" Height="26" Content="APPLY" Background="#FF0D2C49" Foreground="White" BorderBrush="White" Click="applyFilterButton_Click"/>
-                <Button Name="previousFilterButton" Height="26" Content="PREVIOUS" Background="#FF0D2C49" Foreground="White" BorderBrush="White" BorderThickness="1,0,1,1" Click="previousFilterButton_Click" />
-                <Button Name="clearFilterButton" Height="26" Content="CLEAR" Background="#FF0D2C49" Foreground="White" BorderBrush="White" BorderThickness="1,0,1,1" Click="Button_Click" />
+                <Button Name="applyFilterButton" Height="26" Content="APPLY" Background="{DynamicResource DarkAccentColor}" Foreground="{DynamicResource MainTextColor}" BorderBrush="{DynamicResource MainOutlineColor}" Click="applyFilterButton_Click"/>
+                <Button Name="previousFilterButton" Height="26" Content="PREVIOUS" Background="{DynamicResource DarkAccentColor}" Foreground="{DynamicResource MainTextColor}" BorderBrush="{DynamicResource MainOutlineColor}" BorderThickness="1,0,1,1" Click="previousFilterButton_Click" />
+                <Button Name="clearFilterButton" Height="26" Content="CLEAR" Background="{DynamicResource DarkAccentColor}" Foreground="{DynamicResource MainTextColor}" BorderBrush="{DynamicResource MainOutlineColor}" BorderThickness="1,0,1,1" Click="Button_Click" />
             </StackPanel>
         </DockPanel>
         
         <!-- Bottom Bar -->
-        <StatusBar Height="22" Background="WhiteSmoke" VerticalAlignment="Bottom"  >
+        <StatusBar Height="22" Background="{DynamicResource BottomBarColor}" VerticalAlignment="Bottom"  >
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Grid>
@@ -213,21 +221,21 @@
                 </ItemsPanelTemplate>
             </StatusBar.ItemsPanel>
             <StatusBarItem HorizontalContentAlignment="Left" Padding="0" VerticalAlignment="Center">
-                <TextBlock Name="bottomStatusText" Text="Initializing" Foreground="Black" Margin="8,0,0,0"/>
+                <TextBlock Name="bottomStatusText" Text="Initializing" Foreground="{DynamicResource BottomBarTextColor}" Margin="8,0,0,0"/>
             </StatusBarItem>
             <StatusBarItem Grid.Column="1">
                 <Image Source="Resources\database-64.ico" Height="12"/>
             </StatusBarItem>
             <StatusBarItem Grid.Column="2">
-                <TextBlock Name="bottomDBStatusText" Text="No connection" Margin="2,0,0,0"/>
+                <TextBlock Name="bottomDBStatusText" Text="No connection" Foreground="{DynamicResource BottomBarTextColor}" Margin="2,0,0,0"/>
             </StatusBarItem>
             <StatusBarItem Grid.Column="4">
-                <TextBlock Text="Hits:"/>
+                <TextBlock Text="Hits:" Foreground="{DynamicResource BottomBarTextColor}"/>
             </StatusBarItem>
             <StatusBarItem Grid.Column="5">
-                <TextBlock Name="bottomBarTotalHitsText" Text="NA" />
+                <TextBlock Name="bottomBarTotalHitsText" Foreground="{DynamicResource BottomBarTextColor}" Text="NA" />
             </StatusBarItem>
-            <Separator Grid.Column="6" Width="1" Background="Black"/>
+            <Separator Grid.Column="6" Width="1" Background="{DynamicResource BottomBarTextColor}"/>
             <StatusBarItem Grid.Column="7">
                 <Image Source="Resources\question-mark-4-64.ico" Height="12" MouseLeftButtonDown="infoMenu_Click"/>
             </StatusBarItem>

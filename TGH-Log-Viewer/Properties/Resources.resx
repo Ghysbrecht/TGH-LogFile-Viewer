@@ -157,9 +157,6 @@
   <data name="text_file_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\text-file-64.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TGH_LogViewer_Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\TGH-LogViewer-Logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="upload_2_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\upload-2-64.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -177,5 +174,34 @@
   </data>
   <data name="data_configuration_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\data-configuration-64.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DarkAccentColor" xml:space="preserve">
+    <value>#FF0D2C49</value>
+    <comment>Mostly used for buttons</comment>
+  </data>
+  <data name="DarkDefaultColor" xml:space="preserve">
+    <value>#FF2C3E50</value>
+    <comment>Used for backgrounds</comment>
+  </data>
+  <data name="LightDefaultColor" xml:space="preserve">
+    <value>#FF34495E</value>
+    <comment>Used for sub squares</comment>
+  </data>
+  <data name="MainOutlineColor" xml:space="preserve">
+    <value>#FFFFFFFF</value>
+    <comment>Used for text and borders</comment>
+  </data>
+  <data name="SubOutlineColor" xml:space="preserve">
+    <value>#00000000</value>
+    <comment>Used for dark text</comment>
+  </data>
+  <data name="paint_brush_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\paint-brush-64.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo_Black" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Logo-Black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logo_White" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Logo-White.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

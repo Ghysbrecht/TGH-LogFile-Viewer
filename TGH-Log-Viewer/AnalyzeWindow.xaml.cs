@@ -23,5 +23,7 @@ namespace TGH_Log_Viewer
         {
             InitializeComponent();
         }
+
+
     }
 }

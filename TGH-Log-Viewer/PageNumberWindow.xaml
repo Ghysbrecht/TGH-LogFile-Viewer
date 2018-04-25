@@ -6,10 +6,9 @@
         xmlns:local="clr-namespace:TGH_Log_Viewer"
         mc:Ignorable="d"
         Title="Pagenumber" Height="95" Width="310">
-    <Grid Background="#FF2C3E50">
+    <Grid Background="{DynamicResource DarkDefaultColor}">
         <TextBox Name="numberBox" HorizontalAlignment="Left" Height="20" Margin="10,25,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="186" KeyDown="numberBox_KeyDown"/>
-        <Button Content="GO" HorizontalAlignment="Left" Margin="207,25,0,0" VerticalAlignment="Top" Width="75" Background="#FF0D2C49" Foreground="White" BorderBrush="White" Click="Button_Click"/>
-        <Label Content="Enter a page number" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="131" Foreground="White"/>
-
+        <Button Content="GO" HorizontalAlignment="Left" Margin="207,25,0,0" VerticalAlignment="Top" Width="75" Background="{DynamicResource DarkAccentColor}" Foreground="{DynamicResource MainTextColor}" BorderBrush="{DynamicResource MainOutlineColor}" Click="Button_Click"/>
+        <Label Content="Enter a page number" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="131" Foreground="{DynamicResource MainTextColor}"/>
     </Grid>
 </Window>

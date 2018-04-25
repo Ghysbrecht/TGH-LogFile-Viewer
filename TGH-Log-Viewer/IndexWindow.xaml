@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:TGH_Log_Viewer"
         mc:Ignorable="d"
         Title="IndexWindow" Height="400" Width="400">
-    <Grid Background="#FF34495E">
-        <DataGrid VerticalAlignment="Top" HorizontalAlignment="Left" Height="315" Margin="5,5,5,5" x:Name="indexItemGrid" Width="auto" HeadersVisibility="Column" AutoGenerateColumns="False" AlternationCount="2" BorderBrush="White" BorderThickness="1" CanUserDeleteRows="True" ClipToBounds="True" IsReadOnly="False" IsTextSearchEnabled="True" AlternatingRowBackground="#FFB2CDDA" Foreground="Black" TextOptions.TextFormattingMode="Display" Background="White" FontFamily="Consolas" >
+    <Grid Background="{DynamicResource DarkDefaultColor}">
+        <DataGrid VerticalAlignment="Top" HorizontalAlignment="Left" Height="315" Margin="5,5,5,5" x:Name="indexItemGrid" Width="auto" HeadersVisibility="Column" AutoGenerateColumns="False" AlternationCount="2" BorderBrush="{DynamicResource MainOutlineColor}" BorderThickness="1" CanUserDeleteRows="True" ClipToBounds="True" IsReadOnly="False" IsTextSearchEnabled="True" AlternatingRowBackground="{DynamicResource SubDataGridColor}" Foreground="{DynamicResource SubTextColor}" TextOptions.TextFormattingMode="Display" Background="{DynamicResource MainDataGridColor}" FontFamily="Consolas" >
             <DataGrid.DataContext>
                 <local:IndexItem/>
             </DataGrid.DataContext>
@@ -18,8 +18,8 @@
             </DataGrid.Columns>
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
-                    <Setter Property="Background" Value="#34495e"/>
-                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Background" Value="{DynamicResource LightDefaultColor}"/>
+                    <Setter Property="Foreground" Value="{DynamicResource MainTextColor}"/>
                     <Setter Property="Padding" Value="5,5,5,5"/>
                 </Style>
             </DataGrid.ColumnHeaderStyle>
@@ -34,8 +34,8 @@
             </DataGrid.ContextMenu>
         </DataGrid>
 
-        <Button Name="saveButton" Content="SAVE" Height="30" Width="80" Background="#FF0D2C49" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5,0,0,5" Click="saveButton_Click" />
-        <Button Name="clearChangesButton" Content="CLEAR CHANGES" Height="30" Width="110" Background="#FF0D2C49" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="90,0,0,5" Click="clearChangesButton_Click" />
+        <Button Name="saveButton" Content="SAVE" Height="30" Width="80" Background="{DynamicResource DarkAccentColor}" Foreground="{DynamicResource MainTextColor}" BorderBrush="{DynamicResource MainOutlineColor}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5,0,0,5" Click="saveButton_Click" />
+        <Button Name="clearChangesButton" Content="CLEAR CHANGES" Height="30" Width="110" Background="{DynamicResource DarkAccentColor}" Foreground="{DynamicResource MainTextColor}" BorderBrush="{DynamicResource MainOutlineColor}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="90,0,0,5" Click="clearChangesButton_Click" />
         
     </Grid>
 </Window>
