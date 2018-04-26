@@ -55,3 +55,12 @@ This is my bachelor's thesis. I am attending my last year at Vives Brugge (Campu
 -	BUG – Main datagrid now expands to the full available width
 -	OTHER – Renamed to Skyline Log Viewer
 -	OTHER – Guide is linked on the info page
+
+##### V0.1.5:
+-	FEATURE – Graph can now be docked under the datagrid
+-	FEATURE – Added filtering on graph by clicking on a bar or selecting a timeframe (Click and drag)
+-	FEATURE – Time is now also saved in history
+-	FEATURE – Index window where unnecessary indices can be removed
+-	FEATURE – You can now change the theme
+-	IMPROVEMENT – Index name is checked before starting local parsing script
+-	OTHER – Autoscroll can be disabled in settings
